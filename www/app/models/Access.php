@@ -168,7 +168,7 @@ class AccessModel {
         return false;
     }
 
-    public eslCmd($cmd = null) {
+    public function eslCmd($cmd = null) {
         if ($cmd && is_string($cmd)) {
             $config = Yaf\Registry::get('config');
 
