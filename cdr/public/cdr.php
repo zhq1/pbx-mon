@@ -23,9 +23,9 @@ try {
         $src_ip = isset($rep['sip_network_ip']) ? $rep['sip_network_ip'] : '0.0.0.0';
         $caller = isset($rep['sip_from_user']) ? $rep['sip_from_user'] : 'unknown';
         $called = isset($rep['called']) ? $rep['called'] : 'unknown';
-        $duration = isset($rep['billsec'])) ? intval($rep['billsec']) : 0;
+        $duration = isset($rep['billsec']) ? intval($rep['billsec']) : 0;
         $file = date('Y/m/d/', intval($rep['start_epoch'])) . $caller . '-' . $called . '-' . $uuid . '.wav';
-        $create_time = isset($rep['start_stamp'])) ? urldecode($rep['start_stamp']) : '1970-01-01 08:00:00';
+        $create_time = isset($rep['start_stamp']) ? urldecode($rep['start_stamp']) : '1970-01-01 08:00:00';
 
         if ($duration > 0) {
             $db->query("INSERT INTO cdr(caller, called, duration, src_ip, rpf, file, create_time) values('$caller', '$called', $duration, '$src_ip', '$rpf', '$file', '$create_time')");
