@@ -23,7 +23,7 @@ try {
         $uuid = isset($req['uuid']) ? $req['uuid'] : 'unknown';
         $src_ip = isset($req['sip_network_ip']) ? $req['sip_network_ip'] : '0.0.0.0';
         $caller = isset($req['sip_from_user']) ? $req['sip_from_user'] : 'unknown';
-        $called = isset($req['called']) ? $req['called']：'unknown';
+        $called = isset($req['called']) ? $req['called'] : 'unknown';
         $duration = isset($req['billsec'])) ? intval($req['billsec']) : 0;
         $file = date('Y/m/d/', intval($req['start_epoch'])) . $caller . '-' . $called . '-' . $uuid . '.wav';
         $create_time = isset($req['start_stamp'])) ? urldecode($req['start_stamp']) : '1970-01-01 08:00:00';
