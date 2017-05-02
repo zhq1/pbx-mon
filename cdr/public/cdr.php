@@ -12,6 +12,7 @@ require('../config.php');
 try {
     // get post json data
     $data = json_decode(file_get_contents('php://input'), true);
+    
     if ($data) {
     	// Initialize mysql connection
     	$db = new PDO('mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
