@@ -16,7 +16,6 @@ try {
     if ($data) {
     	// Variable processing
         $req = isset($data['variables']) ? $data['variables'] : '';
-        $rpf = isset($req['rpf']) ? $req['rpf'] : 'unknown';
         $uuid = isset($req['uuid']) ? $req['uuid'] : 'unknown';
         $src_ip = isset($req['sip_network_ip']) ? ip2long($req['sip_network_ip']) : 0;
         $dst_ip = isset($req['sip_network_ip']) ? ip2long($req['sip_network_ip']) : 0;

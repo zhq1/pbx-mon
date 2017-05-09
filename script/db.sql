@@ -38,9 +38,18 @@ INSERT INTO `account` VALUES('admin', '94a2282805744c634a13b65e6b44cd5b82d66bff'
 -- pbxmon route table
 CREATE TABLE `route` (
        `id` int primary key not null,
-       `rule` varchar(64) not null,
+       `rexp` varchar(64) not null,
        `type` int not null,
        `trunk` int not null,
+       `description` varchar(64) not null
+);
+
+-- pbxmon extension table
+CREATE TABLE `extension` (
+       `id` int primary key not null,
+       `user` varchar(64) not null,
+       `password` int not null,
+       `callerid` varchar() not null,
        `description` varchar(64) not null
 );
 

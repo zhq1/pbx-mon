@@ -51,7 +51,7 @@
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">路由规则:</label>
               <div class="col-xs-3 col-sm-3">
-                <input type="text" class="rule input-sm form-control" name="name" placeholder="Enter regular expression" required="required">
+                <input type="text" class="rule input-sm form-control" name="rexp" placeholder="Enter regular expression" required="required">
               </div>
               <div class="col-xs-3 col-sm-3">
                 <span class="help-block">路由匹配规则，正则表达式</span>
@@ -60,7 +60,7 @@
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">匹配类型:</label>
               <div class="col-xs-3 col-sm-3">
-                <select class="form-control input-sm">
+                <select class="form-control input-sm" name="type">
                   <option>被叫号码</option>
                   <option>主叫号码</option>
                 </select>
@@ -72,7 +72,7 @@
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">呼出网关:</label>
               <div class="col-xs-3 col-sm-3">
-                <select class="form-control input-sm">
+                <select class="form-control input-sm" name="trunk">
                   <option>上海移动 (58.240.59.240)</option>
                   <option>上海电信 (58.240.59.250)</option>
                   <option>深圳联通 (58.240.59.251)</option>

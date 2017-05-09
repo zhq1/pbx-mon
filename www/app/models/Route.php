@@ -9,10 +9,10 @@
 use Tool\Filter;
 use Esl\ESLconnection;
 
-class GatewayModel {
+class RouteModel {
 
     public $db   = null;
-    private $table = 'external';
+    private $table = 'route';
     
     public function __construct() {
         $this->db = Yaf\Registry::get('db');
@@ -44,10 +44,10 @@ class GatewayModel {
     public function change($id = null, array $data = null) {
         $id = intval($id);
         if ($id > 0 && $this->db && $this->isExist($id)) {
-            if (isset($data['name'], $data['ip'], $data['port'], $data['description'])) {
-                $name = Filter::alpha($data['name']);
-                $ip = Filter::ip($data['ip']);
-                $port = Filter::port($data['port'], 5060);
+            if (isset($data['rexp'], $data['type'], $data['trunk'], $data['description'])) {
+                $rexp = str_replace(" ", "", strip_tags($data['rexp']));
+                $type = in_array(intval($data['type']), [1, 2], true) ? intval($data['type']) : 1;
+                $trunk = Filter::port($data['port'], 5060);
                 $description = Filter::string($data['description'], 'No description');
 
                 if ($name && $ip && $port && $description) {
