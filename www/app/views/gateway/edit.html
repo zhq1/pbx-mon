@@ -49,12 +49,12 @@
         <div class="container main">
           <form class="form-horizontal" action="/gateway/edit?id=<?php if($data) echo $data['id'];?>" method="post">
             <div class="form-group">
-              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">落地前缀:</label>
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">网关名称:</label>
               <div class="col-xs-3 col-sm-3">
-                <input type="text" class="input-sm form-control" placeholder="Enter prefix" name="prefix" value="<?php if($data) echo $data['prefix']?>" required="required" />
+                <input type="text" class="input-sm form-control" placeholder="Enter name" name="name" value="<?php if($data) echo $data['prefix']?>" required="required" />
               </div>
               <div class="col-xs-2 col-sm-2">
-                <span class="help-block">落地网关被叫号码前缀</span>
+                <span class="help-block">呼出落地网关名称</span>
               </div>
             </div>
             <div class="form-group">
