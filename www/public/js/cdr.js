@@ -62,8 +62,8 @@ function loadMore() {
                     '<td>' + obj.data[i].caller + '</td>' +
                     '<td>' + obj.data[i].called + '</td>' +
                     '<td>' + getForSeconds(obj.data[i].duration) + '</td>' +
-                    '<td>' + obj.data[i].src_ip + '</td>' +
-                    '<td>' + obj.data[i].rpf + '</td>' +
+                    '<td>' + long2ip(obj.data[i].src_ip) + '</td>' +
+                    '<td>' + long2ip(obj.data[i].dst_ip) + '</td>' +
                     '<td>' + obj.data[i].create_time + '</td>' +
                     '<td><a href="javascript:;" onClick="show(' +
                     "'" + obj.data[i].file + "'" +
@@ -102,3 +102,10 @@ function formatForDate(dt) {
     return r;  
 }
 
+function long2ip(num){
+    num = parseInt(num);
+    if(num > 0 && num < 0xffffffff){
+        return (num >>> 24) + "." + (num >> 16 & 0xff) + "." + (num >> 8 & 0xff) + "." + (num & 0xff);
+    }
+    return "0.0.0.0";
+}

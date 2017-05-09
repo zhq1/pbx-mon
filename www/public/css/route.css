@@ -13,8 +13,21 @@ body {
     content: "";
 }
 
+.label {
+    padding: 3px 6px;
+}
+
+.label-default {
+    color: #555555;
+    background: #e0e0e0;
+}
+
 .main {
     margin-top: -5px;
+}
+
+.breadcrumb .add {
+    margin-right: 20px;
 }
 
 .table {
@@ -28,4 +41,18 @@ table th, table tr td {
 .table>thead>tr>th, .table>tbody>tr>td {
     border-top: 1px solid #fafafa;
     border-bottom: 1px solid #fafafa;
+}
+
+form {
+    margin-top: 10px;
+}
+
+form .form-group button, form .form-group a {
+    width: 80px;
+    margin-right: 20px;
+}
+
+.rule {
+    font-size: 13px;
+    font-weight: bold;
 }
