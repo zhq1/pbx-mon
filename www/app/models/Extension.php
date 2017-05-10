@@ -42,30 +42,56 @@ class ExtensionModel {
     }
     
     public function change($id = null, array $data = null) {
-        $id = intval($id);
-        if ($id > 0 && $this->db && $this->isExist($id)) {
-            if ($data['password'], $data['callerid'], $data['description'])) {
-                $password = Filter::ip($data['password']);
-                $callerid = Filter::port($data['callerid'], 'unknown');
-                $description = Filter::string($data['description'], 'No description');
+        $column = ['user', 'password', 'callerid', 'description'];
+        $data = array_intersect_key($data, array_flip($column));
 
-                if ($password && $callerid && $description) {
-                    $sql = 'UPDATE ' . $this->table . ' SET password = :password, callerid = :callerid, description = :description WHERE id = :id';
-                    $sth = $this->db->prepare($sql);
-                    $sth->bindParam(':id', $id, PDO::PARAM_INT);
-                    $sth->bindParam(':password', $password, PDO::PARAM_STR);
-                    $sth->bindParam(':callerid', $callerid, PDO::PARAM_STR);
-                    $sth->bindParam(':description', $description, PDO::PARAM_STR);
+        foreach ($data as $key => $val) {
+            switch ($key) {
+            case 'user':
+                $data['user'] = Filter::alpha($val, null, 1, 32);
+                break;
+            case 'password':
+                $data['password'] = Filter::string($val, null, 8, 40);
+                break;
+            case 'callerid':
+                $data['callerid'] = Filter::alpha($val, null, 1, 32);
+                break;
+            case 'description':
+                $data['description'] = Filter::string($val, null, 1, 64);
+                break;
+            }
+        }
 
-                    if ($sth->execute()) {
-                        if($this->regenAcl() && $this->regenPlan()){
-                            sleep(1);
-                            $this->reloadAcl();
-                            sleep(1);
-                            $this->reloadXml();
-                            return true;
-                        }
-                    }
+        $key = '';
+        foreach ($data as $key => $val) {
+            if ($val) {
+                $key .= $key . ' = :'.$key;
+            } else {
+                unset($data[$key]);
+            }
+        }
+        
+        $sql = 'UPDATE ' . $this->table . ' SET ' . $key . 'WHERE id = :id';
+        
+        $password = Filter::ip($data['password']);
+        $callerid = Filter::port($data['callerid'], 'unknown');
+        $description = Filter::string($data['description'], 'No description');
+
+        if ($password && $callerid && $description) {
+
+            $sth = $this->db->prepare($sql);
+            $sth->bindParam(':id', $id, PDO::PARAM_INT);
+            $sth->bindParam(':password', $password, PDO::PARAM_STR);
+            $sth->bindParam(':callerid', $callerid, PDO::PARAM_STR);
+            $sth->bindParam(':description', $description, PDO::PARAM_STR);
+
+            if ($sth->execute()) {
+                if($this->regenAcl() && $this->regenPlan()){
+                    sleep(1);
+                    $this->reloadAcl();
+                    sleep(1);
+                    $this->reloadXml();
+                    return true;
                 }
             }
         }

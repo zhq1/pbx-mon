@@ -10,24 +10,29 @@ namespace Tool;
 
 class Filter {
 
-    static public function alpha($value = null, $defval = null) {
+    static public function alpha($value = null, $defval = null, $min = 0, $max = 4096) {
         $value = filter_var($value, FILTER_SANITIZE_STRING);
         if ($value) {
-            return preg_replace('/[^a-zA-Z0-9]/', '', $value);
+            $value = preg_replace('/[^a-zA-Z0-9]/', '', $value);
+            $len = mb_strlen($value);
+            if ($len >= $min && $len <= $max) {
+                return $value;
+            }
         }
 
-        if ($defval) {
-            return $defval;
+        return ($defval !== null) ? $defval : null;
+    }
+
+    static public function number($value = null, $defval = null, $min = 0, $max = PHP_INT_MAX) {
+        $value = intval($value);
+        if ($value >= $min && $value <= $max) {
+            return $value;
         }
-        
-        return false;
+
+        return ($defval !== null) ? $defval : null;
     }
 
-    static public function number($value = null) {
-        return intval($value);
-    }
-
-    static public function string($value = null, $defval = null, $min = 0, $max = PHP_INT_MAX) {
+    static public function string($value = null, $defval = null, $min = 0, $max = 4096) {
         $value = filter_var($value, FILTER_SANITIZE_STRING);
         if ($value) {
             $len = mb_strlen($value);
@@ -36,11 +41,7 @@ class Filter {
             }
         }
 
-        if ($defval) {
-            return $defval;
-        }
-
-        return false;
+        return $defval !== null ? $defval : false;
     }
     
     static public function dateTime($value = null, $defval = null) {
@@ -52,11 +53,7 @@ class Filter {
             }
         }
 
-        if ($defval) {
-            return $defval;
-        }
-
-        return false;
+        return ($defval !== null) ? $defval : false;
     }
 
     static public function ip($value = null, $defval = null) {
@@ -65,11 +62,7 @@ class Filter {
             return $value;
         }
 
-        if ($defval) {
-            return $defval;
-        }
-        
-        return false;
+        return ($defval !== null) ? $defval : false;
     }
 
     static public function port($value = null, $defval = null) {
@@ -78,10 +71,6 @@ class Filter {
             return $value;
         }
 
-        if ($defval) {
-            return $defval;
-        }
-
-        return false;
+        return ($defval !== null) ? $defval : false;
     }
 }

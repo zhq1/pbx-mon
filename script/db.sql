@@ -47,8 +47,8 @@ CREATE TABLE `route` (
 CREATE TABLE `extension` (
        `id` int primary key not null,
        `user` varchar(64) not null,
-       `password` int not null,
-       `callerid` varchar() not null,
+       `password` varchar(64) not null,
+       `callerid` varchar(32) not null,
        `description` varchar(64) not null
 );
 
