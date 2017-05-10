@@ -1,7 +1,6 @@
 
--- pbxmon database for mysql
--- author: typefo
--- e-mail: typefo@qq.com
+-- pbxMon database for mysql
+-- by typefo <typefo@qq.com>
 
 DROP DATABASE IF EXISTS `pbxmon`;
 
@@ -40,7 +39,7 @@ CREATE TABLE `route` (
        `id` int primary key not null,
        `rexp` varchar(64) not null,
        `type` int not null,
-       `trunk` int not null,
+       `gateway` int not null,
        `description` varchar(64) not null
 );
 
@@ -53,21 +52,13 @@ CREATE TABLE `extension` (
        `description` varchar(64) not null
 );
 
--- pbxmon internal table
-CREATE TABLE `internal` (
+-- pbxmon gateway table
+CREATE TABLE `gateway` (
        `id` int primary key auto_increment not null,
        `name` varchar(64) not null,
        `ip` varchar(16) not null,
        `port` int not null,
-       `description` varchar(64) not null
-);
-
--- pbxmon external table
-CREATE TABLE `external` (
-       `id` int primary key auto_increment not null,
-       `name` varchar(64) not null,
-       `ip` varchar(16) not null,
-       `port` int not null,
+       `call` int not null,
        `description` varchar(64) not null
 );
 

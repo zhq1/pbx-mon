@@ -10,7 +10,7 @@
     <title>Pbx Monitor System - Bit Cloud Inc</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/css/non-responsive.css">
-    <link type="text/css" rel="stylesheet" href="/css/route.css">
+    <link type="text/css" rel="stylesheet" href="/css/extension.css">
   </head>
   <body>
     <nav class="navbar navbar-default navbar-static-top">
@@ -41,47 +41,47 @@
       <div class="row">
         <ol class="breadcrumb">
           <li><a href="/cdr">Home</a></li>
-          <li><a href="/route">Route</a></li>
+          <li><a href="#">Extension</a></li>
           <li class="active">Create</li>
         </ol>
       </div>
       <div class="row">
         <div class="container main">
-          <form class="form-horizontal" action="/route/create" method="post">
+          <form class="form-horizontal" action="/extension/create" method="post">
             <div class="form-group">
-              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">路由规则:</label>
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">分机号码:</label>
               <div class="col-xs-3 col-sm-3">
-                <input type="text" class="rule input-sm form-control" name="rexp" placeholder="Enter regular expression" required="required">
+                <input type="text" class="input-sm form-control" name="user" placeholder="Enter extension" required="required">
               </div>
-              <div class="col-xs-3 col-sm-3">
-                <span class="help-block">路由匹配规则，正则表达式</span>
+              <div class="col-xs-2 col-sm-2">
+                <span class="help-block">分机号码，不可重复</span>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">匹配类型:</label>
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">分机名称:</label>
               <div class="col-xs-3 col-sm-3">
-                <select class="form-control input-sm" name="type">
-                  <option>被叫号码</option>
-                  <option>主叫号码</option>
-                </select>
+                <input type="text" class="input-sm form-control" name="name" placeholder="Enter name" required="required">
               </div>
-              <div class="col-xs-3 col-sm-3">
-                <span class="help-block">匹配对象，主叫或者被叫</span>
+              <div class="col-xs-2 col-sm-2">
+                <span class="help-block">分机名称</span>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">呼出网关:</label>
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">分机密码:</label>
               <div class="col-xs-3 col-sm-3">
-                <select class="form-control input-sm" name="trunk">
-                  <option>上海移动 (58.240.59.240)</option>
-                  <option>上海电信 (58.240.59.250)</option>
-                  <option>深圳联通 (58.240.59.251)</option>
-                  <option>苏州移动 (58.240.58.100)</option>
-                  <option>苏州电信 (58.240.58.120)</option>
-                </select>
+                <input type="password" class="input-sm form-control" name="password" placeholder="Enter password" required="required">
               </div>
               <div class="col-xs-3 col-sm-3">
-                <span class="help-block">呼出落地网关</span>
+                <span class="help-block">分机密码，密码长度必须大于 7 位</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">主叫号码:</label>
+              <div class="col-xs-3 col-sm-3">
+                <input type="text" class="input-sm form-control" name="callerid" placeholder="Enter callerid" required="required">
+              </div>
+              <div class="col-xs-3 col-sm-3">
+                <span class="help-block">分机呼出的主叫外显号码</span>
               </div>
             </div>
             <div class="form-group">
@@ -90,13 +90,13 @@
                 <input type="text" class="input-sm form-control" name="description" placeholder="Enter description" />
               </div>
               <div class="col-xs-3 col-sm-3">
-                <span class="help-block">路由备注说明</span>
+                <span class="help-block">分机相关备注说明</span>
               </div>
             </div>
             <div class="form-group">
-              <div class="col-xs-offset-2 col-sm-offset-4 col-xs-3 col-sm-3">
-                <button type="submit" id="submit" class="btn btn-success btn-sm">确 定</button>
-                <a class="btn btn-default btn-sm" href="/route">取 消</a>
+              <div class="col-sm-offset-4 col-xs-3 col-sm-3">
+                <button type="submit" id="submit" class="btn btn-sm btn-success">确 定</button>
+                <a class="btn btn-default btn-sm" href="/gateway/status">取 消</a>
               </div>
             </div>
           </form>
