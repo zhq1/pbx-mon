@@ -91,13 +91,15 @@ class RouteModel {
     
     public function create(array $data = null) {
         if ($this->db) {
-            if (isset($data['name'], $data['ip'], $data['port'], $data['description'])) {
-                $name = Filter::alpha($data['name'], 'unknown');
-                $ip = Filter::ip($data['ip']);
-                $port = Filter::port($data['port'], 5060);
+            if (isset($data['rexp'], $data['type'], $data['gateway'], $data['description'])) {
+                $gateway = new GatewayModel();
+                
+                $rexp = Filter::string($data['rexp'], '^(.*)$');
+                $type = in_array(intval($data['type']), [1, 2], true) ? intval($data['type']) : 2;
+                $gateway = $gateway->isExist($data['gateway']) ? intval($data['gateway']) : null;
                 $description = Filter::string($data['description'], 'No description');
 
-                if ($name && $ip && $port && $description) {
+                if ($rexp && $type && $gateway && $description) {
                     $sql = 'INSERT INTO ' . $this->table . '(name, ip, port, description) VALUES(:name, :ip, :port, :description)';
                     $sth = $this->db->prepare($sql);
                     $sth->bindParam(':name', $name, PDO::PARAM_STR);

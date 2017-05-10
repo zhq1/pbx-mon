@@ -9,10 +9,10 @@
 use Tool\Filter;
 use Esl\ESLconnection;
 
-class GatewayModel {
+class ExtensionModel {
 
     public $db   = null;
-    private $table = 'external';
+    private $table = 'extension';
     
     public function __construct() {
         $this->db = Yaf\Registry::get('db');
@@ -44,19 +44,17 @@ class GatewayModel {
     public function change($id = null, array $data = null) {
         $id = intval($id);
         if ($id > 0 && $this->db && $this->isExist($id)) {
-            if (isset($data['name'], $data['ip'], $data['port'], $data['description'])) {
-                $name = Filter::alpha($data['name']);
-                $ip = Filter::ip($data['ip']);
-                $port = Filter::port($data['port'], 5060);
+            if ($data['password'], $data['callerid'], $data['description'])) {
+                $password = Filter::ip($data['password']);
+                $callerid = Filter::port($data['callerid'], 'unknown');
                 $description = Filter::string($data['description'], 'No description');
 
-                if ($name && $ip && $port && $description) {
-                    $sql = 'UPDATE ' . $this->table . ' SET name = :name, ip = :ip, port = :port, description = :description WHERE id = :id';
+                if ($password && $callerid && $description) {
+                    $sql = 'UPDATE ' . $this->table . ' SET password = :password, callerid = :callerid, description = :description WHERE id = :id';
                     $sth = $this->db->prepare($sql);
                     $sth->bindParam(':id', $id, PDO::PARAM_INT);
-                    $sth->bindParam(':name', $name, PDO::PARAM_STR);
-                    $sth->bindParam(':ip', $ip, PDO::PARAM_STR);
-                    $sth->bindParam(':port', $port, PDO::PARAM_INT);
+                    $sth->bindParam(':password', $password, PDO::PARAM_STR);
+                    $sth->bindParam(':callerid', $callerid, PDO::PARAM_STR);
                     $sth->bindParam(':description', $description, PDO::PARAM_STR);
 
                     if ($sth->execute()) {
@@ -98,18 +96,18 @@ class GatewayModel {
     
     public function create(array $data = null) {
         if ($this->db) {
-            if (isset($data['name'], $data['ip'], $data['port'], $data['description'])) {
-                $name = Filter::alpha($data['name']);
-                $ip = Filter::ip($data['ip']);
-                $port = Filter::port($data['port'], 5060);
+            if (isset($data['user'], $data['password'], $data['callerid'], $data['description'])) {
+                $user = Filter::alpha($data['user']);
+                $password = Filter::string($data['password']);
+                $callerid = Filter::string($data['callerid'], 'unknown');
                 $description = Filter::string($data['description'], 'No description');
 
-                if ($name && $ip && $port && $description) {
-                    $sql = 'INSERT INTO ' . $this->table . '(name, ip, port, description) VALUES(:name, :ip, :port, :description)';
+                if ($user && $password && $callerid && $description) {
+                    $sql = 'INSERT INTO ' . $this->table . '(user, password, callerid, description) VALUES(:user, :password, :callerid, :description)';
                     $sth = $this->db->prepare($sql);
-                    $sth->bindParam(':name', $name, PDO::PARAM_STR);
-                    $sth->bindParam(':ip', $ip, PDO::PARAM_STR);
-                    $sth->bindParam(':port', $port, PDO::PARAM_INT);
+                    $sth->bindParam(':user', $user, PDO::PARAM_STR);
+                    $sth->bindParam(':password', $password, PDO::PARAM_STR);
+                    $sth->bindParam(':callerid', $callerid, PDO::PARAM_STR);
                     $sth->bindParam(':description', $description, PDO::PARAM_STR);
 
                     if($sth->execute()) {

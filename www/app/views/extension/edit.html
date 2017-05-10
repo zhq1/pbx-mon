@@ -41,13 +41,13 @@
       <div class="row">
         <ol class="breadcrumb">
           <li><a href="/cdr">Home</a></li>
-          <li><a href="/gateway/status">Gateway</a></li>
+          <li><a href="/gateway">Gateway</a></li>
           <li class="active">Edit</li>
         </ol>
       </div>
       <div class="row">
         <div class="container main">
-          <form class="form-horizontal" action="/gateway/edit?id=<?php if($data) echo $data['id'];?>" method="post">
+          <form class="form-horizontal" action="/extension/edit?id=<?php if($data) echo $data['id'];?>" method="post">
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">分机号码:</label>
               <div class="col-xs-3 col-sm-3">
@@ -87,7 +87,7 @@
             <div class="form-group">
               <div class="col-sm-offset-4 col-xs-3 col-sm-3">
                 <button type="submit" id="save" class="btn btn-sm btn-success">保 存</button>
-                <a class="btn btn-default btn-sm" href="/gateway/status">取 消</a>
+                <a class="btn btn-default btn-sm" href="/extension">取 消</a>
               </div>
             </div>
           </form>
