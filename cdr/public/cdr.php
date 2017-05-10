@@ -16,9 +16,9 @@ try {
     if ($data) {
     	// Variable processing
         $req = isset($data['variables']) ? $data['variables'] : '';
-        $rpf = isset($req['rpf']) ? $req['rpf'] : 'unknown';
         $uuid = isset($req['uuid']) ? $req['uuid'] : 'unknown';
-        $src_ip = isset($req['sip_network_ip']) ? $req['sip_network_ip'] : '0.0.0.0';
+        $src_ip = isset($req['sip_network_ip']) ? ip2long($req['sip_network_ip']) : 0;
+        $dst_ip = isset($req['sip_network_ip']) ? ip2long($req['sip_network_ip']) : 0;
         $caller = isset($req['sip_from_user']) ? $req['sip_from_user'] : 'unknown';
         $called = isset($req['called']) ? $req['called'] : 'unknown';
         $duration = isset($req['billsec']) ? intval($req['billsec']) : 0;
@@ -29,7 +29,7 @@ try {
         	// Initialize mysql connection
     		$db = new PDO('mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
 
-            $db->query("INSERT INTO cdr(caller, called, duration, src_ip, rpf, file, create_time) values('$caller', '$called', $duration, '$src_ip', '$rpf', '$file', '$create_time')");
+            $db->query("INSERT INTO cdr(caller, called, duration, src_ip, rpf, file, create_time) values('$caller', '$called', $duration, $src_ip, $dst_ip, '$rpf', '$file', '$create_time')");
 
             // Close mysql connection
     	    $db = null;

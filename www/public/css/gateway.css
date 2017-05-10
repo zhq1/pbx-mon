@@ -17,6 +17,10 @@ body {
     content: "";
 }
 
+.label {
+    padding: 1px 6px;
+}
+
 .table {
     margin-top: 10px;
 }
@@ -35,6 +39,10 @@ table th, table tr td {
 }
 
 .table {
+    margin-top: 10px;
+}
+
+form {
     margin-top: 10px;
 }
 

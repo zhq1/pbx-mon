@@ -6,10 +6,10 @@
  * By typefo <typefo@qq.com>
  */
 
-class AccessController extends Yaf\Controller_Abstract {
+class RouteController extends Yaf\Controller_Abstract {
 
-    public function statusAction() {
-        $access = new AccessModel();
+    public function indexAction() {
+        $access = new RouteModel();
         $this->getView()->assign("data", $access->getAll());
         return true;
 	}
@@ -18,9 +18,9 @@ class AccessController extends Yaf\Controller_Abstract {
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $access = new AccessModel();
+            $access = new RouteModel();
             $access->create($request->getPost());
-            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/access/status';
+            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/route';
             $response = $this->getResponse();
             $response->setRedirect($url);
             $response->response();
@@ -32,11 +32,11 @@ class AccessController extends Yaf\Controller_Abstract {
 
     public function editAction() {
         $request = $this->getRequest();
-        $access = new AccessModel();
+        $access = new RouteModel();
 
         if ($request->isPost()) {
             $access->change($request->getQuery('id'), $request->getPost());
-            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/access/status';
+            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/route';
             $response = $this->getResponse();
             $response->setRedirect($url);
             $response->response();
@@ -49,7 +49,7 @@ class AccessController extends Yaf\Controller_Abstract {
 
     public function deleteAction() {
         $id = $this->getRequest()->getQuery('id');
-        $access = new AccessModel();
+        $access = new RouteModel();
 
         $access->delete($id);
 

@@ -7,11 +7,10 @@
  */
 
 use Tool\Filter;
-use Esl\ESLconnection;
 
-class AccessModel {
+class ReportModel {
     public $db   = null;
-    private $table = 'internal';
+    private $table = 'report';
     
     public function __construct() {
         $this->db = Yaf\Registry::get('db');
@@ -57,14 +56,8 @@ class AccessModel {
                     $sth->bindParam(':ip', $ip, PDO::PARAM_STR);
                     $sth->bindParam(':port', $port, PDO::PARAM_INT);
                     $sth->bindParam(':description', $description, PDO::PARAM_STR);
-
-                    if ($sth->execute()) {
-                        if($this->regenAcl()){
-                            sleep(1);
-                            $this->reloadAcl();
-                            return true;
-                        }
-                    }
+                    $sth->execute()
+                    return true;
                 }
             }
 
@@ -78,13 +71,7 @@ class AccessModel {
         $id = intval($id);
         if ($id > 0 && $this->db && $this->isExist($id)){
             $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id . '';
-            $success = $this->db->query($sql);
-            if ($success) {
-                // regenerate the configuration files
-                if($this->regenAcl()) {
-                    // reload acl list
-                    $this->reloadAcl();
-                }
+            $this->db->query($sql);
             }
         }
     }
@@ -104,88 +91,12 @@ class AccessModel {
                     $sth->bindParam(':ip', $ip, PDO::PARAM_STR);
                     $sth->bindParam(':port', $port, PDO::PARAM_INT);
                     $sth->bindParam(':description', $description, PDO::PARAM_STR);
-
-                    if($sth->execute()) {
-                        if($this->regenAcl()){
-                            sleep(1);
-                            $this->reloadAcl();
-                            return true;
-                        }
-                    }
+                    $sth->execute()
+                    return true;
                 }
             }
         }
 
-        return false;
-    }
-
-    public function isExist($id = null) {
-        $id = intval($id);
-        if ($id > 0 && $this->db) {
-            $sql = 'SELECT id FROM ' . $this->table . ' WHERE id = ' . $id . ' LIMIT 1';
-            $result = $this->db->query($sql);
-            if (count($result) > 0) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public function regenAcl() {
-        if ($this->db) {
-            $result = $this->getAll();
-            if (count($result) > 0) {
-                $file = '/usr/local/freeswitch/conf/acl/internal.xml';
-                if (is_writable($file)) {
-                    $xml = '<list name="internal" default="deny">' . "\n";
-                    foreach ($result as $obj) {
-                        $xml .= '  <node type="allow" cidr="' . $obj['ip'] . '/32"/>' . "\n";
-                    }
-                    $xml .= '</list>' . "\n";
-
-                
-                    $fp = fopen($file, "w");
-                    if ($fp) {
-                        fwrite($fp, $xml);
-                        fclose($fp);
-                        return true;
-                    }
-                }
-
-                error_log('Cannot write file ' . $file . ' permission denied');
-            }
-        }
-
-        return false;
-    }
-
-    public function reloadAcl() {
-        if ($this->eslCmd('bgapi reloadacl')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function eslCmd($cmd = null) {
-        if ($cmd && is_string($cmd)) {
-            $config = Yaf\Registry::get('config');
-
-            // conection to freeswitch
-            $esl = new ESLconnection($config->esl->host, $config->esl->port, $config->esl->password);
-            
-            if ($esl) {
-                // exec reloadacl command
-                $esl->send($cmd);
-                // close esl connection
-                $esl->disconnect();
-                return true;
-            }
-            
-            error_log('esl cannot connect to freeswitch', 0);
-        }
-        
         return false;
     }
 }

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Bit Cloud, Inc.">
+    <meta name="author" content="typefo">
+    <link rel="icon" href="favicon.ico">
+    <title>Pbx Monitor System - Bit Cloud Inc</title>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/non-responsive.css">
+    <link type="text/css" rel="stylesheet" href="/css/route.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand">
+            <img alt="Brand" src="/img/icon.png" width="34" style="margin-top:-8px" />
+          </a>
+          <a class="navbar-brand" href="/cdr">pbxMon</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/cdr">通话记录</a></li>
+            <li><a href="/extension">分机管理</a></li>
+            <li><a href="/gateway">网关管理</a></li>
+            <li><a href="/route">路由管理</a></li>
+            <li><a href="/report">数据报表</a></li>
+            <li><a href="/server">服务器状态</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/user/setting"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> 账号设置</a></li>
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> 退 出</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <ol class="breadcrumb">
+          <li><a href="/cdr">Home</a></li>
+          <li><a href="/route">Route</a></li>
+          <li class="active">Create</li>
+        </ol>
+      </div>
+      <div class="row">
+        <div class="container main">
+          <form class="form-horizontal" action="/route/create" method="post">
+            <div class="form-group">
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">路由规则:</label>
+              <div class="col-xs-3 col-sm-3">
+                <input type="text" class="rule input-sm form-control" name="rexp" placeholder="Enter regular expression" required="required">
+              </div>
+              <div class="col-xs-3 col-sm-3">
+                <span class="help-block">路由匹配规则，正则表达式</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">匹配类型:</label>
+              <div class="col-xs-3 col-sm-3">
+                <select class="form-control input-sm" name="type">
+                  <option>被叫号码</option>
+                  <option>主叫号码</option>
+                </select>
+              </div>
+              <div class="col-xs-3 col-sm-3">
+                <span class="help-block">匹配对象，主叫或者被叫</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">呼出网关:</label>
+              <div class="col-xs-3 col-sm-3">
+                <select class="form-control input-sm" name="trunk">
+                  <option>上海移动 (58.240.59.240)</option>
+                  <option>上海电信 (58.240.59.250)</option>
+                  <option>深圳联通 (58.240.59.251)</option>
+                  <option>苏州移动 (58.240.58.100)</option>
+                  <option>苏州电信 (58.240.58.120)</option>
+                </select>
+              </div>
+              <div class="col-xs-3 col-sm-3">
+                <span class="help-block">呼出落地网关</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">备注信息:</label>
+              <div class="col-xs-3 col-sm-3">
+                <input type="text" class="input-sm form-control" name="description" placeholder="Enter description" />
+              </div>
+              <div class="col-xs-3 col-sm-3">
+                <span class="help-block">路由备注说明</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-offset-2 col-sm-offset-4 col-xs-3 col-sm-3">
+                <button type="submit" id="submit" class="btn btn-success btn-sm">确 定</button>
+                <a class="btn btn-default btn-sm" href="/route">取 消</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/layer.js"></script>
+  <script type="text/javascript">
+    $("#submit").click(function(){
+      var index = layer.load(2, {shade: [0.7,'#fff'], time: 3000});
+    });
+  </script>
+</html>

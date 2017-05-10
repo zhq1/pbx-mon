@@ -1,17 +1,17 @@
 <?php
 
 /*
- * The Gateway Model
+ * The Access Model
  * Link http://github.com/typefo/pbx-mon
  * By typefo <typefo@qq.com>
  */
 
 use Tool\Filter;
+use Esl\ESLconnection;
 
-class GatewayModel {
-
+class RouteModel {
     public $db   = null;
-    private $table = 'gateway';
+    private $table = 'route';
     
     public function __construct() {
         $this->db = Yaf\Registry::get('db');
@@ -43,26 +43,31 @@ class GatewayModel {
     public function change($id = null, array $data = null) {
         $id = intval($id);
         if ($id > 0 && $this->db && $this->isExist($id)) {
-            if (isset($data['name'], $data['ip'], $data['port'], $data['call'], $data['description'])) {
-                $name = Filter::alpha($data['name']);
+            if (isset($data['name'], $data['ip'], $data['port'], $data['description'])) {
+                $name = Filter::alpha($data['name'], 'unknown');
                 $ip = Filter::ip($data['ip']);
                 $port = Filter::port($data['port'], 5060);
-                $call = in_array(intval($data['call']), [0, 1], true) ? intval($data['call']) : 0;
                 $description = Filter::string($data['description'], 'No description');
 
                 if ($name && $ip && $port && $description) {
-                    $sql = 'UPDATE ' . $this->table . ' SET name = :name, ip = :ip, port = :port, call = :call, description = :description WHERE id = :id';
+                    $sql = 'UPDATE ' . $this->table . ' SET name = :name, ip = :ip, port = :port, description = :description WHERE id = :id';
                     $sth = $this->db->prepare($sql);
                     $sth->bindParam(':id', $id, PDO::PARAM_INT);
                     $sth->bindParam(':name', $name, PDO::PARAM_STR);
                     $sth->bindParam(':ip', $ip, PDO::PARAM_STR);
                     $sth->bindParam(':port', $port, PDO::PARAM_INT);
-                    $sth->bindParam(':call', $port, PDO::PARAM_INT);
                     $sth->bindParam(':description', $description, PDO::PARAM_STR);
-                    $sth->execute();
-                    return true;
+
+                    if ($sth->execute()) {
+                        if($this->regenAcl()){
+                            sleep(1);
+                            $this->reloadAcl();
+                            return true;
+                        }
+                    }
                 }
             }
+
         }
 
         return false;
@@ -72,33 +77,43 @@ class GatewayModel {
     public function delete($id = null) {
         $id = intval($id);
         if ($id > 0 && $this->db && $this->isExist($id)){
-            $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id;
-            $this->db->query($sql);
-            return true;
+            $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id . '';
+            $success = $this->db->query($sql);
+            if ($success) {
+                // regenerate the configuration files
+                if($this->regenAcl()) {
+                    // reload acl list
+                    $this->reloadAcl();
+                }
+            }
         }
-
-        return false;
     }
     
     public function create(array $data = null) {
         if ($this->db) {
-            if (isset($data['name'], $data['ip'], $data['port'], $data['call'], $data['description'])) {
-                $name = Filter::alpha($data['name']);
-                $ip = Filter::ip($data['ip']);
-                $port = Filter::port($data['port'], 5060);
-                $call = in_array(intval($data['call']), [0, 1], true) ? intval($data['call']) : 0;
+            if (isset($data['rexp'], $data['type'], $data['gateway'], $data['description'])) {
+                $gateway = new GatewayModel();
+                
+                $rexp = Filter::string($data['rexp'], '^(.*)$');
+                $type = in_array(intval($data['type']), [1, 2], true) ? intval($data['type']) : 2;
+                $gateway = $gateway->isExist($data['gateway']) ? intval($data['gateway']) : null;
                 $description = Filter::string($data['description'], 'No description');
 
-                if ($name && $ip && $port && $description) {
-                    $sql = 'INSERT INTO ' . $this->table . '(name, ip, port, call, description) VALUES(:name, :ip, :port, :call, :description)';
+                if ($rexp && $type && $gateway && $description) {
+                    $sql = 'INSERT INTO ' . $this->table . '(name, ip, port, description) VALUES(:name, :ip, :port, :description)';
                     $sth = $this->db->prepare($sql);
                     $sth->bindParam(':name', $name, PDO::PARAM_STR);
                     $sth->bindParam(':ip', $ip, PDO::PARAM_STR);
                     $sth->bindParam(':port', $port, PDO::PARAM_INT);
-                    $sth->bindParam(':call', $call, PDO::PARAM_INT);
                     $sth->bindParam(':description', $description, PDO::PARAM_STR);
-                    $sth->execute();
-                    return true;
+
+                    if($sth->execute()) {
+                        if($this->regenAcl()){
+                            sleep(1);
+                            $this->reloadAcl();
+                            return true;
+                        }
+                    }
                 }
             }
         }
