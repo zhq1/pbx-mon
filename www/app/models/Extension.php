@@ -1,7 +1,7 @@
 <?php
 
 /*
- * The Access Model
+ * The Gateway Model
  * Link http://github.com/typefo/pbx-mon
  * By typefo <typefo@qq.com>
  */
@@ -9,9 +9,10 @@
 use Tool\Filter;
 use Esl\ESLconnection;
 
-class RouteModel {
+class GatewayModel {
+
     public $db   = null;
-    private $table = 'route';
+    private $table = 'external';
     
     public function __construct() {
         $this->db = Yaf\Registry::get('db');
@@ -44,7 +45,7 @@ class RouteModel {
         $id = intval($id);
         if ($id > 0 && $this->db && $this->isExist($id)) {
             if (isset($data['name'], $data['ip'], $data['port'], $data['description'])) {
-                $name = Filter::alpha($data['name'], 'unknown');
+                $name = Filter::alpha($data['name']);
                 $ip = Filter::ip($data['ip']);
                 $port = Filter::port($data['port'], 5060);
                 $description = Filter::string($data['description'], 'No description');
@@ -59,15 +60,16 @@ class RouteModel {
                     $sth->bindParam(':description', $description, PDO::PARAM_STR);
 
                     if ($sth->execute()) {
-                        if($this->regenAcl()){
+                        if($this->regenAcl() && $this->regenPlan()){
                             sleep(1);
                             $this->reloadAcl();
+                            sleep(1);
+                            $this->reloadXml();
                             return true;
                         }
                     }
                 }
             }
-
         }
 
         return false;
@@ -77,22 +79,27 @@ class RouteModel {
     public function delete($id = null) {
         $id = intval($id);
         if ($id > 0 && $this->db && $this->isExist($id)){
-            $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id . '';
+            $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id;
             $success = $this->db->query($sql);
             if ($success) {
                 // regenerate the configuration files
-                if($this->regenAcl()) {
-                    // reload acl list
+                if($this->regenAcl() && $this->regenPlan()){
+                    sleep(1);
                     $this->reloadAcl();
+                    sleep(1);
+                    $this->reloadXml();
+                    return true;
                 }
             }
         }
+
+        return false;
     }
     
     public function create(array $data = null) {
         if ($this->db) {
             if (isset($data['name'], $data['ip'], $data['port'], $data['description'])) {
-                $name = Filter::alpha($data['name'], 'unknown');
+                $name = Filter::alpha($data['name']);
                 $ip = Filter::ip($data['ip']);
                 $port = Filter::port($data['port'], 5060);
                 $description = Filter::string($data['description'], 'No description');
@@ -106,9 +113,11 @@ class RouteModel {
                     $sth->bindParam(':description', $description, PDO::PARAM_STR);
 
                     if($sth->execute()) {
-                        if($this->regenAcl()){
+                        if($this->regenAcl() && $this->regenPlan()){
                             sleep(1);
                             $this->reloadAcl();
+                            sleep(1);
+                            $this->reloadXml();
                             return true;
                         }
                     }
@@ -136,14 +145,62 @@ class RouteModel {
         if ($this->db) {
             $result = $this->getAll();
             if (count($result) > 0) {
-                $file = '/usr/local/freeswitch/conf/acl/internal.xml';
+                $file = '/usr/local/freeswitch/conf/acl/external.xml';
                 if (is_writable($file)) {
-                    $xml = '<list name="internal" default="deny">' . "\n";
+                    $xml = '<list name="external" default="deny">' . "\n";
                     foreach ($result as $obj) {
                         $xml .= '  <node type="allow" cidr="' . $obj['ip'] . '/32"/>' . "\n";
                     }
                     $xml .= '</list>' . "\n";
 
+                    $fp = fopen($file, "w");
+                    if ($fp) {
+                        fwrite($fp, $xml);
+                        fclose($fp);
+                        return true;
+                    }
+                }
+
+                error_log('Cannot write file ' . $file . ' permission denied');
+            }
+        }
+
+        return false;
+    }
+
+    public function regenPlan() {
+        if ($this->db) {
+            $result = $this->getAll();
+            if (count($result) > 0) {
+                $file = '/usr/local/freeswitch/conf/dialplan/default.xml';
+                if (is_writable($file)) {
+                    $xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
+                    $xml .= '<include>' . "\n";
+                    $xml .= '  <context name="default">' . "\n";
+                    $xml .= '    <extension name="unloop">' . "\n";
+                    $xml .= '      <condition field="${unroll_loops}" expression="^true$"/>' . "\n";
+                    $xml .= '      <condition field="${sip_looped_call}" expression="^true$">' . "\n";
+                    $xml .= '        <action application="deflect" data="${destination_number}"/>' . "\n";
+                    $xml .= '      </condition>' . "\n";
+                    $xml .= '    </extension>' . "\n\n";
+
+                    foreach ($result as $obj) {
+                        $xml .= '    <extension name="' . $obj['prefix'] . '">' . "\n";
+                        $xml .= '      <condition field="destination_number" expression="^' . $obj['rexp'] . '(.*)$">' . "\n";
+                        $xml .= '        <action application="set" data="called=$1"/>' . "\n";
+                        $xml .= '        <action application="set" data="call_timeout=60"/>' . "\n";
+                        $xml .= '        <action application="set" data="ringback=${cn-ring}"/>' . "\n";
+                        $xml .= '        <action application="set" data="RECORD_STEREO=false"/>' . "\n";
+                        $xml .= '        <action application="set" data="RECORD_ANSWER_REQ=true"/>' . "\n";
+                        $xml .= '        <action application="record_session" data="/var/record/${strftime(%Y/%m/%d}/${caller_id_number}-${called}-${uuid}.wav"/>' . "\n";
+                        $xml .= '        <action application="bridge" data="sofia/external/${called}@' . $obj['ip'] . ':' . $obj['port'] . '"/>' . "\n";
+                        $xml .= '        <action application="hangup"/>' . "\n";
+                        $xml .= '        </condition>' . "\n";
+                        $xml .= '    </extension>' . "\n";
+                    }
+                    
+                    $xml .= '  </context>' . "\n";
+                    $xml .= '</include>' . "\n";
                 
                     $fp = fopen($file, "w");
                     if ($fp) {
@@ -168,13 +225,21 @@ class RouteModel {
         return false;
     }
 
+    public function reloadXml() {
+        if ($this->eslCmd('bgapi reloadxml')) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function eslCmd($cmd = null) {
         if ($cmd && is_string($cmd)) {
             $config = Yaf\Registry::get('config');
 
             // conection to freeswitch
             $esl = new ESLconnection($config->esl->host, $config->esl->port, $config->esl->password);
-            
+
             if ($esl) {
                 // exec reloadacl command
                 $esl->send($cmd);
@@ -185,7 +250,7 @@ class RouteModel {
             
             error_log('esl cannot connect to freeswitch', 0);
         }
-        
+
         return false;
     }
 }

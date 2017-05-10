@@ -7,12 +7,11 @@
  */
 
 use Tool\Filter;
-use Esl\ESLconnection;
 
 class GatewayModel {
 
     public $db   = null;
-    private $table = 'external';
+    private $table = 'gateway';
     
     public function __construct() {
         $this->db = Yaf\Registry::get('db');
@@ -58,16 +57,8 @@ class GatewayModel {
                     $sth->bindParam(':ip', $ip, PDO::PARAM_STR);
                     $sth->bindParam(':port', $port, PDO::PARAM_INT);
                     $sth->bindParam(':description', $description, PDO::PARAM_STR);
-
-                    if ($sth->execute()) {
-                        if($this->regenAcl() && $this->regenPlan()){
-                            sleep(1);
-                            $this->reloadAcl();
-                            sleep(1);
-                            $this->reloadXml();
-                            return true;
-                        }
-                    }
+                    $sth->execute();
+                    return true;
                 }
             }
         }
@@ -80,17 +71,8 @@ class GatewayModel {
         $id = intval($id);
         if ($id > 0 && $this->db && $this->isExist($id)){
             $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id;
-            $success = $this->db->query($sql);
-            if ($success) {
-                // regenerate the configuration files
-                if($this->regenAcl() && $this->regenPlan()){
-                    sleep(1);
-                    $this->reloadAcl();
-                    sleep(1);
-                    $this->reloadXml();
-                    return true;
-                }
-            }
+            $this->db->query($sql);
+            return true;
         }
 
         return false;
@@ -111,16 +93,8 @@ class GatewayModel {
                     $sth->bindParam(':ip', $ip, PDO::PARAM_STR);
                     $sth->bindParam(':port', $port, PDO::PARAM_INT);
                     $sth->bindParam(':description', $description, PDO::PARAM_STR);
-
-                    if($sth->execute()) {
-                        if($this->regenAcl() && $this->regenPlan()){
-                            sleep(1);
-                            $this->reloadAcl();
-                            sleep(1);
-                            $this->reloadXml();
-                            return true;
-                        }
-                    }
+                    $sth->execute();
+                    return true;
                 }
             }
         }
@@ -145,62 +119,14 @@ class GatewayModel {
         if ($this->db) {
             $result = $this->getAll();
             if (count($result) > 0) {
-                $file = '/usr/local/freeswitch/conf/acl/external.xml';
+                $file = '/usr/local/freeswitch/conf/acl/internal.xml';
                 if (is_writable($file)) {
-                    $xml = '<list name="external" default="deny">' . "\n";
+                    $xml = '<list name="internal" default="deny">' . "\n";
                     foreach ($result as $obj) {
                         $xml .= '  <node type="allow" cidr="' . $obj['ip'] . '/32"/>' . "\n";
                     }
                     $xml .= '</list>' . "\n";
 
-                    $fp = fopen($file, "w");
-                    if ($fp) {
-                        fwrite($fp, $xml);
-                        fclose($fp);
-                        return true;
-                    }
-                }
-
-                error_log('Cannot write file ' . $file . ' permission denied');
-            }
-        }
-
-        return false;
-    }
-
-    public function regenPlan() {
-        if ($this->db) {
-            $result = $this->getAll();
-            if (count($result) > 0) {
-                $file = '/usr/local/freeswitch/conf/dialplan/default.xml';
-                if (is_writable($file)) {
-                    $xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
-                    $xml .= '<include>' . "\n";
-                    $xml .= '  <context name="default">' . "\n";
-                    $xml .= '    <extension name="unloop">' . "\n";
-                    $xml .= '      <condition field="${unroll_loops}" expression="^true$"/>' . "\n";
-                    $xml .= '      <condition field="${sip_looped_call}" expression="^true$">' . "\n";
-                    $xml .= '        <action application="deflect" data="${destination_number}"/>' . "\n";
-                    $xml .= '      </condition>' . "\n";
-                    $xml .= '    </extension>' . "\n\n";
-
-                    foreach ($result as $obj) {
-                        $xml .= '    <extension name="' . $obj['prefix'] . '">' . "\n";
-                        $xml .= '      <condition field="destination_number" expression="^' . $obj['rexp'] . '(.*)$">' . "\n";
-                        $xml .= '        <action application="set" data="called=$1"/>' . "\n";
-                        $xml .= '        <action application="set" data="call_timeout=60"/>' . "\n";
-                        $xml .= '        <action application="set" data="ringback=${cn-ring}"/>' . "\n";
-                        $xml .= '        <action application="set" data="RECORD_STEREO=false"/>' . "\n";
-                        $xml .= '        <action application="set" data="RECORD_ANSWER_REQ=true"/>' . "\n";
-                        $xml .= '        <action application="record_session" data="/var/record/${strftime(%Y/%m/%d}/${caller_id_number}-${called}-${uuid}.wav"/>' . "\n";
-                        $xml .= '        <action application="bridge" data="sofia/external/${called}@' . $obj['ip'] . ':' . $obj['port'] . '"/>' . "\n";
-                        $xml .= '        <action application="hangup"/>' . "\n";
-                        $xml .= '        </condition>' . "\n";
-                        $xml .= '    </extension>' . "\n";
-                    }
-                    
-                    $xml .= '  </context>' . "\n";
-                    $xml .= '</include>' . "\n";
                 
                     $fp = fopen($file, "w");
                     if ($fp) {
@@ -225,21 +151,13 @@ class GatewayModel {
         return false;
     }
 
-    public function reloadXml() {
-        if ($this->eslCmd('bgapi reloadxml')) {
-            return true;
-        }
-
-        return false;
-    }
-
     public function eslCmd($cmd = null) {
         if ($cmd && is_string($cmd)) {
             $config = Yaf\Registry::get('config');
 
             // conection to freeswitch
             $esl = new ESLconnection($config->esl->host, $config->esl->port, $config->esl->password);
-
+            
             if ($esl) {
                 // exec reloadacl command
                 $esl->send($cmd);
@@ -250,7 +168,7 @@ class GatewayModel {
             
             error_log('esl cannot connect to freeswitch', 0);
         }
-
+        
         return false;
     }
 }
