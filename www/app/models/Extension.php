@@ -67,16 +67,16 @@ class ExtensionModel {
         $data = $this->keyAssembly($key, $data);
 
         if ($id > 0 && count($data) > 0) {
-        	$sql = 'UPDATE ' . $this->table . ' SET ' . $key . ' WHERE id = :id';
-        	$sth = $this->db->prepare($sql);
-        	$sth->bindParam(':id', $id, PDO::PARAM_INT);
-        	foreach ($data as $key => $val) {
-        		$sth->bindParam($key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
-        	}
+            $sql = 'UPDATE ' . $this->table . ' SET ' . $key . ' WHERE id = :id';
+            $sth = $this->db->prepare($sql);
+            $sth->bindParam(':id', $id, PDO::PARAM_INT);
+            foreach ($data as $key => $val) {
+                $sth->bindParam($key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+            }
 
-        	return $sth->execute() ? true : false;
+            return $sth->execute() ? true : false;
         }
-        
+
         return false;
     }
 
@@ -147,21 +147,21 @@ class ExtensionModel {
     }
 
     public function keyAssembly(&$text, array $data) {
-    	$result = [];
-    	$append = false;
-    	foreach ($data as $key => $val) {
-    		if ($val != null) {
-    			$result[':' . $key] = $val;
-    			if ($append) {
-    				$text .= ", $key = :$key";
-    			} else {
-    				$append = true;
-    				$text .= "$key = :$key";
-    			}
-    		}
-    	}
+        $result = [];
+        $append = false;
+        foreach ($data as $key => $val) {
+            if ($val != null) {
+                $result[':' . $key] = $val;
+                if ($append) {
+                    $text .= ", $key = :$key";
+                } else {
+                    $append = true;
+                    $text .= "$key = :$key";
+                }
+            }
+        }
 
-    	return $result;
+        return $result;
     }
 
     public function regenAcl() {
