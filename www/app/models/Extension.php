@@ -69,7 +69,6 @@ class ExtensionModel {
         if ($id > 0 && count($data) > 0) {
         	$sql = 'UPDATE ' . $this->table . ' SET ' . $key . ' WHERE id = :id';
         	$sth = $this->db->prepare($sql);
-
         	$sth->bindParam(':id', $id, PDO::PARAM_INT);
         	foreach ($data as $key => $val) {
         		$sth->bindParam($key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
