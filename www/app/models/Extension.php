@@ -42,6 +42,7 @@ class ExtensionModel {
     }
     
     public function change($id = null, array $data = null) {
+    	$id = intval($id);
         $column = ['user', 'password', 'callerid', 'description'];
         $data = array_intersect_key($data, array_flip($column));
 
@@ -63,39 +64,20 @@ class ExtensionModel {
         }
 
         $key = '';
-        foreach ($data as $key => $val) {
-            if ($val) {
-                $key .= $key . ' = :'.$key;
-            } else {
-                unset($data[$key]);
-            }
+        $data = $this->keyAssembly($key, $data);
+
+        if ($id > 0 && count($data) > 0) {
+        	$sql = 'UPDATE ' . $this->table . ' SET ' . $key . ' WHERE id = :id';
+        	$sth = $this->db->prepare($sql);
+
+        	$sth->bindParam(':id', $id, PDO::PARAM_INT);
+        	foreach ($data as $key => $val) {
+        		$sth->bindParam($key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+        	}
+
+        	return $sth->execute() ? true : false;
         }
         
-        $sql = 'UPDATE ' . $this->table . ' SET ' . $key . 'WHERE id = :id';
-        
-        $password = Filter::ip($data['password']);
-        $callerid = Filter::port($data['callerid'], 'unknown');
-        $description = Filter::string($data['description'], 'No description');
-
-        if ($password && $callerid && $description) {
-
-            $sth = $this->db->prepare($sql);
-            $sth->bindParam(':id', $id, PDO::PARAM_INT);
-            $sth->bindParam(':password', $password, PDO::PARAM_STR);
-            $sth->bindParam(':callerid', $callerid, PDO::PARAM_STR);
-            $sth->bindParam(':description', $description, PDO::PARAM_STR);
-
-            if ($sth->execute()) {
-                if($this->regenAcl() && $this->regenPlan()){
-                    sleep(1);
-                    $this->reloadAcl();
-                    sleep(1);
-                    $this->reloadXml();
-                    return true;
-                }
-            }
-        }
-
         return false;
     }
 
@@ -163,6 +145,24 @@ class ExtensionModel {
         }
 
         return false;
+    }
+
+    public function keyAssembly(&$text, array $data) {
+    	$result = [];
+    	$append = false;
+    	foreach ($data as $key => $val) {
+    		if ($val != null) {
+    			$result[':' . $key] = $val;
+    			if ($append) {
+    				$text .= ", $key = :$key";
+    			} else {
+    				$append = true;
+    				$text .= "$key = :$key";
+    			}
+    		}
+    	}
+
+    	return $result;
     }
 
     public function regenAcl() {
