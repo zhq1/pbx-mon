@@ -20,7 +20,7 @@ class Filter {
             }
         }
 
-        return ($defval !== null) ? $defval : null;
+        return $defval;
     }
 
     static public function number($value = null, $defval = null, $min = 0, $max = PHP_INT_MAX) {
@@ -29,7 +29,7 @@ class Filter {
             return $value;
         }
 
-        return ($defval !== null) ? $defval : null;
+        return $defval;
     }
 
     static public function string($value = null, $defval = null, $min = 0, $max = 4096) {
@@ -41,7 +41,7 @@ class Filter {
             }
         }
 
-        return $defval !== null ? $defval : false;
+        return $defval;
     }
     
     static public function dateTime($value = null, $defval = null) {
@@ -53,7 +53,7 @@ class Filter {
             }
         }
 
-        return ($defval !== null) ? $defval : false;
+        return $defval;
     }
 
     static public function ip($value = null, $defval = null) {
@@ -62,7 +62,7 @@ class Filter {
             return $value;
         }
 
-        return ($defval !== null) ? $defval : false;
+        return $defval;
     }
 
     static public function port($value = null, $defval = null) {
@@ -71,6 +71,6 @@ class Filter {
             return $value;
         }
 
-        return ($defval !== null) ? $defval : false;
+        return $defval;
     }
 }
