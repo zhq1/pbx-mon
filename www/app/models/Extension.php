@@ -43,33 +43,14 @@ class ExtensionModel {
     
     public function change($id = null, array $data = null) {
     	$id = intval($id);
-        $column = ['user', 'password', 'callerid', 'description'];
-        $data = array_intersect_key($data, array_flip($column));
-
-        foreach ($data as $key => $val) {
-            switch ($key) {
-            case 'user':
-                $data['user'] = Filter::alpha($val, null, 1, 32);
-                break;
-            case 'password':
-                $data['password'] = Filter::string($val, null, 8, 40);
-                break;
-            case 'callerid':
-                $data['callerid'] = Filter::alpha($val, null, 1, 32);
-                break;
-            case 'description':
-                $data['description'] = Filter::string($val, null, 1, 64);
-                break;
-            }
-        }
-
-        $key = '';
-        $data = $this->keyAssembly($key, $data);
+        $data = $this->checkArgs($data, $column);
+        $key = $this->keyAssembly($data);
 
         if ($id > 0 && count($data) > 0) {
             $sql = 'UPDATE ' . $this->table . ' SET ' . $key . ' WHERE id = :id';
             $sth = $this->db->prepare($sql);
             $sth->bindParam(':id', $id, PDO::PARAM_INT);
+            
             foreach ($data as $key => $val) {
                 $sth->bindParam($key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
             }
@@ -102,35 +83,39 @@ class ExtensionModel {
     }
     
     public function create(array $data = null) {
-        if ($this->db) {
-            if (isset($data['user'], $data['password'], $data['callerid'], $data['description'])) {
-                $user = Filter::alpha($data['user']);
-                $password = Filter::string($data['password']);
-                $callerid = Filter::string($data['callerid'], 'unknown');
-                $description = Filter::string($data['description'], 'No description');
-
-                if ($user && $password && $callerid && $description) {
-                    $sql = 'INSERT INTO ' . $this->table . '(user, password, callerid, description) VALUES(:user, :password, :callerid, :description)';
-                    $sth = $this->db->prepare($sql);
-                    $sth->bindParam(':user', $user, PDO::PARAM_STR);
-                    $sth->bindParam(':password', $password, PDO::PARAM_STR);
-                    $sth->bindParam(':callerid', $callerid, PDO::PARAM_STR);
-                    $sth->bindParam(':description', $description, PDO::PARAM_STR);
-
-                    if($sth->execute()) {
-                        if($this->regenAcl() && $this->regenPlan()){
-                            sleep(1);
-                            $this->reloadAcl();
-                            sleep(1);
-                            $this->reloadXml();
-                            return true;
-                        }
-                    }
-                }
+        $column = ['user' => 'def:feji,type:string', 'password', 'callerid', 'description'];
+        $data = array_intersect_key($data, array_flip($column));
+        
+        foreach ($data as $key => $val) {
+            switch ($key) {
+            case 'user':
+                $data['user'] = Filter::alpha($val, null, 1, 32);
+                break;
+            case 'password':
+                $data['password'] = Filter::string($val, null, 8, 40);
+                break;
+            case 'callerid':
+                $data['callerid'] = Filter::alpha($val, null, 1, 32);
+                break;
+            case 'description':
+                $data['description'] = Filter::string($val, null, 1, 64);
+                break;
             }
         }
+        
+        $data = $this->keyAssembly($data);
+        
+        if ($id > 0 && count($data) > 0) {
+            $sql = 'INSERT INTO ' . $this->table . '(user, password, callerid, description) VALUES(:user, :password, :callerid, :description)';
+            $sth = $this->db->prepare($sql);
 
-        return false;
+            foreach ($data as $key => $val) {
+                $sth->bindParam($key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+            }
+
+            return $sth->execute() ? true : false;
+        }
+
     }
 
     public function isExist($id = null) {
@@ -146,13 +131,13 @@ class ExtensionModel {
         return false;
     }
 
-    public function keyAssembly(&$text, array $data) {
+    public function keyAssembly(array $data, &$text = null) {
         $result = [];
         $append = false;
         foreach ($data as $key => $val) {
             if ($val != null) {
                 $result[':' . $key] = $val;
-                if ($append) {
+                if ($text != null && $append) {
                     $text .= ", $key = :$key";
                 } else {
                     $append = true;
@@ -162,6 +147,15 @@ class ExtensionModel {
         }
 
         return $result;
+    }
+
+    public function checkArgs(array $data) {
+        $column = ['user', 'password', 'callerid', 'description'];
+        $data = array_intersect_key($data, array_flip($column));
+         
+        switch () {
+
+        } 
     }
 
     public function regenAcl() {
