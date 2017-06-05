@@ -7,9 +7,9 @@
     <meta name="description" content="Bit Cloud, Inc.">
     <meta name="author" content="typefo">
     <link rel="icon" href="favicon.ico">
-    <title>Pbx Monitor System - Bit Cloud Inc</title>
+    <title>Pbx Monitor System</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="/css/non-responsive.css">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link type="text/css" rel="stylesheet" href="/css/route.css">
   </head>
   <body>
@@ -17,16 +17,16 @@
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand">
-            <img alt="Brand" src="/img/icon.png" width="34" style="margin-top:-8px" />
+            <img alt="Brand" src="/img/logo.png" width="34" style="margin-top:-8px" />
           </a>
           <a class="navbar-brand" href="/cdr">pbxMon</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="/cdr">通话记录</a></li>
-            <li><a href="/extension">分机管理</a></li>
-            <li><a href="/gateway">网关管理</a></li>
             <li><a href="/route">路由管理</a></li>
+            <li><a href="/acl">ACL管理</a></li>
+            <li><a href="/gateway">接口管理</a></li>
             <li><a href="/report">数据报表</a></li>
             <li><a href="/server">服务器状态</a></li>
           </ul>
@@ -51,7 +51,7 @@
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">路由编号:</label>
               <div class="col-xs-3 col-sm-3">
-                <input type="text" class="input-sm form-control" name="name" value="1" disabled="disabled" />
+                <input type="text" class="form-control" name="name" value="1" disabled="disabled" />
               </div>
               <div class="col-xs-2 col-sm-2">
                 <span class="help-block">路由匹配规则编号</span>
@@ -60,31 +60,40 @@
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">路由规则:</label>
               <div class="col-xs-3 col-sm-3">
-                <input type="text" class="rule input-sm form-control" placeholder="Enter regular expression" name="rexp" value="^86(.*)" required="required" />
+                <input type="text" class="rule form-control" placeholder="Enter regular expression" name="rexp" value="^86(.*)" required="required" />
               </div>
               <div class="col-xs-3 col-sm-3">
                 <span class="help-block">路由匹配规则，正则表达式</span>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">呼出网关:</label>
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">出局接口:</label>
               <div class="col-xs-3 col-sm-3">
-                <select class="form-control input-sm" name="trunk">
-                  <option>上海移动 (58.240.59.240)</option>
-                  <option>上海电信 (58.240.59.250)</option>
+                <select class="form-control" name="trunk">
+                  <option>eth1 (58.240.59.240)</option>
+                  <option>eth2 (58.240.59.250)</option>
                   <option>深圳联通 (58.240.59.251)</option>
                   <option>苏州移动 (58.240.58.100)</option>
                   <option>苏州电信 (58.240.58.120)</option>
                 </select>
               </div>
               <div class="col-xs-3 col-sm-3">
-                <span class="help-block">呼出落地网关</span>
+                <span class="help-block">呼出出局接口</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">目标网关:</label>
+              <div class="col-xs-3 col-sm-3">
+                <input type="text" class="form-control" placeholder="Enter description" name="description" />
+              </div>
+              <div class="col-xs-3 col-sm-3">
+                <span class="help-block">中继落地网关 IP 地址</span>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">备注信息:</label>
               <div class="col-xs-3 col-sm-3">
-                <input type="text" class="input-sm form-control" placeholder="Enter description" name="description" value="no description" />
+                <input type="text" class="form-control" placeholder="Enter description" name="description" value="no description" />
               </div>
               <div class="col-xs-3 col-sm-3">
                 <span class="help-block">路由备注说明</span>
@@ -92,8 +101,8 @@
             </div>
             <div class="form-group">
               <div class="col-xs-offset-2 col-sm-offset-4 col-xs-3 col-sm-3">
-                <button type="submit" id="save" class="btn btn-success btn-sm">保 存</button>
-                <a class="btn btn-default btn-sm" href="/route">取 消</a>
+                <button type="submit" id="save" class="btn btn-success">保 存</button>
+                <a class="btn btn-default" href="/route">取 消</a>
               </div>
             </div>
           </form>

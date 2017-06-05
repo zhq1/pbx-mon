@@ -7,9 +7,9 @@
     <meta name="description" content="Bit Cloud, Inc.">
     <meta name="author" content="typefo">
     <link rel="icon" href="favicon.ico">
-    <title>Pbx Monitor System - Bit Cloud Inc</title>
+    <title>Pbx Monitor System</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="/css/non-responsive.css">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link type="text/css" rel="stylesheet" href="/css/route.css">
   </head>
   <body>
@@ -17,16 +17,15 @@
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand">
-            <img alt="Brand" src="/img/icon.png" width="34" style="margin-top:-8px" />
+            <img alt="Brand" src="/img/logo.png" width="34" style="margin-top:-8px" />
           </a>
           <a class="navbar-brand" href="/cdr">pbxMon</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="/cdr">通话记录</a></li>
-            <li><a href="/extension">分机管理</a></li>
-            <li><a href="/gateway">网关管理</a></li>
             <li><a href="/route">路由管理</a></li>
+            <li><a href="/interface">接口管理</a></li>
             <li><a href="/report">数据报表</a></li>
             <li><a href="/server">服务器状态</a></li>
           </ul>
@@ -47,24 +46,23 @@
         </ol>
       </div>
       <div class="row">
-        <div class="container">
+
         <table class="table table-hover table-condensed table-striped">
-        	<thead><tr><th>编 号</th><th class="text-left">路由规则</th><th>匹配类型</th><th>呼出网关</th><th>备注信息</th><th>删 除</th><th>编 辑</th></tr></thead>
+        	<thead><tr><th>编 号</th><th class="text-left">路由规则</th><th>匹配类型</th><th>呼出接口</th><th>目标网关</th><th>备注信息</th><th>删 除</th><th>编 辑</th></tr></thead>
           <tbody>
-            <tr><td>1</td><td class="text-left">^86(.*)$</td><td>被叫号码</td><td>58.240.24.88</td><td>no description</td><td><a class="btn btn-danger btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td>2</td><td class="text-left">^90(.*)$</td><td>被叫号码</td><td>110.24.58.100</td><td>no description</td><td><a class="btn btn-danger btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td>3</td><td class="text-left">^9011(.*)$</td><td>被叫号码</td><td>58.240.24.90</td><td>no description</td><td><a class="btn btn-danger btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td>4</td><td class="text-left">^0512(.*)$</td><td>主叫号码</td><td>158.240.24.88</td><td>no description</td><td><a class="btn btn-danger btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td>5</td><td class="text-left">^(80884567)$</td><td>主叫号码</td><td>58.40.24.99</td><td>no description</td><td><a class="btn btn-danger btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td>6</td><td class="text-left">^(051280884567)$</td><td>被叫号码</td><td>58.240.24.88</td><td>no description</td><td><a class="btn btn-danger btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td>7</td><td class="text-left">^021(68554567)$</td><td>被叫号码</td><td>58.240.30.181</td><td>no description</td><td><a class="btn btn-danger btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td>8</td><td class="text-left">^150(.*)$</td><td>主叫号码</td><td>58.240.24.78</td><td>no description</td><td><a class="btn btn-danger btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td>9</td><td class="text-left">^135|136|188</td><td>主叫号码</td><td>58.240.24.100</td><td>no description</td><td><a class="btn btn-danger btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td>10</td><td class="text-left">^(.*)$</td><td>被叫号码</td><td>58.240.24.100</td><td>no description</td><td><a class="btn btn-danger btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td>1</td><td class="text-left">^86(.*)$</td><td>被叫号码</td><td>eth0(电信线路)</td><td>58.240.24.88</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td>2</td><td class="text-left">^90(.*)$</td><td>被叫号码</td><td>eth0(电信线路)</td><td>110.24.58.100</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td>3</td><td class="text-left">^9011(.*)$</td><td>被叫号码</td><td>eth0(电信线路)</td><td>58.240.24.90</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td>4</td><td class="text-left">^0512(.*)$</td><td>主叫号码</td><td>eth0(电信线路)</td><td>158.240.24.88</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td>5</td><td class="text-left">^(80884567)$</td><td>主叫号码</td><td>eth0(电信线路)</td><td>58.40.24.99</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td>6</td><td class="text-left">^(051280884567)$</td><td>被叫号码</td><td>eth0(电信线路)</td><td>58.240.24.88</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td>7</td><td class="text-left">^021(68554567)$</td><td>被叫号码</td><td>eth0(电信线路)</td><td>58.240.30.181</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td>8</td><td class="text-left">^150(.*)$</td><td>主叫号码</td><td>eth0(电信线路)</td><td>58.240.24.78</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td>9</td><td class="text-left">^135|136|188</td><td>主叫号码</td><td>eth0(电信线路)</td><td>58.240.24.100</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td>10</td><td class="text-left">^(.*)$</td><td>被叫号码</td><td>eth0(电信线路)</td><td>58.240.24.100</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
           </tbody>
         </table>
         </div>
-      </div>
     </div>
   </body>
   <script type="text/javascript" src="/js/jquery.min.js"></script>

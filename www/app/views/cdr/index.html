@@ -9,24 +9,23 @@
     <link rel="icon" href="favicon.ico">
     <title>Pbx Monitor System - Bit Cloud Inc</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link type="text/css" rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
-    <link type="text/css" rel="stylesheet" href="/css/non-responsive.css">
-    <link type="text/css" rel="stylesheet" href="/css/record.css">
+    <link type="text/css" rel="stylesheet" href="/css/cdr.css">
   </head>
   <body>
-    <nav class="navbar navbar-default navbar-static-top">
+    <div class="navbar navbar-default navbar-static-top">
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand">
-            <img alt="Brand" src="img/icon.png" width="34" style="margin-top:-8px" />
+            <img alt="Brand" src="/img/logo.png" width="34" style="margin-top:-8px" />
           </a>
           <a class="navbar-brand">pbxMon</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="/cdr">通话记录</a></li>
-            <li><a href="/extension">分机管理</a></li>
-            <li><a href="/gateway">网关管理</a></li>
+            <li><a href="/interface">接口管理</a></li>
             <li><a href="/route">路由管理</a></li>
             <li><a href="/report">数据报表</a></li>
             <li><a href="/server">服务器状态</a></li>
@@ -37,13 +36,14 @@
           </ul>
         </div>
       </div>
-    </nav>
+    </div>
     <div class="container">
       <div class="row">
         <ol class="breadcrumb">
           <li><a href="#">Home</a></li>
           <li><a href="#">Cdr</a></li>
           <li class="active">Data</li>
+          <li class="pull-right help"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <a href="#">帮助信息</a></li>
         </ol>
       </div>
     </div>
