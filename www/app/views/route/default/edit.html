@@ -24,9 +24,15 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="/cdr">通话记录</a></li>
-            <li><a href="/route">路由管理</a></li>
-            <li><a href="/acl">ACL管理</a></li>
-            <li><a href="/gateway">接口管理</a></li>
+            <li><a href="/access">网关管理</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">路由管理</a>
+              <ul class="dropdown-menu">
+                <li><a href="/route/default">默认路由</a></li>
+                <li><a href="/route/gateway">中继路由</a></li>
+              </ul>
+            </li>
+            <li><a href="/gateway">中继网关</a></li>
             <li><a href="/report">数据报表</a></li>
             <li><a href="/server">服务器状态</a></li>
           </ul>
@@ -42,7 +48,9 @@
         <ol class="breadcrumb">
           <li><a href="/cdr">Home</a></li>
           <li><a href="/route">Route</a></li>
+          <li><a href="/route">Default</a></li>
           <li class="active">Edit</li>
+          <li class="pull-right help"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <a href="#">帮助信息</a></li>
         </ol>
       </div>
       <div class="row">
@@ -67,27 +75,18 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">出局接口:</label>
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">中继网关:</label>
               <div class="col-xs-3 col-sm-3">
                 <select class="form-control" name="trunk">
-                  <option>eth1 (58.240.59.240)</option>
-                  <option>eth2 (58.240.59.250)</option>
-                  <option>深圳联通 (58.240.59.251)</option>
-                  <option>苏州移动 (58.240.58.100)</option>
+                  <option>移动SBC (58.240.59.240)</option>
+                  <option>联通500线 (58.240.59.250)</option>
+                  <option>苏州移动 (58.240.59.251)</option>
+                  <option>上海移动 (58.240.58.100)</option>
                   <option>苏州电信 (58.240.58.120)</option>
                 </select>
               </div>
               <div class="col-xs-3 col-sm-3">
-                <span class="help-block">呼出出局接口</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">目标网关:</label>
-              <div class="col-xs-3 col-sm-3">
-                <input type="text" class="form-control" placeholder="Enter description" name="description" />
-              </div>
-              <div class="col-xs-3 col-sm-3">
-                <span class="help-block">中继落地网关 IP 地址</span>
+                <span class="help-block">呼出中继网关</span>
               </div>
             </div>
             <div class="form-group">
@@ -114,6 +113,12 @@
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript">
+    $('li.dropdown').mouseover(function() {   
+      $(this).addClass('open');
+      }).mouseout(function() {
+        $(this).removeClass('open');
+    });
+      
     $("#save").click(function(){
       var index = layer.load(2, {shade: [0.7,'#fff'], time: 3000});
     });

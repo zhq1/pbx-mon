@@ -4,12 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Bit Cloud, Inc.">
-    <meta name="author" content="typefo">
     <link rel="icon" href="favicon.ico">
-    <title>Pbx Monitor System - Bit Cloud Inc</title>
+    <title>Pbx Monitor System</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="/css/non-responsive.css">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link type="text/css" rel="stylesheet" href="/css/gateway.css">
   </head>
   <body>
@@ -17,16 +15,22 @@
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand">
-            <img alt="Brand" src="/img/icon.png" width="34" style="margin-top:-8px" />
+            <img alt="Brand" src="/img/logo.png" width="34" style="margin-top:-8px" />
           </a>
           <a class="navbar-brand" href="/cdr">pbxMon</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="/cdr">通话记录</a></li>
-            <li><a href="/extension">分机管理</a></li>
-            <li><a href="/gateway">网关管理</a></li>
-            <li><a href="/route">路由管理</a></li>
+            <li><a href="/access">网关管理</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">路由管理</a>
+              <ul class="dropdown-menu">
+                <li><a href="/route/default">默认路由</a></li>
+                <li><a href="/route/gateway">中继路由</a></li>
+              </ul>
+            </li>
+            <li><a href="/gateway">中继网关</a></li>
             <li><a href="/report">数据报表</a></li>
             <li><a href="/server">服务器状态</a></li>
           </ul>
@@ -41,8 +45,9 @@
       <div class="row">
         <ol class="breadcrumb">
           <li><a href="/cdr">Home</a></li>
-          <li><a href="/gateway/status">Gateway</a></li>
+          <li><a href="/gateway">Gateway</a></li>
           <li class="active">Edit</li>
+          <li class="pull-right help"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <a href="#">帮助信息</a></li>
         </ol>
       </div>
       <div class="row">
@@ -51,7 +56,7 @@
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">网关名称:</label>
               <div class="col-xs-3 col-sm-3">
-                <input type="text" class="input-sm form-control" placeholder="Enter name" name="name" value="<?php if($data) echo $data['prefix']?>" required="required" />
+                <input type="text" class="form-control" placeholder="Enter name" name="name" value="<?php if($data) echo $data['prefix']?>" required="required" />
               </div>
               <div class="col-xs-2 col-sm-2">
                 <span class="help-block">呼出落地网关名称</span>
@@ -60,7 +65,7 @@
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">IP 地址:</label>
               <div class="col-xs-3 col-sm-3">
-                <input type="text" class="input-sm form-control" placeholder="Enter ip address" name="ip" value="<?php if($data) echo $data['ip'];?>" required="required" />
+                <input type="text" class="form-control" placeholder="Enter ip address" name="ip" value="<?php if($data) echo $data['ip'];?>" required="required" />
               </div>
               <div class="col-xs-3 col-sm-3">
                 <span class="help-block">网关服务器 IP 地址</span>
@@ -69,7 +74,7 @@
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">端 口:</label>
               <div class="col-xs-3 col-sm-3">
-                <input type="number" class="input-sm form-control" placeholder="Enter port" min="1" max="65535" name="port" value="<?php if($data) echo $data['port'];?>" required="required" />
+                <input type="number" class="form-control" placeholder="Enter port" min="1" max="65535" name="port" value="<?php if($data) echo $data['port'];?>" required="required" />
               </div>
               <div class="col-xs-3 col-sm-3">
                 <span class="help-block">网关服务器端口</span>
@@ -80,18 +85,18 @@
               <div class="col-xs-3 col-sm-3">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="call" checked="checked" /> 允许从此中继向外呼出
+                    <input type="checkbox" name="call" checked="checked" /> 允许中继网关呼入
                   </label>
                 </div>
               </div>
               <div class="col-xs-3 col-sm-3">
-                <span class="help-block">是否允许网关从此服务器呼出</span>
+                <span class="help-block">允许此中继网关呼入</span>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">备注信息:</label>
               <div class="col-xs-3 col-sm-3">
-                <input type="text" class="input-sm form-control" placeholder="Enter description" name="description" value="<?php if($data) echo $data['description'];?>" />
+                <input type="text" class="form-control" placeholder="Enter description" name="description" value="<?php if($data) echo $data['description'];?>" />
               </div>
               <div class="col-xs-3 col-sm-3">
                 <span class="help-block">网关相关备注说明</span>
@@ -99,8 +104,8 @@
             </div>
             <div class="form-group">
               <div class="col-sm-offset-4 col-xs-3 col-sm-3">
-                <button type="submit" id="save" class="btn btn-sm btn-success">保 存</button>
-                <a class="btn btn-default btn-sm" href="/gateway/status">取 消</a>
+                <button type="submit" id="save" class="btn btn-success">保 存</button>
+                <a class="btn btn-default" href="/gateway/status">取 消</a>
               </div>
             </div>
           </form>
@@ -112,6 +117,12 @@
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript">
+    $('li.dropdown').mouseover(function() {   
+      $(this).addClass('open');
+      }).mouseout(function() {
+        $(this).removeClass('open');
+    });
+      
     $("#save").click(function(){
       var index = layer.load(2, {shade: [0.7,'#fff'], time: 3000});
     });

@@ -7,7 +7,7 @@
     <meta name="description" content="Bit Cloud, Inc.">
     <meta name="author" content="typefo">
     <link rel="icon" href="favicon.ico">
-    <title>Pbx Monitor System - Bit Cloud Inc</title>
+    <title>Pbx Monitor System</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link type="text/css" rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
@@ -25,8 +25,15 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="/cdr">通话记录</a></li>
-            <li><a href="/interface">接口管理</a></li>
-            <li><a href="/route">路由管理</a></li>
+            <li><a href="/access">网关管理</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">路由管理</a>
+              <ul class="dropdown-menu">
+                <li><a href="/route/default">默认路由</a></li>
+                <li><a href="/route/gateway">中继路由</a></li>
+              </ul>
+            </li>
+            <li><a href="/gateway">中继网关</a></li>
             <li><a href="/report">数据报表</a></li>
             <li><a href="/server">服务器状态</a></li>
           </ul>
@@ -139,6 +146,12 @@
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript" src="/js/cdr.js"></script>
   <script type="text/javascript">
+    $('li.dropdown').mouseover(function() {   
+      $(this).addClass('open');
+      }).mouseout(function() {
+        $(this).removeClass('open');
+    });
+
     // datetimepicker
     $('#start').datetimepicker({
       format: 'yyyy-mm-dd hh:ii:ss',

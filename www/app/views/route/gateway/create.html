@@ -10,7 +10,7 @@
     <title>Pbx Monitor System</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css">
-    <link type="text/css" rel="stylesheet" href="/css/server.css">
+    <link type="text/css" rel="stylesheet" href="/css/route.css">
   </head>
   <body>
     <nav class="navbar navbar-default navbar-static-top">
@@ -47,45 +47,67 @@
       <div class="row">
         <ol class="breadcrumb">
           <li><a href="/cdr">Home</a></li>
-          <li><a href="#">Server</a></li>
-          <li class="active">Status</li>
+          <li><a href="/route">Route</a></li>
+          <li class="active">Gateway</li>
+          <li class="active">Create</li>
           <li class="pull-right help"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <a href="#">帮助信息</a></li>
         </ol>
       </div>
       <div class="row">
         <div class="container main">
-          <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <b>运行时间:</b></div>
-            <div class="col-xs-10 col-sm-10 col-md-10"><?php echo $status['uptime'];?></div>
-          </div>
-          <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span> <b>CPU型号:</b></div>
-            <div class="col-xs-10 col-sm-10 col-md-10"><?php echo $status['cpuinfo'];?></div>
-          </div>
-          <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-expand" aria-hidden="true"></span> <b>操作系统:</b></div>
-            <div class="col-xs-10 col-sm-10 col-md-10"><?php echo $status['uname'];?></div>
-          </div>
-          <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-sound-dolby" aria-hidden="true"></span> <b>内存使用:</b></div>
-            <div class="col-xs-9 col-sm-9 col-md-9">
-              <div class="progress">
-                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $status['memory']['percentage'];?>%;">
-                  <?php echo $status['memory']['percentage'];?>%
-                </div>
+          <form class="form-horizontal" action="/route/default/create" method="post">
+            <div class="form-group">
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">路由规则:</label>
+              <div class="col-xs-3 col-sm-3">
+                <input type="text" class="rule form-control" name="rexp" placeholder="Enter regular expression" required="required">
+              </div>
+              <div class="col-xs-3 col-sm-3">
+                <span class="help-block">路由匹配规则，正则表达式</span>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-hdd" aria-hidden="true"></span> <b>磁盘用量:</b></div>
-            <div class="col-xs-9 col-sm-9 col-md-9">
-              <div class="progress">
-                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo 100 - $status['hard']['percentage'];?>%;">
-                  <?php echo 100 - $status['hard']['percentage'];?>%
-                </div>
+            <div class="form-group">
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">匹配类型:</label>
+              <div class="col-xs-3 col-sm-3">
+                <select class="form-control" name="type">
+                  <option>被叫号码</option>
+                  <option>主叫号码</option>
+                </select>
+              </div>
+              <div class="col-xs-3 col-sm-3">
+                <span class="help-block">匹配对象，主叫或者被叫</span>
               </div>
             </div>
-          </div>
+            <div class="form-group">
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">目标网关:</label>
+              <div class="col-xs-3 col-sm-3">
+                <select class="form-control" name="trunk">
+                  <option>vos2009 (120.240.59.240)</option>
+                  <option>vos3000 (112.240.59.250)</option>
+                  <option>shanghai (112.240.59.251)</option>
+                  <option>suzhou (61.240.58.100)</option>
+                  <option>suhzou (58.240.58.125)</option>
+                </select>
+              </div>
+              <div class="col-xs-3 col-sm-3">
+                <span class="help-block">呼入目标网关</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">备注信息:</label>
+              <div class="col-xs-3 col-sm-3">
+                <input type="text" class="form-control" name="description" placeholder="Enter description" />
+              </div>
+              <div class="col-xs-3 col-sm-3">
+                <span class="help-block">路由备注说明</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-offset-2 col-sm-offset-4 col-xs-3 col-sm-3">
+                <button type="submit" id="submit" class="btn btn-success">创 建</button>
+                <a class="btn btn-default" href="/route">取 消</a>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -98,6 +120,10 @@
       $(this).addClass('open');
       }).mouseout(function() {
         $(this).removeClass('open');
+    });
+      
+    $("#submit").click(function(){
+      var index = layer.load(2, {shade: [0.7,'#fff'], time: 3000});
     });
   </script>
 </html>
