@@ -7,7 +7,7 @@
     <meta name="description" content="Bit Cloud, Inc.">
     <meta name="author" content="typefo">
     <link rel="icon" href="favicon.ico">
-    <title>Pbx Monitor System</title>
+    <title>pbxMon System</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link type="text/css" rel="stylesheet" href="/css/interface.css">
@@ -24,7 +24,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="/cdr">通话记录</a></li>
-            <li><a href="/access">网关管理</a></li>
+            <li><a href="/gateway">网关管理</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">路由管理</a>
               <ul class="dropdown-menu">
@@ -32,7 +32,6 @@
                 <li><a href="/route/gateway">中继路由</a></li>
               </ul>
             </li>
-            <li><a href="/gateway">中继网关</a></li>
             <li><a href="/interface">接口管理</a></li>
             <li><a href="/report">数据报表</a></li>
             <li><a href="/server">服务器状态</a></li>
@@ -58,11 +57,11 @@
           <div class="row">
             <table class="table table-hover table-condensed">
               <thead>
-                <tr><th>#</th><th>接口名称</th><th>IP 地址</th><th>端 口</th><th  class="hidden-xs">呼入编码</th><th  class="hidden-xs">呼出编码</th><th  class="hidden-xs">备注信息</th><th  class="hidden-xs">删 除</th><th class="hidden-xs">编 辑</th></tr>
+                <tr><th>#</th><th>接口名称</th><th>IP 地址</th><th>端 口</th><th>呼入编码</th><th>呼出编码</th><th>备注信息</th><th>删 除</th><th>编 辑</th></tr>
               </thead>
               <tbody>
-              <tr><td><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></td><td>internal</td><td>112.2.24.88</td><td>5060</td><td class="hidden-xs">G729,PCMU,PCMA</td><td class="hidden-xs">G729,PCMU,PCMA</td><td class="hidden-xs">没有任何备注信息</td><td class="hidden-xs"><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td  class="hidden-xs"><a class="btn btn-default btn-xs" href="/gateway/edit?id=',$obj['id'],'"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-              <tr><td><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></td><td>external</td><td>112.2.24.88</td><td>5060</td><td  class="hidden-xs">G729,PCMU,PCMA</td><td  class="hidden-xs">G729,PCMU,PCMA</td><td class="hidden-xs">没有任何备注信息</td><td class="hidden-xs"><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td  class="hidden-xs"><a class="btn btn-default btn-xs" href="/gateway/edit?id=',$obj['id'],'"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+              <tr><td><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></td><td>internal</td><td>112.2.24.88</td><td>5060</td><td>G729,PCMU,PCMA</td><td>G729,PCMU,PCMA</td><td>没有任何备注信息</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/gateway/edit?id=',$obj['id'],'"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+              <tr><td><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></td><td>external</td><td>112.2.24.88</td><td>5060</td><td>G729,PCMU,PCMA</td><td>G729,PCMU,PCMA</td><td class="hidden-xs">没有任何备注信息</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/gateway/edit?id=',$obj['id'],'"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
               </tbody>
             </table>
           </div>
