@@ -10,7 +10,7 @@
     <title>Pbx Monitor System</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css">
-    <link type="text/css" rel="stylesheet" href="/css/server.css">
+    <link type="text/css" rel="stylesheet" href="/css/interface.css">
   </head>
   <body>
     <nav class="navbar navbar-default navbar-static-top">
@@ -48,44 +48,23 @@
       <div class="row">
         <ol class="breadcrumb">
           <li><a href="/cdr">Home</a></li>
-          <li><a href="#">Server</a></li>
-          <li class="active">Status</li>
-          <li class="pull-right help"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <a href="#">帮助信息</a></li>
+          <li><a href="#">Interface</a></li>
+          <li class="active">Data</li>
+          <li class="pull-right add"><a class="btn btn-success btn-xs" href="/gateway/create"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 创 建</a></li>
         </ol>
       </div>
       <div class="row">
         <div class="container main">
           <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <b>运行时间:</b></div>
-            <div class="col-xs-10 col-sm-10 col-md-10"><?php echo $status['uptime'];?></div>
-          </div>
-          <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span> <b>CPU型号:</b></div>
-            <div class="col-xs-10 col-sm-10 col-md-10"><?php echo $status['cpuinfo'];?></div>
-          </div>
-          <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-expand" aria-hidden="true"></span> <b>操作系统:</b></div>
-            <div class="col-xs-10 col-sm-10 col-md-10"><?php echo $status['uname'];?></div>
-          </div>
-          <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-sound-dolby" aria-hidden="true"></span> <b>内存使用:</b></div>
-            <div class="col-xs-9 col-sm-9 col-md-9">
-              <div class="progress">
-                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $status['memory']['percentage'];?>%;">
-                  <?php echo $status['memory']['percentage'];?>%
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-hdd" aria-hidden="true"></span> <b>磁盘用量:</b></div>
-            <div class="col-xs-9 col-sm-9 col-md-9">
-              <div class="progress">
-                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo 100 - $status['hard']['percentage'];?>%;">
-                  <?php echo 100 - $status['hard']['percentage'];?>%
-                </div>
-              </div>
-            </div>
+            <table class="table table-hover table-condensed">
+              <thead>
+                <tr><th>#</th><th>接口名称</th><th>IP 地址</th><th>端 口</th><th  class="hidden-xs">呼入编码</th><th  class="hidden-xs">呼出编码</th><th  class="hidden-xs">备注信息</th><th  class="hidden-xs">删 除</th><th class="hidden-xs">编 辑</th></tr>
+              </thead>
+              <tbody>
+              <tr><td><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></td><td>internal</td><td>112.2.24.88</td><td>5060</td><td class="hidden-xs">G729,PCMU,PCMA</td><td class="hidden-xs">G729,PCMU,PCMA</td><td class="hidden-xs">没有任何备注信息</td><td class="hidden-xs"><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td  class="hidden-xs"><a class="btn btn-default btn-xs" href="/gateway/edit?id=',$obj['id'],'"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+              <tr><td><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></td><td>external</td><td>112.2.24.88</td><td>5060</td><td  class="hidden-xs">G729,PCMU,PCMA</td><td  class="hidden-xs">G729,PCMU,PCMA</td><td class="hidden-xs">没有任何备注信息</td><td class="hidden-xs"><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td  class="hidden-xs"><a class="btn btn-default btn-xs" href="/gateway/edit?id=',$obj['id'],'"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -100,5 +79,19 @@
       }).mouseout(function() {
         $(this).removeClass('open');
     });
+
+    function remove(id) {
+      layer.confirm('亲，确定要删除？', {
+        btn: ['是','否']
+      }, function(){
+        var url = '/gateway/delete?id=' + id;
+        $.get(url, function(){
+          layer.msg('删除成功!', {icon: 1, time: 1000});
+            setTimeout(function() {
+              window.location.reload();
+            }, 1000);
+          });
+      });
+    }
   </script>
 </html>
