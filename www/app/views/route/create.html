@@ -25,13 +25,7 @@
           <ul class="nav navbar-nav">
             <li><a href="/cdr">通话记录</a></li>
             <li><a href="/access">网关管理</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">路由管理</a>
-              <ul class="dropdown-menu">
-                <li><a href="/route/default">默认路由</a></li>
-                <li><a href="/route/gateway">中继路由</a></li>
-              </ul>
-            </li>
+            <li><a href="/route">路由管理</a></li>
             <li><a href="/gateway">中继网关</a></li>
             <li><a href="/interface">接口管理</a></li>
             <li><a href="/report">数据报表</a></li>
@@ -49,51 +43,54 @@
         <ol class="breadcrumb">
           <li><a href="/cdr">Home</a></li>
           <li><a href="/route">Route</a></li>
-          <li><a href="/route">Gateway</a></li>
-          <li class="active">Edit</li>
+          <li class="active">Default</li>
+          <li class="active">Create</li>
           <li class="pull-right help"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <a href="#">帮助信息</a></li>
         </ol>
       </div>
       <div class="row">
         <div class="container main">
-          <form class="form-horizontal" action="/route/edit?id=<?php if($data) echo $data['id'];?>" method="post">
-            <div class="form-group">
-              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">路由编号:</label>
-              <div class="col-xs-3 col-sm-3">
-                <input type="text" class="form-control" name="name" value="1" disabled="disabled" />
-              </div>
-              <div class="col-xs-2 col-sm-2">
-                <span class="help-block">路由匹配规则编号</span>
-              </div>
-            </div>
+          <form class="form-horizontal" action="/route/default/create" method="post">
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">路由规则:</label>
               <div class="col-xs-3 col-sm-3">
-                <input type="text" class="rule form-control" placeholder="Enter regular expression" name="rexp" value="^86(.*)" required="required" />
+                <input type="text" class="rule form-control" name="rexp" placeholder="Enter regular expression" required="required">
               </div>
               <div class="col-xs-3 col-sm-3">
                 <span class="help-block">路由匹配规则，正则表达式</span>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">目标网关:</label>
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">匹配类型:</label>
               <div class="col-xs-3 col-sm-3">
-                <select class="form-control" name="trunk">
-                  <option>vos2009 (120.240.59.240)</option>
-                  <option>vos3000 (112.240.59.250)</option>
-                  <option>shanghai (112.240.59.251)</option>
-                  <option>suzhou (61.240.58.100)</option>
-                  <option>suhzou (58.240.58.125)</option>
+                <select class="form-control" name="type">
+                  <option>被叫号码</option>
+                  <option>主叫号码</option>
                 </select>
               </div>
               <div class="col-xs-3 col-sm-3">
-                <span class="help-block">呼入目标网关</span>
+                <span class="help-block">匹配对象，主叫或者被叫</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">中继网关:</label>
+              <div class="col-xs-3 col-sm-3">
+                <select class="form-control" name="trunk">
+                  <option>移动SBC (58.240.59.240)</option>
+                  <option>联通500线 (58.240.59.250)</option>
+                  <option>苏州移动 (58.240.59.251)</option>
+                  <option>上海移动 (58.240.58.100)</option>
+                  <option>苏州电信 (58.240.58.120)</option>
+                </select>
+              </div>
+              <div class="col-xs-3 col-sm-3">
+                <span class="help-block">呼出中继网关</span>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">备注信息:</label>
               <div class="col-xs-3 col-sm-3">
-                <input type="text" class="form-control" placeholder="Enter description" name="description" value="no description" />
+                <input type="text" class="form-control" name="description" placeholder="Enter description" />
               </div>
               <div class="col-xs-3 col-sm-3">
                 <span class="help-block">路由备注说明</span>
@@ -101,7 +98,7 @@
             </div>
             <div class="form-group">
               <div class="col-xs-offset-2 col-sm-offset-4 col-xs-3 col-sm-3">
-                <button type="submit" id="save" class="btn btn-success">保 存</button>
+                <button type="submit" id="submit" class="btn btn-success">创 建</button>
                 <a class="btn btn-default" href="/route">取 消</a>
               </div>
             </div>
@@ -114,13 +111,7 @@
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript">
-    $('li.dropdown').mouseover(function() {   
-      $(this).addClass('open');
-      }).mouseout(function() {
-        $(this).removeClass('open');
-    });
-      
-    $("#save").click(function(){
+    $("#submit").click(function(){
       var index = layer.load(2, {shade: [0.7,'#fff'], time: 3000});
     });
   </script>

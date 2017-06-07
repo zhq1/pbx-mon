@@ -25,13 +25,7 @@
           <ul class="nav navbar-nav">
             <li><a href="/cdr">通话记录</a></li>
             <li><a href="/gateway">网关管理</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">路由管理</a>
-              <ul class="dropdown-menu">
-                <li><a href="/route/default">默认路由</a></li>
-                <li><a href="/route/gateway">中继路由</a></li>
-              </ul>
-            </li>
+            <li><a href="/route">路由管理</a></li>
             <li><a href="/interface">接口管理</a></li>
             <li><a href="/report">数据报表</a></li>
             <li><a href="/server">服务器状态</a></li>
@@ -93,11 +87,4 @@
   <script type="text/javascript" src="/js/jquery.min.js"></script>
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/layer.js"></script>
-  <script type="text/javascript">
-    $('li.dropdown').mouseover(function() {   
-      $(this).addClass('open');
-      }).mouseout(function() {
-        $(this).removeClass('open');
-    });
-  </script>
 </html>
