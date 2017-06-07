@@ -5,6 +5,14 @@ body {
     font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
 
+.tab-left {
+    width: 60px;
+}
+
+.tab-right {
+    width: 100px;
+}
+
 .navbar .navbar-nav li a {
     font-size: 16px;
 }
@@ -14,7 +22,7 @@ body {
 }
 
 .breadcrumb .add {
-    margin-right: 20px;
+    margin-right: 8px;
 }
 
 .breadcrumb .pull-right:before {
@@ -37,10 +45,6 @@ body {
     background-color: #ce514e;
 }
 
-.table {
-    margin-top: 10px;
-}
-
 table th, table tr td {
     text-align: center;
 }
@@ -48,14 +52,6 @@ table th, table tr td {
 .table>thead>tr>th, .table>tbody>tr>td {
     border-top: 1px solid #fafafa;
     border-bottom: 1px solid #fafafa;
-}
-
-.main {
-    margin-top: -5px;
-}
-
-.table {
-    margin-top: 10px;
 }
 
 form {
