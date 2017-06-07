@@ -16,14 +16,13 @@ CREATE TABLE `cdr` (
        `duration` int not null,
        `src_ip` int not null,
        `dst_ip` int not null,
-       `rpf` varchar(8) not null,
        `file` varchar(128) not null,
        `create_time` datetime not null
 );
 
 -- pbxmon account table
 CREATE TABLE `account` (
-       `username` varchar(64) not null,
+       `username` varchar(32) not null,
        `password` varchar(64) not null,
        `email` varchar(64) not null,
        `last_ip` varchar(64) not null,
@@ -37,8 +36,8 @@ INSERT INTO `account` VALUES('admin', '94a2282805744c634a13b65e6b44cd5b82d66bff'
 -- pbxmon gateway table
 CREATE TABLE `gateway` (
        `id` int primary key auto_increment not null,
-       `name` varchar(64) not null,
-       `ip` varchar(64) not null,
+       `name` varchar(32) not null,
+       `ip` varchar(32) not null,
        `port` int not null,
        `call` int not null,
        `route` int not null,
@@ -48,27 +47,27 @@ CREATE TABLE `gateway` (
 -- pbxmon route table
 CREATE TABLE `route` (
        `id` int primary key auto_increment not null,
-       `name` varchar(64) not null,
+       `name` varchar(32) not null,
        `type` int not null,
        `description` varchar(64) not null
 );
 
--- pbxmon route table
+-- pbxmon dialplan table
 CREATE TABLE `dialplan` (
        `id` int primary key not null,
        `rid` int not null,
        `rexp` varchar(64) not null,
        `type` int not null,
-       `sofia` varchar(64) not null,
-       `server` varchar(64) not null,
+       `sofia` varchar(32) not null,
+       `server` varchar(32) not null,
        `description` varchar(64) not null
 );
 
--- pbxmon gateway table
+-- pbxmon interface table
 CREATE TABLE `interface` (
        `id` int primary key auto_increment not null,
-       `name` varchar(64) not null,
-       `ip` varchar(64) not null,
+       `name` varchar(32) not null,
+       `ip` varchar(32) not null,
        `port` int not null,
        `in_code` varchar(64) not null,
        `out_code` varchar(64) not null,
