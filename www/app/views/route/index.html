@@ -31,8 +31,8 @@
             <li><a href="/server">服务器状态</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/user/setting"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> 账号设置</a></li>
-            <li><a href="/logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> 退 出</a></li>
+            <li><a href="/user/setting"><span class="glyphicon glyphicon-cog"></span> 账号设置</a></li>
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> 退 出</a></li>
           </ul>
         </div>
       </div>
@@ -43,17 +43,18 @@
           <li><a href="/cdr">Home</a></li>
           <li><a href="#">Route</a></li>
           <li class="active">Data</li>
-          <li class="pull-right add"><a class="btn btn-success btn-xs" href="/route/create"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 创 建</a></li>
+          <li class="pull-right add"><button class="btn btn-success btn-xs" onclick="show()"><span class="glyphicon glyphicon-plus"></span> 创 建</button></li>
         </ol>
       </div>
       <div class="row">
         <table class="table table-hover table-condensed">
-        	<thead><tr><th class="tab-left">#</th><th>路由名称</th><th>路由类型</th><th>路由数量</th><th>备注信息</th><th>同步操作</th><th>删 除</th><th class="tab-right">编 辑</th></tr></thead>
+        	<thead><tr><th class="tab-left">#</th><th>路由名称</th><th>路由类型</th><th>路由数量</th><th>备注信息</th><th>删 除</th><th class="tab-right">编 辑</th></tr></thead>
           <tbody>
-            <tr><td><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></td><td><a href="#">default</a></td><td>普通路由</td><td>6</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 同 步</a></td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></td><td><a href="#">internal</a></td><td>普通路由</td><td>6</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 同 步</a></td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></td><td><a href="#">public</a></td><td>普通路由</td><td>6</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 同 步</a></td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></td><td><a href="#">external</a></td><td>高级路由</td><td>6</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 同 步</a></td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td><span class="glyphicon glyphicon-list-alt"></span></td><td><a href="dialplan.html">default</a></td><td>普通路由</td><td>6</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash"></span> 删 除</a></td><td><button class="btn btn-default btn-xs" onclick="change()"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>
+            <tr><td><span class="glyphicon glyphicon-list-alt"></span></td><td><a href="dialplan.html">public</a></td><td>普通路由</td><td>12</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash"></span> 删 除</a></td><td><button class="btn btn-default btn-xs" onclick="change()"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>
+            <tr><td><span class="glyphicon glyphicon-list-alt"></span></td><td><a href="dialplan.html">record</a></td><td>普通路由</td><td>8</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash"></span> 删 除</a></td><td><button class="btn btn-default btn-xs" onclick="change()"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>
+            <tr><td><span class="glyphicon glyphicon-list-alt"></span></td><td><a href="dialplan.html">support</a></td><td>高级路由</td><td>6</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash"></span> 删 除</a></td><td><button class="btn btn-default btn-xs" onclick="change()"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>
+            <tr><td><span class="glyphicon glyphicon-list-alt"></span></td><td><a href="dialplan.html">queue</a></td><td>高级路由</td><td>3</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash"></span> 删 除</a></td><td><button class="btn btn-default btn-xs" onclick="change()"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>
           </tbody>
         </table>
         </div>
@@ -62,4 +63,81 @@
   <script type="text/javascript" src="/js/jquery.min.js"></script>
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/layer.js"></script>
+  <script type="text/javascript">
+  function show() {
+    var templete = '<form class="form-horizontal" style="width:420px">'+
+  '<div class="form-group">'+
+    '<label class="col-sm-3 control-label">路由名称</label>'+
+    '<div class="col-sm-8">'+
+      '<input type="text" class="form-control" placeholder="Enter name">'+
+    '</div>'+
+  '</div>'+
+  '<div class="form-group">'+
+    '<label class="col-sm-3 control-label">路由类型</label>'+
+    '<div class="col-sm-8">'+
+      '<select class="form-control">'+
+          '<option>普通路由</option>'+
+          '<option>高级路由</option>'+
+      '</select>'+
+    '</div>'+
+  '</div>'+
+  '<div class="form-group">'+
+    '<label class="col-sm-3 control-label">备注信息</label>'+
+    '<div class="col-sm-8">'+
+      '<input type="text" class="form-control" placeholder="Enter description">'+
+    '</div>'+
+  '</div>'+
+  '<div class="form-group">'+
+    '<div class="col-sm-offset-3 col-sm-8">'+
+      '<button type="submit" class="btn btn-success">创 建</button><button class="btn btn-default">取 消</button>'+
+    '</div>'+
+  '</div>'+
+'</form>';
+
+    layer.open({
+      type: 1,
+      title: '创建路由表',
+      area: ['435px', '265px'],
+      content: templete
+    });
+  }
+
+  function change() {
+    var templete = '<form class="form-horizontal" style="width:420px">'+
+  '<div class="form-group">'+
+    '<label class="col-sm-3 control-label">路由名称</label>'+
+    '<div class="col-sm-8">'+
+      '<input type="text" class="form-control" value="default" placeholder="Enter name">'+
+    '</div>'+
+  '</div>'+
+  '<div class="form-group">'+
+    '<label class="col-sm-3 control-label">路由类型</label>'+
+    '<div class="col-sm-8">'+
+      '<select class="form-control">'+
+          '<option>普通路由</option>'+
+          '<option>高级路由</option>'+
+      '</select>'+
+    '</div>'+
+  '</div>'+
+  '<div class="form-group">'+
+    '<label class="col-sm-3 control-label">备注信息</label>'+
+    '<div class="col-sm-8">'+
+      '<input type="text" class="form-control" value="no description" placeholder="Enter description">'+
+    '</div>'+
+  '</div>'+
+  '<div class="form-group">'+
+    '<div class="col-sm-offset-3 col-sm-8">'+
+      '<button type="submit" class="btn btn-success">保 存</button><button class="btn btn-default">取 消</button>'+
+    '</div>'+
+  '</div>'+
+'</form>';
+
+    layer.open({
+      type: 1,
+      title: '编辑路由表',
+      area: ['435px', '265px'],
+      content: templete
+    });
+  }
+  </script>
 </html>
