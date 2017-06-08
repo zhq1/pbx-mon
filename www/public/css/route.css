@@ -13,6 +13,14 @@ body {
     content: "";
 }
 
+.tab-left {
+    width: 70px;
+}
+
+.tab-right {
+    width: 100px;
+}
+
 .badge-default {
     background-color: #999999;
 }
@@ -29,12 +37,8 @@ body {
     background-color: #ce514e;
 }
 
-.main {
-    margin-top: -5px;
-}
-
 .breadcrumb .add {
-    margin-right: 20px;
+    margin-right: 8px;
 }
 
 table th, table tr td {

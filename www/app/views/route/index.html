@@ -19,7 +19,7 @@
           <a class="navbar-brand">
             <img alt="Brand" src="/img/logo.png" width="34" style="margin-top:-8px" />
           </a>
-          <a class="navbar-brand" href="/cdr">pbxMon</a>
+          <a class="navbar-brand">pbxMon</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -47,14 +47,13 @@
         </ol>
       </div>
       <div class="row">
-
         <table class="table table-hover table-condensed">
-        	<thead><tr><th>#</th><th>路由名称</th><th>通话录音</th><th>备注信息</th><th>删 除</th><th>编 辑</th></tr></thead>
+        	<thead><tr><th class="tab-left">#</th><th>路由名称</th><th>路由类型</th><th>路由数量</th><th>备注信息</th><th>同步操作</th><th>删 除</th><th class="tab-right">编 辑</th></tr></thead>
           <tbody>
-            <tr><td><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></td><td>default</td><td>被叫号码</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></td><td>internal</td><td>被叫号码</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></td><td>public</td><td>被叫号码</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-            <tr><td><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></td><td>external</td><td>主叫号码</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></td><td><a href="#">default</a></td><td>普通路由</td><td>6</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 同 步</a></td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></td><td><a href="#">internal</a></td><td>普通路由</td><td>6</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 同 步</a></td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></td><td><a href="#">public</a></td><td>普通路由</td><td>6</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 同 步</a></td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+            <tr><td><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></td><td><a href="#">external</a></td><td>高级路由</td><td>6</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 同 步</a></td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove(1)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/route/edit?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
           </tbody>
         </table>
         </div>
