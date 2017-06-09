@@ -12,9 +12,11 @@
 
 #### 功能与特性
 
+- 支持 G729 转码
 - 实时录音查询系统
 - 支持多 sofia 接口接入
 - 支持网关独立拨号路由表
+- 网关数据统计报表查询
 - 采用 restful 接口存储话单
 - 采用 mod_json_cdr 模块推送话单
 
@@ -25,7 +27,7 @@ cdr             通话记录 API 接口，安装位置 /var/cdr
 www             后台 Web 管理系统，安装位置 /var/www
 config          Nginx、PHP 、MySQL 和 FreeSWITCH 的配置文件
 script          MySQL 数据库表 SQL 文件
-package         Yaf 框架以及相关软件包
+package         Yaf 框架以及 G729 模块相关软件包
 ```
 
 #### 默认 Web 后台账号/密码:
