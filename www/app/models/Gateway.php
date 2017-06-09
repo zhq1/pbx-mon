@@ -189,26 +189,40 @@ class GatewayModel {
         $result = $this->getAll();
         if (count($result) > 0) {
             $file = $this->config->fs->path . '/conf/dialplan/default.xml';
-            if (is_writable($file)) {
-                $xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
-                $xml .= '<include>' . "\n";
-                $xml .= '  <context name="' . $route['name'] . '">' . "\n";
-                $xml .= '    <extension name="unloop">' . "\n";
-                $xml .= '      <condition field="${unroll_loops}" expression="^true$"/>' . "\n";
-                $xml .= '      <condition field="${sip_looped_call}" expression="^true$">' . "\n";
-                $xml .= '        <action application="deflect" data="${destination_number}"/>' . "\n";
+            $xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
+            $xml .= '<include>' . "\n";
+            $xml .= '  <context name="' . $route['name'] . '">' . "\n";
+            $xml .= '    <extension name="unloop">' . "\n";
+            $xml .= '      <condition field="${unroll_loops}" expression="^true$"/>' . "\n";
+            $xml .= '      <condition field="${sip_looped_call}" expression="^true$">' . "\n";
+            $xml .= '        <action application="deflect" data="${destination_number}"/>' . "\n";
+            $xml .= '      </condition>' . "\n";
+            $xml .= '    </extension>' . "\n\n";
+
+            foreach ($result as $obj) {
+                $xml .= '    <extension name="' . $obj['ip'] . '">' . "\n";
+                $xml .= '      <condition field="network_addr" expression="^' . $obj['ip'] . '$">' . "\n";
+                $xml .= '        <action application="transfer" data="${destination_number} XML ' . $obj['route'] . '"/>'
                 $xml .= '      </condition>' . "\n";
                 $xml .= '    </extension>' . "\n\n";
+            }
 
-                foreach ($result as $obj) {
-                    $xml .= '    <extension name="' . $obj['ip'] . '">' . "\n";
-                    $xml .= '      <condition field="network_addr" expression="^' . $obj['ip'] . '$">' . "\n";
-                    $xml .= '        <action application="transfer" data="${destination_number} XML ' . $obj['route'] . '"/>'
-                    $xml .= '      </condition>' . "\n";
-                    $xml .= '    </extension>' . "\n";
-                }
+            $xml .= '  </context>' . "\n";
+            $xml .= '</include>' . "\n";
+
+            if (!is_writable($file)) {
+                error_log('Cannot write file ' . $file . ' permission denied');
+            }
+
+            $fp = fopen($file, "w");
+            if ($fp) {
+                fwrite($fp, $xml);
+                fclose($fp);
+                return true;
             }
         }
+
+        return false;
     }
 
     public function reloadXml() {
