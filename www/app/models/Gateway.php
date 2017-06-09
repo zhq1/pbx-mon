@@ -68,13 +68,14 @@ class GatewayModel {
     public function delete($id = null) {
         $id = intval($id);
         $result = $this->get($id);
-        if ($id > 0 && $this->db && $this->isExist($id)){
+
+        if (count($result) > 0) {
             $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id;
             $this->db->query($sql);
 
-            if ($result && $result['call'] == 1) {
-            	$this->regenAcl();
-            	$this->reloadAcl();
+            if ($result['call'] == 1) {
+                $this->regenAcl();
+                $this->reloadAcl();
             }
             return true;
         }
