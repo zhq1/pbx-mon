@@ -67,9 +67,15 @@ class GatewayModel {
 
     public function delete($id = null) {
         $id = intval($id);
+        $result = $this->get($id);
         if ($id > 0 && $this->db && $this->isExist($id)){
             $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id;
             $this->db->query($sql);
+
+            if ($result && $result['call'] == 1) {
+            	$this->regenAcl();
+            	$this->reloadAcl();
+            }
             return true;
         }
 
@@ -155,47 +161,68 @@ class GatewayModel {
     }
     
     public function regenAcl() {
-        if ($this->db) {
-            $result = $this->getAll();
-            if (count($result) > 0) {
-                $file = $this->config->fs->path . '/conf/acl.xml';
-                if (is_writable($file)) {
-                    $xml = '<list name="local" default="deny">' . "\n";
-                    foreach ($result as $obj) {
-                        $xml .= '  <node type="allow" cidr="' . $obj['ip'] . '/32"/>' . "\n";
-                    }
-                    $xml .= '</list>' . "\n";
+        $result = $this->getAll();
 
-                
-                    $fp = fopen($file, "w");
-                    if ($fp) {
-                        fwrite($fp, $xml);
-                        fclose($fp);
-                        return true;
-                    }
-                }
-
-                error_log('Cannot write file ' . $file . ' permission denied');
+        $file = $this->config->fs->path . '/conf/acl.xml';
+        if (count($result) > 0 && is_writable($file)) {
+            $xml = '<list name="local" default="deny">' . "\n";
+            foreach ($result as $obj) {
+                $xml .= $obj['call'] == 1 ? '  <node type="allow" cidr="' . $obj['ip'] . '/32"/>' . "\n" : '';
             }
+            $xml .= '</list>' . "\n";
+
+            $fp = fopen($file, "w");
+            if ($fp) {
+                fwrite($fp, $xml);
+                fclose($fp);
+                return true;
+            }
+
+            error_log('Cannot write file ' . $file . ' permission denied');
         }
 
         return false;
     }
 
-    public function reloadAcl() {
-        if ($this->eslCmd('bgapi reloadacl')) {
+    public function regenXml() {
+        $result = $this->getAll();
+        if (count($result) > 0) {
+            $file = $this->config->fs->path . '/conf/dialplan/default.xml';
+            if (is_writable($file)) {
+                $xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
+                $xml .= '<include>' . "\n";
+                $xml .= '  <context name="' . $route['name'] . '">' . "\n";
+                $xml .= '    <extension name="unloop">' . "\n";
+                $xml .= '      <condition field="${unroll_loops}" expression="^true$"/>' . "\n";
+                $xml .= '      <condition field="${sip_looped_call}" expression="^true$">' . "\n";
+                $xml .= '        <action application="deflect" data="${destination_number}"/>' . "\n";
+                $xml .= '      </condition>' . "\n";
+                $xml .= '    </extension>' . "\n\n";
+
+                foreach ($result as $obj) {
+                    $xml .= '    <extension name="' . $obj['ip'] . '">' . "\n";
+                    $xml .= '      <condition field="network_addr" expression="^' . $obj['ip'] . '$">' . "\n";
+                    $xml .= '        <action application="transfer" data="${destination_number} XML ' . $obj['route'] . '"/>'
+                    $xml .= '      </condition>' . "\n";
+                    $xml .= '    </extension>' . "\n";
+                }
+            }
+        }
+    }
+
+    public function reloadXml() {
+        if ($this->eslCmd('bgapi reloadxml')) {
             return true;
         }
-
         return false;
     }
 
     public function eslCmd($cmd = null) {
         if ($cmd && is_string($cmd)) {
-            $config = Yaf\Registry::get('config');
+            $config = $this->config->esl;
 
             // conection to freeswitch
-            $esl = new ESLconnection($config->esl->host, $config->esl->port, $config->esl->password);
+            $esl = new ESLconnection($config->host, $config->port, $config->password);
             
             if ($esl) {
                 // exec reloadacl command
