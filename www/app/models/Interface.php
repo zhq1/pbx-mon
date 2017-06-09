@@ -70,14 +70,11 @@ class InterfaceModel {
 
     public function delete($id = null) {
         $id = intval($id);
-
-        if ($this->isExist($id)){
-            $result = $this->get($id);
-            if (count($result) > 0) {
-                $file = $this->config->fs->path . '/conf/sofia/' . $result['name'] . '.xml';
-                if (file_exists($file)) {
-                    unlink($file);
-                }
+        $result = $this->get($id);
+        if (count($result) > 0){
+            $file = $this->config->fs->path . '/conf/sofia/' . $result['name'] . '.xml';
+            if (file_exists($file)) {
+                unlink($file);
             }
 
             $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id;

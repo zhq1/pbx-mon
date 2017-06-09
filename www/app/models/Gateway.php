@@ -164,13 +164,18 @@ class GatewayModel {
     public function regenAcl() {
         $result = $this->getAll();
 
-        $file = $this->config->fs->path . '/conf/acl.xml';
-        if (count($result) > 0 && is_writable($file)) {
+        if (count($result) > 0) {
+            $file = $this->config->fs->path . '/conf/acl.xml';
             $xml = '<list name="local" default="deny">' . "\n";
             foreach ($result as $obj) {
                 $xml .= $obj['call'] == 1 ? '  <node type="allow" cidr="' . $obj['ip'] . '/32"/>' . "\n" : '';
             }
             $xml .= '</list>' . "\n";
+
+            if (!is_writable($file)) {
+                error_log('Cannot write file ' . $file . ' permission denied');
+                return false;
+            }
 
             $fp = fopen($file, "w");
             if ($fp) {
@@ -178,8 +183,6 @@ class GatewayModel {
                 fclose($fp);
                 return true;
             }
-
-            error_log('Cannot write file ' . $file . ' permission denied');
         }
 
         return false;
@@ -212,6 +215,7 @@ class GatewayModel {
 
             if (!is_writable($file)) {
                 error_log('Cannot write file ' . $file . ' permission denied');
+                return false;
             }
 
             $fp = fopen($file, "w");
