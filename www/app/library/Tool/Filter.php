@@ -73,4 +73,13 @@ class Filter {
 
         return $defval;
     }
+
+    static public function email($value = null, $defval = null) {
+        $value = filter_var($value, FILTER_VALIDATE_EMAIL);;
+        if ($value) {
+            return $value;
+        }
+
+        return $defval;
+    }
 }

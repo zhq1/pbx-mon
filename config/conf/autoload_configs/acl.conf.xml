@@ -1,7 +1,0 @@
-<configuration name="acl.conf" description="Network Lists">
-  <network-lists>
-    <X-PRE-PROCESS cmd="include" data="../acl/external.xml"/>
-    <X-PRE-PROCESS cmd="include" data="../acl/internal.xml"/>
-  </network-lists>
-</configuration>
-

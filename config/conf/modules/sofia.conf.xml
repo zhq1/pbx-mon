@@ -22,7 +22,7 @@
       one level from this directory.
   -->
   <profiles>
-    <X-PRE-PROCESS cmd="include" data="../sip_profiles/*.xml"/>
+    <X-PRE-PROCESS cmd="include" data="../sofia/*.xml"/>
   </profiles>
 
 </configuration>

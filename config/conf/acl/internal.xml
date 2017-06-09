@@ -1,3 +1,0 @@
-<list name="internal" default="deny">
-  <node type="allow" cidr="127.0.0.1/32"/>
-</list>

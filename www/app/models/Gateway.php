@@ -10,12 +10,15 @@ use Tool\Filter;
 
 class GatewayModel {
 
-    public $db   = null;
+    public $db = null;
+    public $config = null;
     private $table = 'gateway';
-    private $column = ['id', 'name', 'ip', 'port', 'call', 'route', 'description'];
+    private $column = ['name', 'ip', 'port', 'call', 'route', 'description'];
+    
 
     public function __construct() {
         $this->db = Yaf\Registry::get('db');
+        $this->config = Yaf\Registry::get('config');
     }
 
     public function get($id = null) {
@@ -43,16 +46,16 @@ class GatewayModel {
     
     public function change($id = null, array $data = null) {
         $id = intval($id);
-        $data = $this->checkArgs($data, $this->column);
-        $key = $this->keyAssembly($data);
+        $data = $this->checkArgs($data);
+        $column = $this->keyAssembly($data);
 
         if ($id > 0 && count($data) > 0) {
-            $sql = 'UPDATE ' . $this->table . ' SET ' . $key . ' WHERE id = :id';
+            $sql = 'UPDATE ' . $this->table . ' SET ' . $column . ' WHERE id = :id';
             $sth = $this->db->prepare($sql);
             $sth->bindParam(':id', $id, PDO::PARAM_INT);
             
             foreach ($data as $key => $val) {
-                $sth->bindParam($key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+                $sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
             }
 
             return $sth->execute() ? true : false;
@@ -74,37 +77,18 @@ class GatewayModel {
     }
     
     public function create(array $data = null) {
-        $column = ['user' => 'def:feji,type:string', 'password', 'callerid', 'description'];
-        $data = array_intersect_key($data, array_flip($column));
-        
-        foreach ($data as $key => $val) {
-            switch ($key) {
-            case 'user':
-                $data['user'] = Filter::alpha($val, null, 1, 32);
-                break;
-            case 'password':
-                $data['password'] = Filter::string($val, null, 8, 40);
-                break;
-            case 'callerid':
-                $data['callerid'] = Filter::alpha($val, null, 1, 32);
-                break;
-            case 'description':
-                $data['description'] = Filter::string($val, null, 1, 64);
-                break;
-            }
-        }
-        
-        $data = $this->keyAssembly($data);
-        
-        if ($id > 0 && count($data) > 0) {
-            $sql = 'INSERT INTO ' . $this->table . '(user, password, callerid, description) VALUES(:user, :password, :callerid, :description)';
-            $sth = $this->db->prepare($sql);
+    	$count = count($this->column);
+        $data = $this->checkArgs($data);
 
-            foreach ($data as $key => $val) {
-                $sth->bindParam($key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
-            }
+        if ((count($data) == $count) && (!in_array(null, $data, true))) {
+        	$sql = 'INSERT INTO ' . $this->table . '(name, ip, port, call, route, description) VALUES(:name, :ip, :port, :call, :route, :description)';
+        	$sth = $this->db->prepare($sql);
 
-            return $sth->execute() ? true : false;
+        	foreach ($data as $key => $val) {
+        		$sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+        	}
+
+        	return $sth->execute() ? true : false;
         }
 
         return false;
@@ -124,22 +108,41 @@ class GatewayModel {
     }
 
     public function checkArgs(array $data) {
-        $column = ['user', 'password', 'callerid', 'description'];
-        $data = array_intersect_key($data, array_flip($column));
+    	$res = [];
+        $data = array_intersect_key($data, array_flip($this->column));
          
-        switch () {
+        foreach ($data as $key => $val) {
+            switch ($key) {
+            case 'name':
+               	$res['name'] = Filter::alpha($val, null, 1, 32);
+               	break;
+            case 'ip':
+               	$res['ip'] = Filter::ip($val, null);
+               	break;
+            case 'port':
+               	$res['port'] = Filter::port($val, 5060);
+               	break;
+            case 'call':
+               	$res['call'] = Filter::number($val, 0);
+               	break;
+            case 'route':
+               	$res['route'] = Filter::string($val, null, 1, 64);
+               	break;
+            case 'description':
+               	$res['description'] = Filter::string($val, 'no description', 1, 64);
+              	break;
+            }
+        }
 
-        } 
+        return $res;
     }
 
-
-    public function keyAssembly(array $data, &$text = null) {
-        $result = [];
+    public function keyAssembly(array $data) {
+    	$text = '';
         $append = false;
         foreach ($data as $key => $val) {
             if ($val != null) {
-                $result[':' . $key] = $val;
-                if ($text != null && $append) {
+                if ($text != '' && $append) {
                     $text .= ", $key = :$key";
                 } else {
                     $append = true;
@@ -148,16 +151,16 @@ class GatewayModel {
             }
         }
 
-        return $result;
+        return $text;
     }
     
     public function regenAcl() {
         if ($this->db) {
             $result = $this->getAll();
             if (count($result) > 0) {
-                $file = '/usr/local/freeswitch/conf/acl/internal.xml';
+                $file = $this->config->fs->path . '/conf/acl.xml';
                 if (is_writable($file)) {
-                    $xml = '<list name="internal" default="deny">' . "\n";
+                    $xml = '<list name="local" default="deny">' . "\n";
                     foreach ($result as $obj) {
                         $xml .= '  <node type="allow" cidr="' . $obj['ip'] . '/32"/>' . "\n";
                     }
