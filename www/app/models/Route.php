@@ -1,7 +1,7 @@
 <?php
 
 /*
- * The Access Model
+ * The Route Model
  * Link http://github.com/typefo/pbx-mon
  * By typefo <typefo@qq.com>
  */
@@ -10,11 +10,16 @@ use Tool\Filter;
 use Esl\ESLconnection;
 
 class RouteModel {
-    public $db   = null;
+
+    public $db = null;
+    public $config = null;
     private $table = 'route';
+    private $column = ['name', 'type', 'description'];
     
+
     public function __construct() {
         $this->db = Yaf\Registry::get('db');
+        $this->config = Yaf\Registry::get('config');
     }
 
     public function get($id = null) {
@@ -42,32 +47,23 @@ class RouteModel {
     
     public function change($id = null, array $data = null) {
         $id = intval($id);
-        if ($id > 0 && $this->db && $this->isExist($id)) {
-            if (isset($data['name'], $data['ip'], $data['port'], $data['description'])) {
-                $name = Filter::alpha($data['name'], 'unknown');
-                $ip = Filter::ip($data['ip']);
-                $port = Filter::port($data['port'], 5060);
-                $description = Filter::string($data['description'], 'No description');
+        $data = $this->checkArgs($data);
+        $column = $this->keyAssembly($data);
 
-                if ($name && $ip && $port && $description) {
-                    $sql = 'UPDATE ' . $this->table . ' SET name = :name, ip = :ip, port = :port, description = :description WHERE id = :id';
-                    $sth = $this->db->prepare($sql);
-                    $sth->bindParam(':id', $id, PDO::PARAM_INT);
-                    $sth->bindParam(':name', $name, PDO::PARAM_STR);
-                    $sth->bindParam(':ip', $ip, PDO::PARAM_STR);
-                    $sth->bindParam(':port', $port, PDO::PARAM_INT);
-                    $sth->bindParam(':description', $description, PDO::PARAM_STR);
-
-                    if ($sth->execute()) {
-                        if($this->regenAcl()){
-                            sleep(1);
-                            $this->reloadAcl();
-                            return true;
-                        }
-                    }
-                }
+        if ($id > 0 && count($data) > 0) {
+            $sql = 'UPDATE ' . $this->table . ' SET ' . $column . ' WHERE id = :id';
+            $sth = $this->db->prepare($sql);
+            $sth->bindParam(':id', $id, PDO::PARAM_INT);
+            
+            foreach ($data as $key => $val) {
+                $sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
             }
 
+            if ($sth->execute()) {
+                $this->regenPlan();
+                $this->reloadXml();
+                return true;
+            }
         }
 
         return false;
@@ -76,46 +72,44 @@ class RouteModel {
 
     public function delete($id = null) {
         $id = intval($id);
-        if ($id > 0 && $this->db && $this->isExist($id)){
-            $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id . '';
-            $success = $this->db->query($sql);
-            if ($success) {
-                // regenerate the configuration files
-                if($this->regenAcl()) {
-                    // reload acl list
-                    $this->reloadAcl();
+        if ($this->isExist($id)){
+        	$result = $this->get($id);
+            if (count($result) > 0) {
+                $file = $this->config->fs->path . '/conf/dialplan/' . $result['name'] . '.xml';
+                if (file_exists($file)) {
+                    unlink($file);
                 }
             }
+
+            $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id;
+            $this->db->query($sql);
+
+            /* Delete dialplan */
+            $dialplan = new DialplanModel();
+            $dialplan->deleteAll($id);
+
+            /* Reload configure file */
+            $this->regenPlan();
+            $this->reloadXml();
+            return true;
         }
+
+        return false;
     }
     
     public function create(array $data = null) {
-        if ($this->db) {
-            if (isset($data['rexp'], $data['type'], $data['gateway'], $data['description'])) {
-                $gateway = new GatewayModel();
-                
-                $rexp = Filter::string($data['rexp'], '^(.*)$');
-                $type = in_array(intval($data['type']), [1, 2], true) ? intval($data['type']) : 2;
-                $gateway = $gateway->isExist($data['gateway']) ? intval($data['gateway']) : null;
-                $description = Filter::string($data['description'], 'No description');
+        $count = count($this->column);
+        $data = $this->checkArgs($data);
 
-                if ($rexp && $type && $gateway && $description) {
-                    $sql = 'INSERT INTO ' . $this->table . '(name, ip, port, description) VALUES(:name, :ip, :port, :description)';
-                    $sth = $this->db->prepare($sql);
-                    $sth->bindParam(':name', $name, PDO::PARAM_STR);
-                    $sth->bindParam(':ip', $ip, PDO::PARAM_STR);
-                    $sth->bindParam(':port', $port, PDO::PARAM_INT);
-                    $sth->bindParam(':description', $description, PDO::PARAM_STR);
+        if ((count($data) == $count) && (!in_array(null, $data, true))) {
+            $sql = 'INSERT INTO ' . $this->table . '(name, ip, port, call, route, description) VALUES(:name, :ip, :port, :call, :route, :description)';
+            $sth = $this->db->prepare($sql);
 
-                    if($sth->execute()) {
-                        if($this->regenAcl()){
-                            sleep(1);
-                            $this->reloadAcl();
-                            return true;
-                        }
-                    }
-                }
+            foreach ($data as $key => $val) {
+                $sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
             }
+
+            return $sth->execute() ? true : false;
         }
 
         return false;
@@ -134,48 +128,132 @@ class RouteModel {
         return false;
     }
 
-    public function regenAcl() {
-        if ($this->db) {
-            $result = $this->getAll();
-            if (count($result) > 0) {
-                $file = '/usr/local/freeswitch/conf/acl/internal.xml';
-                if (is_writable($file)) {
-                    $xml = '<list name="internal" default="deny">' . "\n";
-                    foreach ($result as $obj) {
-                        $xml .= '  <node type="allow" cidr="' . $obj['ip'] . '/32"/>' . "\n";
-                    }
-                    $xml .= '</list>' . "\n";
-
-                
-                    $fp = fopen($file, "w");
-                    if ($fp) {
-                        fwrite($fp, $xml);
-                        fclose($fp);
-                        return true;
-                    }
-                }
-
-                error_log('Cannot write file ' . $file . ' permission denied');
+    public function checkArgs(array $data) {
+        $res = [];
+        $data = array_intersect_key($data, array_flip($this->column));
+         
+        foreach ($data as $key => $val) {
+            switch ($key) {
+            case 'name':
+                $res['name'] = Filter::alpha($val, null, 1, 32);
+                break;
+            case 'ip':
+                $res['ip'] = Filter::ip($val, null);
+                break;
+            case 'port':
+                $res['port'] = Filter::port($val, 5060);
+                break;
+            case 'call':
+                $res['call'] = Filter::number($val, 0);
+                break;
+            case 'route':
+                $res['route'] = Filter::string($val, null, 1, 64);
+                break;
+            case 'description':
+                $res['description'] = Filter::string($val, 'no description', 1, 64);
+                break;
             }
         }
 
+        return $res;
+    }
+
+    public function keyAssembly(array $data) {
+        $text = '';
+        $append = false;
+        foreach ($data as $key => $val) {
+            if ($val != null) {
+                if ($text != '' && $append) {
+                    $text .= ", $key = :$key";
+                } else {
+                    $append = true;
+                    $text .= "$key = :$key";
+                }
+            }
+        }
+
+        return $text;
+    }
+    
+    public function regenPlan() {
+    	$routes = $this->getAll();
+        if (count($routes) > 0) {
+        	$dialplan = new DialplanModel();
+        	foreach ($routes as $route) {
+        		$file = $this->config->fs->path . '/conf/dialplan/' . $route['name']. '.xml';
+        		$extensions = $dialplan->getAll($route['id']);
+
+        		$xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
+                $xml .= '<include>' . "\n";
+                $xml .= '  <context name="' . $route['name'] . '">' . "\n";
+                $xml .= '    <extension name="unloop">' . "\n";
+                $xml .= '      <condition field="${unroll_loops}" expression="^true$"/>' . "\n";
+                $xml .= '      <condition field="${sip_looped_call}" expression="^true$">' . "\n";
+                $xml .= '        <action application="deflect" data="${destination_number}"/>' . "\n";
+                $xml .= '      </condition>' . "\n";
+                $xml .= '    </extension>' . "\n\n";
+
+        		foreach ($extensions as $obj) {
+        			$xml .= '    <extension name="' . $obj['id'] . '">' . "\n";
+
+                    $field = 'destination_number';
+                    switch ($obj['type']) {
+                        case 1:
+                            $field = 'caller_id_number';
+                            break;
+                        case 2:
+                            $field = 'destination_number';
+                            break;
+                        default:
+                            break;
+                    }
+
+                    $xml .= '      <condition field="' . $field . '" expression="' . $obj['rexp'] . '">' . "\n";
+                    $xml .= '        <action application="set" data="called=$1"/>' . "\n";
+                    $xml .= '        <action application="set" data="call_timeout=60"/>' . "\n";
+                    $xml .= '        <action application="set" data="ringback=${cn-ring}"/>' . "\n";
+                    $xml .= '        <action application="set" data="RECORD_STEREO=false"/>' . "\n";
+                    $xml .= '        <action application="set" data="RECORD_ANSWER_REQ=true"/>' . "\n";
+                    $xml .= '        <action application="record_session" data="/var/record/${strftime(%Y/%m/%d}/${caller_id_number}-${called}-${uuid}.wav"/>' . "\n";
+                    $xml .= '        <action application="bridge" data="sofia/' . $obj['sofia'] . '/${called}@' . $obj['server'] . '"/>' . "\n";
+                    $xml .= '        <action application="hangup"/>' . "\n";
+                    $xml .= '        </condition>' . "\n";
+                    $xml .= '    </extension>' . "\n";
+        		}
+
+                $xml .= '  </context>' . "\n";
+                $xml .= '</include>' . "\n";
+
+                $fp = fopen($file, "w");
+                if (!$fp) {
+                    error_log('Cannot open file ' . $file . ' permission denied');
+                    contione;
+                }
+
+                fwrite($fp, $xml);
+                fclose($fp);
+                
+        	}
+
+            return true;
+        }
+ 
         return false;
     }
 
-    public function reloadAcl() {
-        if ($this->eslCmd('bgapi reloadacl')) {
+    public function reloadXml() {
+        if ($this->eslCmd('bgapi reloadxml')) {
             return true;
         }
-
         return false;
     }
 
     public function eslCmd($cmd = null) {
         if ($cmd && is_string($cmd)) {
-            $config = Yaf\Registry::get('config');
+            $config = $this->config->esl;
 
             // conection to freeswitch
-            $esl = new ESLconnection($config->esl->host, $config->esl->port, $config->esl->password);
+            $esl = new ESLconnection($config->host, $config->port, $config->password);
             
             if ($esl) {
                 // exec reloadacl command
