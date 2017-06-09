@@ -10,7 +10,7 @@
 - 数据库 :  MariaDB 5.5
 - PBX系统： FreeSWITCH 1.6.15
 
-#### pbxMon 功能与特性
+#### 功能与特性
 
 - 实时录音查询系统
 - 支持多 sofia 接口接入
