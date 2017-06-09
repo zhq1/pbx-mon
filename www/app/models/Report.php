@@ -1,7 +1,7 @@
 <?php
 
 /*
- * The Access Model
+ * The Report Model
  * Link http://github.com/typefo/pbx-mon
  * By typefo <typefo@qq.com>
  */

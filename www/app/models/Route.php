@@ -15,7 +15,6 @@ class RouteModel {
     public $config = null;
     private $table = 'route';
     private $column = ['name', 'type', 'description'];
-    
 
     public function __construct() {
         $this->db = Yaf\Registry::get('db');
@@ -54,7 +53,7 @@ class RouteModel {
             $sql = 'UPDATE ' . $this->table . ' SET ' . $column . ' WHERE id = :id';
             $sth = $this->db->prepare($sql);
             $sth->bindParam(':id', $id, PDO::PARAM_INT);
-            
+
             foreach ($data as $key => $val) {
                 $sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
             }
@@ -176,14 +175,14 @@ class RouteModel {
     }
     
     public function regenPlan() {
-    	$routes = $this->getAll();
+        $routes = $this->getAll();
         if (count($routes) > 0) {
-        	$dialplan = new DialplanModel();
-        	foreach ($routes as $route) {
-        		$file = $this->config->fs->path . '/conf/dialplan/' . $route['name']. '.xml';
-        		$extensions = $dialplan->getAll($route['id']);
+            $dialplan = new DialplanModel();
+            foreach ($routes as $route) {
+                $file = $this->config->fs->path . '/conf/dialplan/' . $route['name']. '.xml';
+                $extensions = $dialplan->getAll($route['id']);
 
-        		$xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
+                $xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
                 $xml .= '<include>' . "\n";
                 $xml .= '  <context name="' . $route['name'] . '">' . "\n";
                 $xml .= '    <extension name="unloop">' . "\n";
@@ -193,8 +192,8 @@ class RouteModel {
                 $xml .= '      </condition>' . "\n";
                 $xml .= '    </extension>' . "\n\n";
 
-        		foreach ($extensions as $obj) {
-        			$xml .= '    <extension name="' . $obj['id'] . '">' . "\n";
+                foreach ($extensions as $obj) {
+                    $xml .= '    <extension name="' . $obj['id'] . '">' . "\n";
 
                     $field = 'destination_number';
                     switch ($obj['type']) {
@@ -219,7 +218,7 @@ class RouteModel {
                     $xml .= '        <action application="hangup"/>' . "\n";
                     $xml .= '      </condition>' . "\n";
                     $xml .= '    </extension>' . "\n\n";
-        		}
+                }
 
                 $xml .= '  </context>' . "\n";
                 $xml .= '</include>' . "\n";
@@ -232,8 +231,7 @@ class RouteModel {
 
                 fwrite($fp, $xml);
                 fclose($fp);
-                
-        	}
+            }
 
             return true;
         }
@@ -254,7 +252,7 @@ class RouteModel {
 
             // conection to freeswitch
             $esl = new ESLconnection($config->host, $config->port, $config->password);
-            
+
             if ($esl) {
                 // exec reloadacl command
                 $esl->send($cmd);
@@ -262,10 +260,10 @@ class RouteModel {
                 $esl->disconnect();
                 return true;
             }
-            
+
             error_log('esl cannot connect to freeswitch', 0);
         }
-        
+
         return false;
     }
 }
