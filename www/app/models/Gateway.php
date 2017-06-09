@@ -114,7 +114,7 @@ class GatewayModel {
     }
 
     public function checkArgs(array $data) {
-    	$res = [];
+    	$res = array();
         $data = array_intersect_key($data, array_flip($this->column));
          
         foreach ($data as $key => $val) {
@@ -126,10 +126,10 @@ class GatewayModel {
                	$res['ip'] = Filter::ip($val, null);
                	break;
             case 'port':
-               	$res['port'] = Filter::port($val, 5060);
+               	$res['port'] = Filter::port($val, null, 5060);
                	break;
             case 'call':
-               	$res['call'] = Filter::number($val, 0);
+               	$res['call'] = Filter::number($val, null, 0);
                	break;
             case 'route':
                	$res['route'] = Filter::string($val, null, 1, 64);

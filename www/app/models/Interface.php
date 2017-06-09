@@ -124,7 +124,7 @@ class InterfaceModel {
     }
 
     public function checkArgs(array $data) {
-    	$res = [];
+    	$res = array();
         $data = array_intersect_key($data, array_flip($this->column));
          
         foreach ($data as $key => $val) {
@@ -136,7 +136,7 @@ class InterfaceModel {
                	$res['ip'] = Filter::ip($val, null);
                	break;
             case 'port':
-               	$res['port'] = Filter::port($val, 5060);
+               	$res['port'] = Filter::port($val, null, 5060);
                	break;
             case 'in_code':
                	$res['in_code'] = Filter::string($val, 'PCMU,PCMA', 1, 64);
