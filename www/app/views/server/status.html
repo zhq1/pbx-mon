@@ -31,8 +31,8 @@
             <li><a href="/server">服务器状态</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/user/setting"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> 账号设置</a></li>
-            <li><a href="/logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> 退 出</a></li>
+            <li><a href="/user/setting"><span class="glyphicon glyphicon-cog"></span> 账号设置</a></li>
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> 退 出</a></li>
           </ul>
         </div>
       </div>
@@ -43,25 +43,25 @@
           <li><a href="/cdr">Home</a></li>
           <li><a href="#">Server</a></li>
           <li class="active">Status</li>
-          <li class="pull-right help"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <a href="#">帮助信息</a></li>
+          <li class="pull-right help"><span class="glyphicon glyphicon-question-sign"></span> <a href="#">帮助信息</a></li>
         </ol>
       </div>
       <div class="row">
         <div class="container main">
           <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <b>运行时间:</b></div>
+            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-flash"></span> <b>运行时间:</b></div>
             <div class="col-xs-10 col-sm-10 col-md-10"><?php echo $status['uptime'];?></div>
           </div>
           <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span> <b>CPU型号:</b></div>
+            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-copyright-mark"></span> <b>CPU型号:</b></div>
             <div class="col-xs-10 col-sm-10 col-md-10"><?php echo $status['cpuinfo'];?></div>
           </div>
           <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-expand" aria-hidden="true"></span> <b>操作系统:</b></div>
+            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-expand"></span> <b>操作系统:</b></div>
             <div class="col-xs-10 col-sm-10 col-md-10"><?php echo $status['uname'];?></div>
           </div>
           <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-sound-dolby" aria-hidden="true"></span> <b>内存使用:</b></div>
+            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-sound-dolby"></span> <b>内存使用:</b></div>
             <div class="col-xs-9 col-sm-9 col-md-9">
               <div class="progress">
                 <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $status['memory']['percentage'];?>%;">
@@ -71,7 +71,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-hdd" aria-hidden="true"></span> <b>磁盘用量:</b></div>
+            <div class="col-xs-2 col-sm-2 col-md-2 text-center"><span class="glyphicon glyphicon-hdd"></span> <b>磁盘用量:</b></div>
             <div class="col-xs-9 col-sm-9 col-md-9">
               <div class="progress">
                 <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo 100 - $status['hard']['percentage'];?>%;">
