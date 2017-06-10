@@ -8,7 +8,7 @@
 
 class GatewayController extends Yaf\Controller_Abstract {
 
-    public function statusAction() {
+    public function indexAction() {
         $gateway = new GatewayModel();
         $this->getView()->assign("data", $gateway->getAll());
         return true;
