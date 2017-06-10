@@ -212,7 +212,7 @@ class GatewayModel {
             foreach ($result as $obj) {
                 $xml .= '    <extension name="' . $obj['ip'] . '">' . "\n";
                 $xml .= '      <condition field="network_addr" expression="^' . $obj['ip'] . '$">' . "\n";
-                $xml .= '        <action application="transfer" data="${destination_number} XML ' . $obj['route'] . '"/>'
+                $xml .= '        <action application="transfer" data="${destination_number} XML ' . $obj['route'] . '"/>';
                 $xml .= '      </condition>' . "\n";
                 $xml .= '    </extension>' . "\n\n";
             }
