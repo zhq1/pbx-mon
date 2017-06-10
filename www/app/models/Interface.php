@@ -1,7 +1,7 @@
 <?php
 
 /*
- * The Gateway Model
+ * The Interface Model
  * Link http://github.com/typefo/pbx-mon
  * By typefo <typefo@qq.com>
  */
