@@ -55,6 +55,10 @@ class RouteController extends Yaf\Controller_Abstract {
 
         return false;
     }
+
+    public function dialplan() {
+        return true;
+    }
 }
 
 
