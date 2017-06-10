@@ -1,5 +1,7 @@
 基于 FreeSWITCH 的录音与转码平台，支持 G729, G711 转码，并且支持多接口接入部署。
 
+#### web 平台
+
 ![screenshot](./script/screenshot.png)
 
 #### 服务器环境
