@@ -3,7 +3,7 @@ Description=FreeSWITCH
 After=syslog.target network.target
 
 [Service]
-User=freeswitch
+User=root
 Group=pbx
 Nice=-5
 UMask=0022
