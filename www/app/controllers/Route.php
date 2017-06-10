@@ -26,7 +26,7 @@ class RouteController extends Yaf\Controller_Abstract {
             $response->response();
             return false;
         }
-        
+
         return true;
     }
 
@@ -42,7 +42,7 @@ class RouteController extends Yaf\Controller_Abstract {
             $response->response();
             return false;
         }
-        
+
         $this->getView()->assign('data', $route->get($request->getQuery('id')));
         return true;
     }
