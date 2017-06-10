@@ -14,7 +14,6 @@ class GatewayModel {
     public $config = null;
     private $table = 'gateway';
     private $column = ['name', 'ip', 'port', 'call', 'route', 'description'];
-    
 
     public function __construct() {
         $this->db = Yaf\Registry::get('db');
@@ -53,7 +52,7 @@ class GatewayModel {
             $sql = 'UPDATE ' . $this->table . ' SET ' . $column . ' WHERE id = :id';
             $sth = $this->db->prepare($sql);
             $sth->bindParam(':id', $id, PDO::PARAM_INT);
-            
+
             foreach ($data as $key => $val) {
                 $sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
             }
@@ -63,7 +62,6 @@ class GatewayModel {
 
         return false;
     }
-
 
     public function delete($id = null) {
         $id = intval($id);
@@ -82,7 +80,7 @@ class GatewayModel {
 
         return false;
     }
-    
+
     public function create(array $data = null) {
     	$count = count($this->column);
         $data = $this->checkArgs($data);
@@ -117,7 +115,7 @@ class GatewayModel {
     public function checkArgs(array $data) {
     	$res = array();
         $data = array_intersect_key($data, array_flip($this->column));
-         
+
         foreach ($data as $key => $val) {
             switch ($key) {
             case 'name':
@@ -160,22 +158,24 @@ class GatewayModel {
 
         return $text;
     }
-    
+
     public function regenAcl() {
         $result = $this->getAll();
 
         if (count($result) > 0) {
             $file = $this->config->fs->path . '/conf/acl.xml';
+
+            /* Check if the file is writable */
+            if (!is_writable($file)) {
+                error_log('Cannot write file ' . $file . ' permission denied');
+                return false;
+            }
+
             $xml = '<list name="local" default="deny">' . "\n";
             foreach ($result as $obj) {
                 $xml .= $obj['call'] == 1 ? '  <node type="allow" cidr="' . $obj['ip'] . '/32"/>' . "\n" : '';
             }
             $xml .= '</list>' . "\n";
-
-            if (!is_writable($file)) {
-                error_log('Cannot write file ' . $file . ' permission denied');
-                return false;
-            }
 
             $fp = fopen($file, "w");
             if ($fp) {
@@ -192,6 +192,13 @@ class GatewayModel {
         $result = $this->getAll();
         if (count($result) > 0) {
             $file = $this->config->fs->path . '/conf/dialplan/default.xml';
+
+            /* Check if the file is writable */
+            if (!is_writable($file)) {
+                error_log('Cannot write file ' . $file . ' permission denied');
+                return false;
+            }
+
             $xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
             $xml .= '<include>' . "\n";
             $xml .= '  <context name="' . $route['name'] . '">' . "\n";
@@ -213,11 +220,7 @@ class GatewayModel {
             $xml .= '  </context>' . "\n";
             $xml .= '</include>' . "\n";
 
-            if (!is_writable($file)) {
-                error_log('Cannot write file ' . $file . ' permission denied');
-                return false;
-            }
-
+            /* Write configuration file */
             $fp = fopen($file, "w");
             if ($fp) {
                 fwrite($fp, $xml);
@@ -240,20 +243,20 @@ class GatewayModel {
         if ($cmd && is_string($cmd)) {
             $config = $this->config->esl;
 
-            // conection to freeswitch
+            /* Conection to freeswitch */
             $esl = new ESLconnection($config->host, $config->port, $config->password);
-            
+
             if ($esl) {
-                // exec reloadacl command
+                /* Send command to freeswitch execute */
                 $esl->send($cmd);
-                // close esl connection
+                /* Close esl connection */
                 $esl->disconnect();
                 return true;
             }
-            
+
             error_log('esl cannot connect to freeswitch', 0);
         }
-        
+
         return false;
     }
 }
