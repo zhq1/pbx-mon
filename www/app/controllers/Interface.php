@@ -1,7 +1,7 @@
 <?php
 
 /*
- * The Gateway Controller
+ * The Interface Controller
  * Link http://github.com/typefo/pbx-mon
  * By typefo <typefo@qq.com>
  */
