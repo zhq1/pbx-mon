@@ -56,10 +56,11 @@
     * soft nproc unlimited
     * hard nproc unlimited
 
-创建 freeswitch 运行用户组
+创建 pbx 运行用户组，并下载 pbxMon 源码包
 
     $ groupadd pbx
     $ usermod -g pbx nginx
+    $ git clone https://github.com/typefo/pbx-mon.git
 
 编译安装 FreeSWITCH
 
@@ -78,15 +79,19 @@
     $ make phpmod
     $ cp php/ESL.so /usr/lib64/php/modules
 
-下载 pbxMon 源码包
-
-    $ git clone https://github.com/typefo/pbx-mon.git
-
 安装 G729 语音模块
 
-    $ cd pbx-mon/packge
     $ tar -xzvf mod_bcg729.tar.gz
     $ cd mod_bcg729
+    $ make
+    $ make install
+
+安装 yaf 框架
+
+    $ tar -xzvf yaf-2.3.5.tgz
+    $ cd yaf-2.3.5
+    $ phpize
+    $ ./configure
     $ make
     $ make install
 
