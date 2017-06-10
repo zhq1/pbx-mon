@@ -20,7 +20,6 @@
 - 采用 restful 接口存储话单
 - 采用 mod_json_cdr 模块推送话单
 
-
 #### 相关目录说明:
 
     cdr             通话记录 API 接口，安装位置 /var/cdr
@@ -57,7 +56,7 @@
     * soft nproc unlimited
     * hard nproc unlimited
 
-创建 freeswitch 运行帐户
+创建 freeswitch 运行用户组
 
     $ groupadd pbx
     $ usermod -g pbx nginx
@@ -93,7 +92,7 @@
 
 安装 Web 平台系统
 
-    $ make
+    $ make install
 
 #### 默认 Web 后台账号/密码:
 
