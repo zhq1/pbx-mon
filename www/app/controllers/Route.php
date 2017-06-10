@@ -1,7 +1,7 @@
 <?php
 
 /*
- * The Access Controller
+ * The Route Controller
  * Link http://github.com/typefo/pbx-mon
  * By typefo <typefo@qq.com>
  */
