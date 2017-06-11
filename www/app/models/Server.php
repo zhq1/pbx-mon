@@ -103,10 +103,9 @@ class ServerModel {
         	$sth = $this->db->prepare($sql);
 
         	foreach ($data as $key => $val) {
-        		$sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+        		$sth->bindParam(':' . $key, $data[$key], is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
         	}
-            var_dump($data);
-            exit;
+
         	if ($sth->execute()) {
                 if ($data['call'] == 1) {
                     $system = new SystemModel();
