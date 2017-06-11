@@ -63,9 +63,9 @@
                   echo '<td><span class="badge badge-',$style,'">',$text,'</span></td>';
                   echo '<td>',$obj['route'],'</td>';
 
-                  echo $obj['route'],'->';
+                  echo '[',$obj['route'],']';
                   foreach ($routes as $route) {
-                    echo $obj['route'],'=>';
+                    echo '(',$obj['route'],')';
                     if ($route['id'] === $obj['route']) {
                       echo '<td>',$route['name'],'</td>';
                     }
