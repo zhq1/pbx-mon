@@ -64,9 +64,7 @@
                 $text = 'default';
                 if (isset($routes)) {
                   foreach ($routes as $route) {
-                    var_dump($route);
-                    exit;
-                    if ($obj['route'] == $route['id']) {
+                    if ($obj['route'] == intval($route['id'])) {
                       $text = $route['name'];
                     }
                   }
