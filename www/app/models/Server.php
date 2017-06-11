@@ -99,28 +99,23 @@ class ServerModel {
         }
 
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
-            echo '111111111111111111111<br>';
-        	$sql = 'INSERT INTO ' . $this->table . '(name, ip, port, call, route, description) VALUES(:name, :ip, :port, :call, :route, :description)';
+        	$sql = 'INSERT INTO ' . $this->table . '(`name`, `ip`, `port`, `call`, `route`, `description`) VALUES(:name, :ip, :port, :call, :route, :description)';
         	$sth = $this->db->prepare($sql);
 
         	foreach ($data as $key => $val) {
         		$sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
         	}
-            echo '########################<br>';
 
         	if ($sth->execute()) {
-                echo 'okokokokokokokokokokokokok';
                 if ($data['call'] == 1) {
                     $system = new SystemModel();
                     $system->regenAcl();
                     $system->reloadAcl();
                 }
-                exit;
                 return true;
             }
-            var_dump($sth->errorInfo());
         }
-        exit;
+
         return false;
     }
 
@@ -175,10 +170,10 @@ class ServerModel {
         foreach ($data as $key => $val) {
             if ($val != null) {
                 if ($text != '' && $append) {
-                    $text .= ", $key = :$key";
+                    $text .= ", `$key` = :$key";
                 } else {
                     $append = true;
-                    $text .= "$key = :$key";
+                    $text .= "`$key` = :$key";
                 }
             }
         }
