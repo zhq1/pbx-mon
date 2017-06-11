@@ -107,6 +107,7 @@ class ServerModel {
         		$sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
         	}
             echo '########################<br>';
+
         	if ($sth->execute()) {
                 echo 'okokokokokokokokokokokokok';
                 if ($data['call'] == 1) {
@@ -117,6 +118,7 @@ class ServerModel {
                 exit;
                 return true;
             }
+            echo $sth->errorInfo();
         }
         exit;
         return false;
