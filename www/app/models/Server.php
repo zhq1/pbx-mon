@@ -97,7 +97,9 @@ class ServerModel {
         if (!isset($data['call'])) {
             $data['call'] = 0;
         }
-
+        var_dump($data);
+        echo '=======================<br>';
+        echo 'coutn: ',$count;
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
             echo '11111111111111<br>';
         	$sql = 'INSERT INTO ' . $this->table . '(name, ip, port, call, route, description) VALUES(:name, :ip, :port, :call, :route, :description)';
