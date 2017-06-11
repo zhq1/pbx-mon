@@ -67,31 +67,31 @@
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript">
   function show() {
-    var templete = '<form class="form-horizontal" style="width:420px">'+
+    var templete = '<form class="form-horizontal" action="/route/create" method="post" style="width:420px">'+
   '<div class="form-group">'+
     '<label class="col-sm-3 control-label">路由名称</label>'+
     '<div class="col-sm-8">'+
-      '<input type="text" class="form-control" placeholder="Enter name">'+
+      '<input type="text" class="form-control" name="name" placeholder="Enter name">'+
     '</div>'+
   '</div>'+
   '<div class="form-group">'+
     '<label class="col-sm-3 control-label">路由类型</label>'+
     '<div class="col-sm-8">'+
-      '<select class="form-control">'+
-          '<option>普通路由</option>'+
-          '<option>高级路由</option>'+
+      '<select class="form-control" name="type">'+
+          '<option value="1">普通路由</option>'+
+          '<option value="2">高级路由</option>'+
       '</select>'+
     '</div>'+
   '</div>'+
   '<div class="form-group">'+
     '<label class="col-sm-3 control-label">备注信息</label>'+
     '<div class="col-sm-8">'+
-      '<input type="text" class="form-control" placeholder="Enter description">'+
+      '<input type="text" class="form-control" name="description" placeholder="Enter description">'+
     '</div>'+
   '</div>'+
   '<div class="form-group">'+
     '<div class="col-sm-offset-3 col-sm-8">'+
-      '<button type="submit" class="btn btn-success">创 建</button><button class="btn btn-default">取 消</button>'+
+      '<button type="submit" class="btn btn-success">创 建</button><a href="/route" class="btn btn-default">取 消</a>'+
     '</div>'+
   '</div>'+
 '</form>';
@@ -105,17 +105,17 @@
   }
 
   function change() {
-    var templete = '<form class="form-horizontal" style="width:420px">'+
+    var templete = '<form class="form-horizontal" action="/route/edit" method="post" style="width:420px">'+
   '<div class="form-group">'+
     '<label class="col-sm-3 control-label">路由名称</label>'+
     '<div class="col-sm-8">'+
-      '<input type="text" class="form-control" value="default" placeholder="Enter name">'+
+      '<input type="text" class="form-control" name="name" placeholder="Enter name">'+
     '</div>'+
   '</div>'+
   '<div class="form-group">'+
     '<label class="col-sm-3 control-label">路由类型</label>'+
     '<div class="col-sm-8">'+
-      '<select class="form-control">'+
+      '<select class="form-control" name="type">'+
           '<option>普通路由</option>'+
           '<option>高级路由</option>'+
       '</select>'+
@@ -124,12 +124,12 @@
   '<div class="form-group">'+
     '<label class="col-sm-3 control-label">备注信息</label>'+
     '<div class="col-sm-8">'+
-      '<input type="text" class="form-control" value="no description" placeholder="Enter description">'+
+      '<input type="text" class="form-control" name="description" placeholder="Enter description">'+
     '</div>'+
   '</div>'+
   '<div class="form-group">'+
     '<div class="col-sm-offset-3 col-sm-8">'+
-      '<button type="submit" class="btn btn-success">保 存</button><button class="btn btn-default">取 消</button>'+
+      '<button type="submit" class="btn btn-success">保 存</button><a href="/route" class="btn btn-default">取 消</a>'+
     '</div>'+
   '</div>'+
 '</form>';
