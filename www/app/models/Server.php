@@ -91,17 +91,12 @@ class ServerModel {
     }
 
     public function create(array $data = null) {
-        var_dump($data);
-        echo '====================================================<br>';
     	$count = count($this->column);
         $data = $this->checkArgs($data);
         
         if (!isset($data['call'])) {
             $data['call'] = 0;
         }
-
-        var_dump($data);
-        exit;
 
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
         	$sql = 'INSERT INTO ' . $this->table . '(name, ip, port, call, route, description) VALUES(:name, :ip, :port, :call, :route, :description)';
