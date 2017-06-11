@@ -118,7 +118,7 @@ class ServerModel {
                 exit;
                 return true;
             }
-            echo $sth->errorInfo();
+            var_dump($sth->errorInfo());
         }
         exit;
         return false;
