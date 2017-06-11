@@ -12,8 +12,6 @@ class ServerController extends Yaf\Controller_Abstract {
         $server = new ServerModel();
         $route = new RouteModel();
         $this->getView()->assign("data", $server->getAll());
-        var_dump($route->getAll());
-        exit;
         $this->getView()->assign("routes", $route->getAll());
         return true;
 	}
