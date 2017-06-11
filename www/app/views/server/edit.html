@@ -113,7 +113,8 @@
             <div class="form-group">
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">备注信息:</label>
               <div class="col-xs-3 col-sm-3">
-                <input type="text" class="form-control" name="description" value="<?php echo isset($data['description']) ? $data['description'] : '';?>" placeholder="Enter description" />
+              <?php $description = htmlspecialchars(mb_substr($data['description'], 0, 16, 'UTF-8'), ENT_QUOTES);?>
+                <input type="text" class="form-control" name="description" value="<?php echo $description;?>" placeholder="Enter description" />
               </div>
               <div class="col-xs-3 col-sm-3">
                 <span class="help-block">网关相关备注说明</span>
