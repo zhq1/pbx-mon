@@ -99,6 +99,7 @@ class ServerModel {
         }
 
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
+            echo '11111111111111<br>';
         	$sql = 'INSERT INTO ' . $this->table . '(name, ip, port, call, route, description) VALUES(:name, :ip, :port, :call, :route, :description)';
         	$sth = $this->db->prepare($sql);
 
@@ -114,10 +115,11 @@ class ServerModel {
                     $system->regenAcl();
                     $system->reloadAcl();
                 }
-                exit;
+
                 return true;
             }
         }
+        echo '########################';
         exit;
         return false;
     }
