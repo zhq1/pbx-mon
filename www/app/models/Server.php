@@ -144,10 +144,14 @@ class ServerModel {
                	$res['port'] = Filter::port($val, null, 5060);
                	break;
             case 'call':
-               	$res['call'] = Filter::number($val, null, 0);
+               	$res['call'] = Filter::number($val, 0, 0, 1);
                	break;
             case 'route':
-               	$res['route'] = Filter::string($val, null, 1, 64);
+               	$rid = Filter::string($val, null, 1, 64);
+                if ($rid != null) {
+                    $route = new RouteModel();
+                    $res['route'] = $route->isExist($rid) ? $rid : null;
+                }
                	break;
             case 'description':
                	$res['description'] = Filter::string($val, 'no description', 1, 64);
