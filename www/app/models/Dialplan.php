@@ -22,7 +22,7 @@ class DialplanModel {
     public function get($id = null) {
         $id = intval($id);
         if ($id > 0 && $this->db) {
-            $sql = 'SELECT * FROM ' . $this->table . ' WHERE id = :id LIMIT 1';
+            $sql = 'SELECT * FROM `' . $this->table . '` WHERE id = :id LIMIT 1';
             $sth = $this->db->prepare($sql);
             $sth->bindParam(':id', $id, PDO::PARAM_INT);
             $sth->execute();
@@ -36,7 +36,7 @@ class DialplanModel {
         $rid = intval($rid);
         $result = array();
         if ($rid > 0) {
-            $sql = 'SELECT * FROM ' . $this->table . ' WHERE rid = :rid ORDER BY id';
+            $sql = 'SELECT * FROM `' . $this->table . '` WHERE rid = :rid ORDER BY id';
             $sth = $this->db->prepare($sql);
             $sth->bindParam(':rid', $rid, PDO::PARAM_INT);
             $result = $this->db->query($sql)->fetchAll();
@@ -51,7 +51,7 @@ class DialplanModel {
         $column = $this->keyAssembly($data);
 
         if ($id > 0 && count($data) > 0) {
-            $sql = 'UPDATE ' . $this->table . ' SET ' . $column . ' WHERE id = :id';
+            $sql = 'UPDATE `' . $this->table . '` SET ' . $column . ' WHERE id = :id';
             $sth = $this->db->prepare($sql);
             $sth->bindParam(':id', $id, PDO::PARAM_INT);
             
@@ -59,7 +59,15 @@ class DialplanModel {
                 $sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
             }
 
-            return $sth->execute() ? true : false;
+            if ($sth->execute()) {
+                $dialplan = $this->get($id);
+                if (count($dialplan) > 0) {
+                    $system = new SystemModel();
+                    $system->regenPlan($dialplan['rid']);
+                    $system->reloadXml();
+                }
+                return true;
+            }
         }
 
         return false;
@@ -69,9 +77,16 @@ class DialplanModel {
     public function delete($id = null) {
         $id = intval($id);
         if ($id > 0){
-            $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id;
-            $this->db->query($sql);
-            return true;
+            $sql = 'DELETE FROM `' . $this->table . '` WHERE id = ' . $id;
+            if ($this->db->query($sql)) {
+                $dialplan = $this->get($id);
+                if (count($dialplan) > 0) {
+                    $system = new SystemModel();
+                    $system->regenPlan($dialplan['rid']);
+                    $system->reloadXml();
+                }
+                return true;
+            }
         }
 
         return false;
@@ -80,8 +95,12 @@ class DialplanModel {
     public function deleteAll($rid = null) {
         $rid = intval($rid);
         if ($rid > 0){
-            $sql = 'DELETE FROM ' . $this->table . ' WHERE rid = ' . $rid;
-            $this->db->query($sql);
+            $sql = 'DELETE FROM `' . $this->table . '` WHERE rid = ' . $rid;
+            if ($this->db->query($sql)) {
+                $system = new SystemModel();
+                $system->regenPlan($rid);
+                $system->reloadXml();
+            }
             return true;
         }
 
@@ -93,14 +112,19 @@ class DialplanModel {
         $data = $this->checkArgs($data);
 
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
-            $sql = 'INSERT INTO ' . $this->table . '(rid, rexp, type, sofia, server, description) VALUES(:rid, :rexp, :type, :sofia, :server, :description)';
+            $sql = 'INSERT INTO `' . $this->table . '`(rid, rexp, type, sofia, server, description) VALUES(:rid, :rexp, :type, :sofia, :server, :description)';
             $sth = $this->db->prepare($sql);
 
             foreach ($data as $key => $val) {
                 $sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
             }
 
-            return $sth->execute() ? true : false;
+            if ($sth->execute()) {
+                $system = new SystemModel();
+                $system->regenPlan($data['rid']);
+                $system->reloadXml();
+                return true;
+            }
         }
 
         return false;
@@ -117,7 +141,7 @@ class DialplanModel {
     public function isExist($id = null) {
         $id = intval($id);
         if ($id > 0 && $this->db) {
-            $sql = 'SELECT id FROM ' . $this->table . ' WHERE id = ' . $id . ' LIMIT 1';
+            $sql = 'SELECT id FROM `' . $this->table . '` WHERE id = ' . $id . ' LIMIT 1';
             $result = $this->db->query($sql);
             if (count($result) > 0) {
                 return true;

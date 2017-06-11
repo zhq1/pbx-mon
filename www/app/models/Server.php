@@ -57,7 +57,15 @@ class ServerModel {
                 $sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
             }
 
-            return $sth->execute() ? true : false;
+            if ($sth->execute()) {
+                if (isset($data['call'])) {
+                    $system = new SystemModel();
+                    $system->regenAcl();
+                    $system->reloadAcl();
+                }
+
+                return true;
+            }
         }
 
         return false;
@@ -72,8 +80,9 @@ class ServerModel {
             $this->db->query($sql);
 
             if ($result['call'] == 1) {
-                $this->regenAcl();
-                $this->reloadAcl();
+                $system = new SystemModel();
+                $system->regenAcl();
+                $system->reloadAcl();
             }
             return true;
         }
@@ -93,7 +102,14 @@ class ServerModel {
         		$sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
         	}
 
-        	return $sth->execute() ? true : false;
+        	if ($sth->execute()) {
+                if ($data['call'] == 1) {
+                    $system = new SystemModel();
+                    $system->regenAcl();
+                    $system->reloadAcl();
+                }
+                return true;
+            }
         }
 
         return false;

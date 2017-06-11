@@ -24,7 +24,7 @@ class InterfaceModel {
     public function get($id = null) {
         $id = intval($id);
         if ($id > 0 && $this->db) {
-            $sql = 'SELECT * FROM ' . $this->table . ' WHERE id = :id LIMIT 1';
+            $sql = 'SELECT * FROM `' . $this->table . '` WHERE id = :id LIMIT 1';
             $sth = $this->db->prepare($sql);
             $sth->bindParam(':id', $id, PDO::PARAM_INT);
             $sth->execute();
@@ -37,7 +37,7 @@ class InterfaceModel {
     public function getAll() {
         $result = array();
         if ($this->db) {
-            $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY id';
+            $sql = 'SELECT * FROM `' . $this->table . '` ORDER BY id';
             $result = $this->db->query($sql)->fetchAll();
         }
 
@@ -50,7 +50,7 @@ class InterfaceModel {
         $column = $this->keyAssembly($data);
 
         if ($id > 0 && count($data) > 0) {
-            $sql = 'UPDATE ' . $this->table . ' SET ' . $column . ' WHERE id = :id';
+            $sql = 'UPDATE `' . $this->table . '` SET ' . $column . ' WHERE id = :id';
             $sth = $this->db->prepare($sql);
             $sth->bindParam(':id', $id, PDO::PARAM_INT);
             
@@ -59,7 +59,8 @@ class InterfaceModel {
             }
 
             if ($sth->execute()) {
-                $this->regenSofia();
+                $system = new SystemModel();
+                $system->regenSofia();
                 return true;
             }
         }
@@ -79,7 +80,6 @@ class InterfaceModel {
 
             $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id;
             $this->db->query($sql);
-            $this->regenSofia();
             return true;
         }
 
@@ -91,7 +91,7 @@ class InterfaceModel {
         $data = $this->checkArgs($data);
 
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
-        	$sql = 'INSERT INTO ' . $this->table . '(name, ip, port, in_code, out_code, description) VALUES(:name, :ip, :port, :in_code, :out_code, :description)';
+        	$sql = 'INSERT INTO `' . $this->table . '`(name, ip, port, in_code, out_code, description) VALUES(:name, :ip, :port, :in_code, :out_code, :description)';
         	$sth = $this->db->prepare($sql);
 
         	foreach ($data as $key => $val) {
@@ -99,7 +99,8 @@ class InterfaceModel {
         	}
 
         	if ($sth->execute()) {
-                $this->regenSofia();
+                $system = new SystemModel();
+                $system->regenSofia();
                 return true;
             }
         }
@@ -110,7 +111,7 @@ class InterfaceModel {
     public function isExist($id = null) {
         $id = intval($id);
         if ($id > 0 && $this->db) {
-            $sql = 'SELECT id FROM ' . $this->table . ' WHERE id = ' . $id . ' LIMIT 1';
+            $sql = 'SELECT id FROM `' . $this->table . '` WHERE id = ' . $id . ' LIMIT 1';
             $result = $this->db->query($sql);
             if (count($result) > 0) {
                 return true;
