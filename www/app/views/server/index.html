@@ -55,7 +55,7 @@
               <?php
               if (isset($data)) {
                 foreach ($data as $obj) {
-                echo '<tr><td><span class="glyphicon glyphicon-modal-window"></span></td><td>',$obj['name'],'</td><td>',$obj['ip'],'</td><td>',$obj['port'],'</td><td><span class="badge badge-',$obj['call'] == 1 ? 'success' : 'default','">',$obj['call'] == 1 ? 'Yes' : 'No','</span></td><td>',$obj['route'],'</td><td>',$obj['description'],'</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove()"><span class="glyphicon glyphicon-trash"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/server/edit"><span class="glyphicon glyphicon-edit"></span> 编 辑</a></td></tr>';
+                echo '<tr><td><span class="glyphicon glyphicon-modal-window"></span></td><td>',$obj['name'],'</td><td>',$obj['ip'],'</td><td>',$obj['port'],'</td><td><span class="badge badge-',$obj['call'] == 1 ? 'success' : 'default','">',$obj['call'] == 1 ? 'Yes' : 'No','</span></td><td>',$obj['route'],'</td><td>',$obj['description'],'</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="drop(',$obj['id'],')"><span class="glyphicon glyphicon-trash"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/server/edit?id=',$obj['id'],'"><span class="glyphicon glyphicon-edit"></span> 编 辑</a></td></tr>';
                 }
               }
               ?>
@@ -68,7 +68,7 @@
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript">
-    function remove(id) {
+    function drop(id) {
       layer.confirm('亲，确定要删除？', {
         btn: ['是','否']
       }, function(){
