@@ -64,14 +64,12 @@
                 $text = 'default';
                 if (isset($routes)) {
                   foreach ($routes as $route) {
-                    var_dump($route);
-                    //if (intval($obj['route']) == intval($route['id'])) {
-                      //$text = $route['name'];
-                    //}
+                    if (intval($obj['route']) == intval($route['id'])) {
+                      $text = $route['name'];
+                    }
                   }
                 }
-                exit;
-                echo '<td>',$text,'</td>';
+                echo '<td>',$obj['route'],'</td>';
                 $description = htmlspecialchars(mb_substr($obj['description'], 0, 18, 'UTF-8'), ENT_QUOTES);
                 echo '<td>',$description,'</td>';
                 echo '<td><button class="btn btn-default btn-xs" onClick="drop(',$obj['id'],')"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td>';
