@@ -64,11 +64,13 @@
                 $text = 'default';
                 if (isset($routes)) {
                   foreach ($routes as $route) {
-                    if (intval($obj['route']) == intval($route['id'])) {
-                      $text = $route['name'];
-                    }
+                    var_dump($route);
+                    //if (intval($obj['route']) == intval($route['id'])) {
+                      //$text = $route['name'];
+                    //}
                   }
                 }
+                exit;
                 echo '<td>',$text,'</td>';
                 $description = htmlspecialchars(mb_substr($obj['description'], 0, 18, 'UTF-8'), ENT_QUOTES);
                 echo '<td>',$description,'</td>';
