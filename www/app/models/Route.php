@@ -118,7 +118,7 @@ class RouteModel {
         $id = intval($id);
         if ($id > 0 && $this->db) {
             $sql = 'SELECT id FROM `' . $this->table . '` WHERE id = ' . $id . ' LIMIT 1';
-            $result = $this->db->query($sql)->fetchAll();
+            $result = $this->db->query($sql);
             if (count($result) > 0) {
                 return true;
             }
