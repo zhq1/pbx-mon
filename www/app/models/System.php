@@ -14,8 +14,8 @@ class SystemModel {
     public $config = null;
 
     public function __construct($username) {
-        $db = Yaf\Registry::get('db');
-        $config = Yaf\Registry::get('config');
+        $this->db = Yaf\Registry::get('db');
+        $this->config = Yaf\Registry::get('config');
     }
 
     public function regenAcl() {
