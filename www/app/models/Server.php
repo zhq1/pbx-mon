@@ -106,6 +106,8 @@ class ServerModel {
         		$sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
         	}
 
+            echo "<br>",$sth->queryString;
+
         	if ($sth->execute()) {
                 if ($data['call'] == 1) {
                     $system = new SystemModel();
