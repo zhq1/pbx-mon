@@ -62,11 +62,12 @@
                   $text = $obj['call'] == 1 ? 'Yes' : 'No';
                   echo '<td><span class="badge badge-',$style,'">',$text,'</span></td>';
                   echo '<td>',$obj['route'],'</td>';
-                  //foreach ($routes as $route) {
-                  //  if ($route['id'] === $obj['route']) {
-                  //    echo '<td>',$route['name'],'</td>';
-                  //  }
-                  //}
+
+                  foreach ($routes as $route) {
+                    if ($route['id'] === $obj['route']) {
+                      echo '<td>',$route['name'],'</td>';
+                    }
+                  }
                   
                   $description = htmlspecialchars(mb_substr($obj['description'], 0, 18, 'UTF-8'), ENT_QUOTES);
                   echo '<td>',$description,'</td>';
