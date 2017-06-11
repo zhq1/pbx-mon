@@ -52,8 +52,13 @@
                 <tr><th class="tab-left">#</th><th>接口名称</th><th>IP 地址</th><th>端 口</th><th>呼入编码</th><th>呼出编码</th><th>备注信息</th><th>删 除</th><th class="tab-right">编 辑</th></tr>
               </thead>
               <tbody>
-              <tr><td><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></td><td>internal</td><td>112.2.24.88</td><td>5060</td><td>G729,PCMU,PCMA</td><td>G729,PCMU,PCMA</td><td>no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/interface/edit"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
-              <tr><td><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></td><td>external</td><td>112.2.24.88</td><td>5060</td><td>G729,PCMU,PCMA</td><td>G729,PCMU,PCMA</td><td class="hidden-xs">no description</td><td><a class="btn btn-default btn-xs" href="javascript:;" onClick="remove()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删 除</a></td><td><a class="btn btn-default btn-xs" href="/interface/edit"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编 辑</a></td></tr>
+              <?php
+              if (isset($data)) {
+                foreach ($data as $obj) {
+                  echo '<tr><td><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></td><td>',$obj['name'],'</td><td>',$obj['ip'],'</td><td>',$obj['port'],'</td><td>',$obj['in_code'],'</td><td>',$obj['out_code'],'</td><td>',$obj['description'],'</td><td><button class="btn btn-default btn-xs" onClick="drop(',$obj['id'],')"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><a class="btn btn-default btn-xs" href="/interface/edit?id=',$obj['id'],'"><span class="glyphicon glyphicon-edit"></span> 编 辑</a></td></tr>';
+                }
+              }
+              ?>
               </tbody>
             </table>
           </div>
