@@ -9,9 +9,9 @@
 class SystemController extends Yaf\Controller_Abstract {
 
     public function statusAction() {
-        $server = new ServerModel();
+        $system = new SystemModel();
 
-        $this->getView()->assign("status", $server->sysInfo());
+        $this->getView()->assign("status", $system->sysInfo());
         return true;
 	}
 
