@@ -29,6 +29,8 @@ class ServerController extends Yaf\Controller_Abstract {
             return false;
         }
         
+        $route = new RouteModel();
+        $this->getView()->assign('routes', $route->getAll());
         return true;
     }
 

@@ -80,9 +80,13 @@
               <label class="col-sm-offset-2 col-xs-2 col-sm-2 control-label">默认路由:</label>
               <div class="col-xs-3 col-sm-3">
                 <select class="form-control" name="trunk">
-                  <option>default</option>
-                  <option>internal</option>
-                  <option>external</option>
+                <?php
+                if (isset($routes)) {
+                  foreach ($routes as $route) {
+                    echo '<option value="',$route['id'],'">',$route['name'],'</option>';
+                  }
+                }
+                ?>
                 </select>
               </div>
               <div class="col-xs-3 col-sm-3">
