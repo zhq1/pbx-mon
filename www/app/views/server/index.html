@@ -54,7 +54,6 @@
               <tbody>
               <?php
               if (isset($data)) {
-                $r = $routes;
                 foreach ($data as $obj) {
                   echo '<tr>';
                   echo '<td><span class="glyphicon glyphicon-modal-window"></span></td><td>',$obj['name'],'</td>';
@@ -63,13 +62,7 @@
                   $text = $obj['call'] == 1 ? 'Yes' : 'No';
                   echo '<td><span class="badge badge-',$style,'">',$text,'</span></td>';
                   echo '<td>',$obj['route'],'</td>';
-
-                  foreach ($r as $route) {
-                    echo '#';
-                    //if ($route['id'] === $obj['route']) {
-                    //  echo '<td>',$route['name'],'</td>';
-                    //}
-                  }
+                  echo isset($routes) ? '#' : '@';
                   $description = htmlspecialchars(mb_substr($obj['description'], 0, 18, 'UTF-8'), ENT_QUOTES);
                   echo '<td>',$description,'</td>';
                   echo '<td><button class="btn btn-default btn-xs" onClick="drop(',$obj['id'],')"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td>';
