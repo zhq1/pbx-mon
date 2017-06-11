@@ -142,10 +142,24 @@
     });
   }
 
-  function sync() {
-    layer.alert('路由表同步成功！', {
+  function sync(id) {
+    layer.alert('路由表' + id + '同步成功！', {
       icon: 1
     })
   }
+
+  function drop(id) {
+      layer.confirm('亲，确定要删除？', {
+        btn: ['是','否']
+      }, function(){
+        var url = '/route/delete?id=' + id;
+        $.get(url, function(){
+          layer.msg('删除成功!', {icon: 1, time: 1000});
+            setTimeout(function() {
+              window.location.reload();
+            }, 1000);
+          });
+        });
+    }
   </script>
 </html>
