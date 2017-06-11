@@ -114,10 +114,11 @@ class ServerModel {
                     $system->regenAcl();
                     $system->reloadAcl();
                 }
+                exit;
                 return true;
             }
         }
-
+        exit;
         return false;
     }
 
