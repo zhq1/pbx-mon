@@ -110,7 +110,7 @@ class ServerModel {
                 if ($data['call'] == 1) {
                     $system = new SystemModel();
                     $system->regenAcl();
-                    $system->reloadAcl();
+                    //$system->reloadAcl();
                 }
                 return true;
             }
