@@ -63,6 +63,7 @@
                   echo '<td><span class="badge badge-',$style,'">',$text,'</span></td>';
                   $text = 'default';
                   if (isset($routes)) {
+                    echo '@';
                     foreach ($routes as $route) {
                       if ($obj['route'] == $route['id']) {
                         echo '#';
