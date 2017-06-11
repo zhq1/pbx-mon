@@ -76,7 +76,10 @@
                   echo '<td>default</td>';
                 }
 
-                echo '<td>',$obj['description'],'</td><td><button class="btn btn-default btn-xs" onClick="drop(',$obj['id'],')"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><a class="btn btn-default btn-xs" href="/server/edit?id=',$obj['id'],'"><span class="glyphicon glyphicon-edit"></span> 编 辑</a></td></tr>';
+                $description = htmlspecialchars(mb_substr($obj['description'], 0, 18, 'UTF-8'), ENT_QUOTES);
+                echo '<td>',$description,'</td>';
+                echo '<td><button class="btn btn-default btn-xs" onClick="drop(',$obj['id'],')"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td>';
+                echo '<td><a class="btn btn-default btn-xs" href="/server/edit?id=',$obj['id'],'"><span class="glyphicon glyphicon-edit"></span> 编 辑</a></td></tr>';
                 }
               }
               ?>
