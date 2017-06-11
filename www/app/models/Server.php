@@ -91,6 +91,8 @@ class ServerModel {
     }
 
     public function create(array $data = null) {
+        var_dump($data);
+        echo '=============================<br>';
     	$count = count($this->column);
         $data = $this->checkArgs($data);
         
