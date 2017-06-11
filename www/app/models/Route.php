@@ -38,7 +38,7 @@ class RouteModel {
         $result = array();
         if ($this->db) {
             $sql = 'SELECT * FROM `' . $this->table . '` ORDER BY id';
-            $result = $this->db->query($sql);
+            $result = $this->db->query($sql)->fetchAll();
         }
 
         return $result;
