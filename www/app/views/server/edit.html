@@ -84,9 +84,9 @@
                 if (isset($routes)) {
                   foreach ($routes as $route) {
                     if ($data['route'] == $route['id']) {
-                      echo '<option value="',$route['id'],'" selected="selected">',$route['name'],'</option>';
+                      echo '<option value="',$route['id'],'" selected="selected">',$route['name'],'</option>',"\n";
                     } else {
-                      echo '<option value="',$route['id'],'">',$route['name'],'</option>';
+                      echo '<option value="',$route['id'],'">',$route['name'],'</option>',"\n";
                     }
                   }
                 }
