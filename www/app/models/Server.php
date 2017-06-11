@@ -157,15 +157,12 @@ class ServerModel {
                	$res['port'] = Filter::port($val, null, 5060);
                	break;
             case 'call':
-               	$call = Filter::alpha($val, null);
-                $res['call'] = ($call == 'on') ? 1 : 0;
+                $res['call'] = ($val == 'on') ? 1 : 0;
                	break;
             case 'route':
-               	$rid = Filter::string($val, null, 1, 64);
-                if ($rid != null) {
-                    $route = new RouteModel();
-                    $res['route'] = $route->isExist($rid) ? $rid : null;
-                }
+                $rid = intval($val);
+                $route = new RouteModel();
+                $res['route'] = $route->isExist($rid) ? $rid : null;
                	break;
             case 'description':
                	$res['description'] = Filter::string($val, 'no description', 1, 64);
