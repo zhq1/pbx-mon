@@ -13,7 +13,7 @@ class SystemModel {
     public $db = null;
     public $config = null;
 
-    public function __construct($username) {
+    public function __construct() {
         $this->db = Yaf\Registry::get('db');
         $this->config = Yaf\Registry::get('config');
     }
