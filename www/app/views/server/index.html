@@ -61,21 +61,15 @@
                 $style = $obj['call'] == 1 ? 'success' : 'default';
                 $text = $obj['call'] == 1 ? 'Yes' : 'No';
                 echo '<td><span class="badge badge-',$style,'">',$text,'</span></td>';
-
-                $empty = true;
-                if (isset($routes)) {
+                $text = 'default';
+                if (isset($routes) && is_array($routes)) {
                   foreach ($routes as $route) {
                     if ($obj['route'] == $route['id']) {
-                      $empty = false;
-                      echo '<td>',$route['name'],'</td>';
+                      $text = $route['name'];
                     }
                   }
                 }
-                
-                if ($empty) {
-                  echo '<td>default</td>';
-                }
-
+                echo '<td>',$text,'</td>';
                 $description = htmlspecialchars(mb_substr($obj['description'], 0, 18, 'UTF-8'), ENT_QUOTES);
                 echo '<td>',$description,'</td>';
                 echo '<td><button class="btn btn-default btn-xs" onClick="drop(',$obj['id'],')"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td>';
