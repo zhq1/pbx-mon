@@ -58,6 +58,10 @@ table tr td {
 
 }
 
+.form-group label select {
+    border-width: 0px;
+}
+
 .form-group .talktime {
     width: 70px;
     font-weight: solid;
