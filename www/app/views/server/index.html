@@ -70,7 +70,7 @@
                       echo '<td>',$route['name'],'</td>';
                     }
                   }
-                  
+                  echo '====================<br />';
                   $description = htmlspecialchars(mb_substr($obj['description'], 0, 18, 'UTF-8'), ENT_QUOTES);
                   echo '<td>',$description,'</td>';
                   echo '<td><button class="btn btn-default btn-xs" onClick="drop(',$obj['id'],')"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td>';
