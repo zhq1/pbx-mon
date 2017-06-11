@@ -79,11 +79,7 @@
               </select>
             </label>
 	        <?php
-	          if (isset($where['caller'])) {
-	            echo '<input type="text" id="caller" class="form-control input-sm caller" placeholder="请输入主叫号码" name="caller" value="',$where['caller'],'" />';
-	          } else {
-	            echo '<input type="text" id="caller" class="form-control input-sm caller" placeholder="请输入主叫号码" name="caller" value=""/>';
-	          }
+	        echo '<input type="text" id="number" class="form-control input-sm caller" placeholder="请输入号码" name="number" value="',isset($where['number']) ? $where['caller'] : '','" />';
 	        ?>
           </div>
           <div class="form-group">
@@ -94,21 +90,13 @@
               </select>
             </label>
 	        <?php
-	          if (isset($where['called'])) {
-	            echo '<input type="text" id="called" class="form-control input-sm called" placeholder="请输入被叫号码" name="called" value="',$where['called'],'" />';
-	          } else {
-	            echo '<input type="text" id="called" class="form-control input-sm called" placeholder="请输入被叫号码" name="called" value=""/>';
-	          }
+	        echo '<input type="text" id="called" class="form-control input-sm called" placeholder="请输入被叫号码" name="called" value="',isset($where['ip']) ? $where['ip'] : '','" />';
 	        ?>
           </div>
           <div class="form-group">
             <label>通话时长: </label>
 	        <?php
-	          if (isset($where['duration'])) {
-	            echo '<input type="number" id="duration" class="form-control input-sm talktime" name="duration" min="0" value="',$where['duration'],'" />';
-	          } else {
-	            echo '<input type="number" id="duration" class="form-control input-sm talktime" name="duration" min="0" value="0" />';
-	          }
+	        echo '<input type="number" id="duration" class="form-control input-sm talktime" name="duration" min="0" value="',isset($where['duration']) ? $where['duration'] : 0,'" />';
 	        ?>
           </div>
           <button type="submit" id="query" class="btn btn-success btn-sm pull-right" name="sub" value="ok">查 询</button>
