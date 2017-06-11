@@ -34,7 +34,7 @@ CREATE TABLE `account` (
 INSERT INTO `account` VALUES('admin', '94a2282805744c634a13b65e6b44cd5b82d66bff', 'admin@example.com', '127.0.0.1', '1970-01-01 08:00:00', '1970-01-01 08:00:00');
 
 -- pbxmon gateway table
-CREATE TABLE `gateway` (
+CREATE TABLE `server` (
        `id` int primary key auto_increment not null,
        `name` varchar(32) not null,
        `ip` varchar(32) not null,

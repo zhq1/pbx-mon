@@ -11,54 +11,107 @@ use Tool\Filter;
 class SystemModel {
 
     public  $db = null;
-    private $username = null;
 
     public function __construct($username) {
-        if (is_string($username) && mb_strlen($username) > 0) {
-            $this->username = Filter::alpha($username);
-            $this->db = Yaf\Registry::get('db');
-        }
+        $db = Yaf\Registry::get('db');
     }
 
-    public function changePassword($oldpassword = null, $newpassword = null) {
-        if ($this->db && $this->username) {
-            if (is_string($oldpassword) && is_string($newpassword) && ($oldpassword != $newpassword) && mb_strlen($newpassword) > 6) {
-                $oldpassword = sha1(md5($oldpassword));
-                $newpassword = sha1(md5($newpassword));
+    public function sysInfo($esl = null) {
+        $status['uptime'] = $this->getUptime();
+        $status['cpuinfo'] = $this->getCpuInfo();
+        $status['memory'] = $this->getMemory();
+        $status['hard'] = $this->getDisk();
+        $status['uname'] = $this->getUname();
 
-                if ($this->isExist()) {
-                    $sth = $this->db->prepare('SELECT password FROM account WHERE username = :username LIMIT 1');
-                    $sth->bindParam(':username', $this->username, PDO::PARAM_STR);
-                    $sth->execute();
-                    $result = $sth->fetch();
-                    if (is_array($result) && count($result) > 0) {
-                        if ($result['password'] === $oldpassword) {
-                            $sth = $this->db->prepare('UPDATE account SET password = :password WHERE username = :username');
-                            $sth->bindParam(':username', $this->username, PDO::PARAM_STR);
-                            $sth->bindParam(':password', $newpassword, PDO::PARAM_STR);
-                            return $sth->execute();
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
+        return $status;
     }
 
-    public function isExist() {
-        if ($this->db && $this->username) {
-            $sth = $this->db->prepare('SELECT username FROM account WHERE username = :username LIMIT 1');
-            $sth->bindParam(':username', $this->username, PDO::PARAM_STR);
-            $sth->execute();
-            $result = $sth->fetch();
+    public function getUptime() {
+        $str = "";
+        $uptime = "";
+    
+        if (($str = @file("/proc/uptime")) === false) {
+            return "";
+        }
+    
+        $str = explode(" ", implode("", $str));
+        $str = trim($str[0]);
+        $min = $str / 60;
+        $hours = $min / 60;
+        $days = floor($hours / 24);
+        $hours = floor($hours - ($days * 24));
+        $min = floor($min - ($days * 60 * 24) - ($hours * 60));
 
-            if (is_array($result) && count($result) > 0) {
-                return true;
-            }
+        if ($days !== 0) {
+            $uptime = $days."天";
+        }
+        if ($hours !== 0) {
+            $uptime .= $hours."小时";
         }
 
-        return false;
-    }
+        $uptime .= $min."分钟";
 
+        return $uptime;
+    }
+    
+    public function getCpuInfo() {
+        if (($str = @file("/proc/cpuinfo")) === false) {
+            return false;
+        }
+    
+        $str = implode("", $str);
+        @preg_match_all("/model\s+name\s{0,}\:+\s{0,}([\w\s\)\(\@.-]+)([\r\n]+)/s", $str, $model);
+
+        if (false !== is_array($model[1])) {
+            $core = sizeof($model[1]);
+            $cpu = $model[1][0].' x '.$core.'核';
+            return $cpu;
+        }
+
+        return "Unknown";
+    }
+    
+    public function getDisk() {
+        $total = round(@disk_total_space(".")/(1024*1024*1024),3); //总
+        $avail = round(@disk_free_space(".")/(1024*1024*1024),3); //可用
+        $use = $total - $avail; //已用
+        $percentage = (floatval($total) != 0) ? round($avail / $total * 100, 0) : 0;
+
+        return ['total' => $total, 'avail' => $avail, 'use' => $use, 'percentage' => $percentage];
+    }
+    
+    public function getLoadavg() {
+        if (($str = @file("/proc/loadavg")) === false) {
+            return 'Unknown';
+        }
+
+        $str = explode(" ", implode("", $str));
+        $str = array_chunk($str, 4);
+        $loadavg = implode(" ", $str[0]);
+
+        return $loadavg;
+    }
+    
+    public function getMemory() {
+        if (false === ($str = @file("/proc/meminfo"))) {
+            return ['total' => 0, 'free' => 0, 'use' => 0, 'percentage' => 0];
+        }
+    
+        $str = implode("", $str);
+        preg_match_all("/MemTotal\s{0,}\:+\s{0,}([\d\.]+).+?MemFree\s{0,}\:+\s{0,}([\d\.]+).+?Cached\s{0,}\:+\s{0,}([\d\.]+).+?SwapTotal\s{0,}\:+\s{0,}([\d\.]+).+?SwapFree\s{0,}\:+\s{0,}([\d\.]+)/s", $str, $buf);
+        preg_match_all("/Buffers\s{0,}\:+\s{0,}([\d\.]+)/s", $str, $buffers);
+    
+        $total = round($buf[1][0] / 1024, 2);
+        $free = round($buf[2][0] / 1024, 2);
+        $buffers = round($buffers[1][0] / 1024, 2);
+        $cached = round($buf[3][0] / 1024, 2);
+        $use = $total - $free - $cached - $buffers; //真实内存使用
+        $percentage = (floatval($total) != 0) ? round($use / $total * 100, 0) : 0; //真实内存使用率
+
+        return ['total' => $total, 'free' => $free, 'use' => $use, 'percentage' => $percentage];
+    }
+    
+    public function getUname() {
+        return php_uname();
+    }
 }

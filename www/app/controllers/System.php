@@ -8,7 +8,22 @@
 
 class SystemController extends Yaf\Controller_Abstract {
 
+    public function statusAction() {
+        $server = new ServerModel();
+
+        $this->getView()->assign("status", $server->sysInfo());
+        return true;
+	}
+
     public function optionAction() {
+        return true;
+	}
+
+  public function clusterAction() {
+    return true;
+  }
+
+  public function passwordAction() {
         $message = null;
         $request = $this->getRequest();
 	    
@@ -31,15 +46,7 @@ class SystemController extends Yaf\Controller_Abstract {
 
         $this->getView()->assign("message", $message);
         return true;
-	}
-
-  public function clusterAction() {
-    return true;
-  }
-
-  public function passwordAction() {
-    return true;
-  }
+    }
 }
 
 

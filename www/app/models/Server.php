@@ -6,104 +6,257 @@
  * By typefo <typefo@qq.com>
  */
 
+use Tool\Filter;
+
 class ServerModel {
 
-    public function sysInfo($esl = null) {
-        $status['uptime'] = $this->getUptime();
-        $status['cpuinfo'] = $this->getCpuInfo();
-        $status['memory'] = $this->getMemory();
-        $status['hard'] = $this->getDisk();
-        $status['uname'] = $this->getUname();
+    public $db = null;
+    public $config = null;
+    private $table = 'server';
+    private $column = ['name', 'ip', 'port', 'call', 'route', 'description'];
 
-        return $status;
+    public function __construct() {
+        $this->db = Yaf\Registry::get('db');
+        $this->config = Yaf\Registry::get('config');
     }
 
-    public function getUptime() {
-        $str = "";
-        $uptime = "";
-    
-        if (($str = @file("/proc/uptime")) === false) {
-            return "";
-        }
-    
-        $str = explode(" ", implode("", $str));
-        $str = trim($str[0]);
-        $min = $str / 60;
-        $hours = $min / 60;
-        $days = floor($hours / 24);
-        $hours = floor($hours - ($days * 24));
-        $min = floor($min - ($days * 60 * 24) - ($hours * 60));
-
-        if ($days !== 0) {
-            $uptime = $days."天";
-        }
-        if ($hours !== 0) {
-            $uptime .= $hours."小时";
+    public function get($id = null) {
+        $id = intval($id);
+        if ($id > 0 && $this->db) {
+            $sql = 'SELECT * FROM ' . $this->table . ' WHERE id = :id LIMIT 1';
+            $sth = $this->db->prepare($sql);
+            $sth->bindParam(':id', $id, PDO::PARAM_INT);
+            $sth->execute();
+            return $sth->fetch();
         }
 
-        $uptime .= $min."分钟";
+        return null;
+    }
 
-        return $uptime;
+    public function getAll() {
+        $result = array();
+        if ($this->db) {
+            $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY id';
+            $result = $this->db->query($sql);
+        }
+
+        return $result;
     }
     
-    public function getCpuInfo() {
-        if (($str = @file("/proc/cpuinfo")) === false) {
-            return false;
-        }
-    
-        $str = implode("", $str);
-        @preg_match_all("/model\s+name\s{0,}\:+\s{0,}([\w\s\)\(\@.-]+)([\r\n]+)/s", $str, $model);
+    public function change($id = null, array $data = null) {
+        $id = intval($id);
+        $data = $this->checkArgs($data);
+        $column = $this->keyAssembly($data);
 
-        if (false !== is_array($model[1])) {
-            $core = sizeof($model[1]);
-            $cpu = $model[1][0].' x '.$core.'核';
-            return $cpu;
-        }
+        if ($id > 0 && count($data) > 0) {
+            $sql = 'UPDATE ' . $this->table . ' SET ' . $column . ' WHERE id = :id';
+            $sth = $this->db->prepare($sql);
+            $sth->bindParam(':id', $id, PDO::PARAM_INT);
 
-        return "Unknown";
-    }
-    
-    public function getDisk() {
-        $total = round(@disk_total_space(".")/(1024*1024*1024),3); //总
-        $avail = round(@disk_free_space(".")/(1024*1024*1024),3); //可用
-        $use = $total - $avail; //已用
-        $percentage = (floatval($total) != 0) ? round($avail / $total * 100, 0) : 0;
+            foreach ($data as $key => $val) {
+                $sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+            }
 
-        return ['total' => $total, 'avail' => $avail, 'use' => $use, 'percentage' => $percentage];
-    }
-    
-    public function getLoadavg() {
-        if (($str = @file("/proc/loadavg")) === false) {
-            return 'Unknown';
+            return $sth->execute() ? true : false;
         }
 
-        $str = explode(" ", implode("", $str));
-        $str = array_chunk($str, 4);
-        $loadavg = implode(" ", $str[0]);
-
-        return $loadavg;
+        return false;
     }
-    
-    public function getMemory() {
-        if (false === ($str = @file("/proc/meminfo"))) {
-            return ['total' => 0, 'free' => 0, 'use' => 0, 'percentage' => 0];
+
+    public function delete($id = null) {
+        $id = intval($id);
+        $result = $this->get($id);
+
+        if (count($result) > 0) {
+            $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id;
+            $this->db->query($sql);
+
+            if ($result['call'] == 1) {
+                $this->regenAcl();
+                $this->reloadAcl();
+            }
+            return true;
         }
-    
-        $str = implode("", $str);
-        preg_match_all("/MemTotal\s{0,}\:+\s{0,}([\d\.]+).+?MemFree\s{0,}\:+\s{0,}([\d\.]+).+?Cached\s{0,}\:+\s{0,}([\d\.]+).+?SwapTotal\s{0,}\:+\s{0,}([\d\.]+).+?SwapFree\s{0,}\:+\s{0,}([\d\.]+)/s", $str, $buf);
-        preg_match_all("/Buffers\s{0,}\:+\s{0,}([\d\.]+)/s", $str, $buffers);
-    
-        $total = round($buf[1][0] / 1024, 2);
-        $free = round($buf[2][0] / 1024, 2);
-        $buffers = round($buffers[1][0] / 1024, 2);
-        $cached = round($buf[3][0] / 1024, 2);
-        $use = $total - $free - $cached - $buffers; //真实内存使用
-        $percentage = (floatval($total) != 0) ? round($use / $total * 100, 0) : 0; //真实内存使用率
 
-        return ['total' => $total, 'free' => $free, 'use' => $use, 'percentage' => $percentage];
+        return false;
     }
-    
-    public function getUname() {
-        return php_uname();
+
+    public function create(array $data = null) {
+    	$count = count($this->column);
+        $data = $this->checkArgs($data);
+
+        if ((count($data) == $count) && (!in_array(null, $data, true))) {
+        	$sql = 'INSERT INTO ' . $this->table . '(name, ip, port, call, route, description) VALUES(:name, :ip, :port, :call, :route, :description)';
+        	$sth = $this->db->prepare($sql);
+
+        	foreach ($data as $key => $val) {
+        		$sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+        	}
+
+        	return $sth->execute() ? true : false;
+        }
+
+        return false;
+    }
+
+    public function isExist($id = null) {
+        $id = intval($id);
+        if ($id > 0 && $this->db) {
+            $sql = 'SELECT id FROM ' . $this->table . ' WHERE id = ' . $id . ' LIMIT 1';
+            $result = $this->db->query($sql);
+            if (count($result) > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function checkArgs(array $data) {
+    	$res = array();
+        $data = array_intersect_key($data, array_flip($this->column));
+
+        foreach ($data as $key => $val) {
+            switch ($key) {
+            case 'name':
+               	$res['name'] = Filter::alpha($val, null, 1, 32);
+               	break;
+            case 'ip':
+               	$res['ip'] = Filter::ip($val, null);
+               	break;
+            case 'port':
+               	$res['port'] = Filter::port($val, null, 5060);
+               	break;
+            case 'call':
+               	$res['call'] = Filter::number($val, null, 0);
+               	break;
+            case 'route':
+               	$res['route'] = Filter::string($val, null, 1, 64);
+               	break;
+            case 'description':
+               	$res['description'] = Filter::string($val, 'no description', 1, 64);
+              	break;
+            }
+        }
+
+        return $res;
+    }
+
+    public function keyAssembly(array $data) {
+    	$text = '';
+        $append = false;
+        foreach ($data as $key => $val) {
+            if ($val != null) {
+                if ($text != '' && $append) {
+                    $text .= ", $key = :$key";
+                } else {
+                    $append = true;
+                    $text .= "$key = :$key";
+                }
+            }
+        }
+
+        return $text;
+    }
+
+    public function regenAcl() {
+        $result = $this->getAll();
+
+        if (count($result) > 0) {
+            $file = $this->config->fs->path . '/conf/acl.xml';
+
+            /* Check if the file is writable */
+            if (!is_writable($file)) {
+                error_log('Cannot write file ' . $file . ' permission denied');
+                return false;
+            }
+
+            $xml = '<list name="local" default="deny">' . "\n";
+            foreach ($result as $obj) {
+                $xml .= $obj['call'] == 1 ? '  <node type="allow" cidr="' . $obj['ip'] . '/32"/>' . "\n" : '';
+            }
+            $xml .= '</list>' . "\n";
+
+            $fp = fopen($file, "w");
+            if ($fp) {
+                fwrite($fp, $xml);
+                fclose($fp);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function regenXml() {
+        $result = $this->getAll();
+        if (count($result) > 0) {
+            $file = $this->config->fs->path . '/conf/dialplan/default.xml';
+
+            /* Check if the file is writable */
+            if (!is_writable($file)) {
+                error_log('Cannot write file ' . $file . ' permission denied');
+                return false;
+            }
+
+            $xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
+            $xml .= '<include>' . "\n";
+            $xml .= '  <context name="' . $route['name'] . '">' . "\n";
+            $xml .= '    <extension name="unloop">' . "\n";
+            $xml .= '      <condition field="${unroll_loops}" expression="^true$"/>' . "\n";
+            $xml .= '      <condition field="${sip_looped_call}" expression="^true$">' . "\n";
+            $xml .= '        <action application="deflect" data="${destination_number}"/>' . "\n";
+            $xml .= '      </condition>' . "\n";
+            $xml .= '    </extension>' . "\n\n";
+
+            foreach ($result as $obj) {
+                $xml .= '    <extension name="' . $obj['ip'] . '">' . "\n";
+                $xml .= '      <condition field="network_addr" expression="^' . str_replace('.', '\.', $obj['ip']) . '$">' . "\n";
+                $xml .= '        <action application="transfer" data="${destination_number} XML ' . $obj['route'] . '"/>';
+                $xml .= '      </condition>' . "\n";
+                $xml .= '    </extension>' . "\n\n";
+            }
+
+            $xml .= '  </context>' . "\n";
+            $xml .= '</include>' . "\n";
+
+            /* Write configuration file */
+            $fp = fopen($file, "w");
+            if ($fp) {
+                fwrite($fp, $xml);
+                fclose($fp);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function reloadXml() {
+        if ($this->eslCmd('bgapi reloadxml')) {
+            return true;
+        }
+        return false;
+    }
+
+    public function eslCmd($cmd = null) {
+        if ($cmd && is_string($cmd)) {
+            $config = $this->config->esl;
+
+            /* Conection to freeswitch */
+            $esl = new ESLconnection($config->host, $config->port, $config->password);
+
+            if ($esl) {
+                /* Send command to freeswitch execute */
+                $esl->send($cmd);
+                /* Close esl connection */
+                $esl->disconnect();
+                return true;
+            }
+
+            error_log('esl cannot connect to freeswitch', 0);
+        }
+
+        return false;
     }
 }
