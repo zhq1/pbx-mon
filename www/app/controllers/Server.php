@@ -10,7 +10,9 @@ class ServerController extends Yaf\Controller_Abstract {
 
     public function indexAction() {
         $server = new ServerModel();
+        $route = new RouteModel();
         $this->getView()->assign("data", $server->getAll());
+        $this->getView()->assign("routes", $route->getAll());
         return true;
 	}
 
