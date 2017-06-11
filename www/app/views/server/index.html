@@ -63,9 +63,9 @@
                 echo '<td><span class="badge badge-',$style,'">',$text,'</span></td>';
                 $text = 'default';
                 if (isset($routes)) {
-                  echo '##########################';
-                  exit;
                   foreach ($routes as $route) {
+                    var_dump($route);
+                    exit;
                     if ($obj['route'] == $route['id']) {
                       $text = $route['name'];
                     }
