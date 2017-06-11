@@ -62,11 +62,9 @@
                   $text = $obj['call'] == 1 ? 'Yes' : 'No';
                   echo '<td><span class="badge badge-',$style,'">',$text,'</span></td>';
                   $value = 'default';
-                  if (isset($routes)) {
-                    foreach ($routes as $route) {
-                      if ($obj['route'] == $route['id']) {
-                        $value = $route['name'];
-                      }
+                  foreach ($routes as $route) {
+                    if ($obj['route'] == $route['id']) {
+                      $value = $route['name'];
                     }
                   }
                   echo '<td>',$value,'</td>';
