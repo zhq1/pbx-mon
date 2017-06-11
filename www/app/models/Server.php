@@ -95,8 +95,14 @@ class ServerModel {
         echo '====================================================<br>';
     	$count = count($this->column);
         $data = $this->checkArgs($data);
+        
+        if (!isset($data['call'])) {
+            $data['call'] = 0;
+        }
+
         var_dump($data);
         exit;
+
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
         	$sql = 'INSERT INTO ' . $this->table . '(name, ip, port, call, route, description) VALUES(:name, :ip, :port, :call, :route, :description)';
         	$sth = $this->db->prepare($sql);
@@ -147,7 +153,8 @@ class ServerModel {
                	$res['port'] = Filter::port($val, null, 5060);
                	break;
             case 'call':
-               	$res['call'] = Filter::number($val, 0, 0, 1);
+               	$call = Filter::alpha($val, null);
+                $res['call'] = ($call == 'on') ? 1 : 0;
                	break;
             case 'route':
                	$rid = Filter::string($val, null, 1, 64);
