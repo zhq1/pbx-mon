@@ -91,27 +91,20 @@ class ServerModel {
     }
 
     public function create(array $data = null) {
-        var_dump($data);
-        echo '=============================<br>';
     	$count = count($this->column);
         $data = $this->checkArgs($data);
         
         if (!isset($data['call'])) {
             $data['call'] = 0;
         }
-        var_dump($data);
-        echo '=======================<br>';
-        echo 'coutn: ',$count;
+
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
-            echo '11111111111111<br>';
         	$sql = 'INSERT INTO ' . $this->table . '(name, ip, port, call, route, description) VALUES(:name, :ip, :port, :call, :route, :description)';
         	$sth = $this->db->prepare($sql);
 
         	foreach ($data as $key => $val) {
         		$sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
         	}
-
-            echo "<br>",$sth->queryString;
 
         	if ($sth->execute()) {
                 if ($data['call'] == 1) {
@@ -123,8 +116,7 @@ class ServerModel {
                 return true;
             }
         }
-        echo '########################';
-        exit;
+
         return false;
     }
 
