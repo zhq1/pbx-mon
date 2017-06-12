@@ -116,7 +116,7 @@ class CdrModel {
                 }
                 break;
             case 'ip':
-                $where['ip'] = Filter::ip($val, null);
+                $where['ip'] = Filter::ip($val, null, 7);
                 break;
             case 'duration':
                 $where['duration'] = Filter::number($val, null, 0);
