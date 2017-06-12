@@ -120,7 +120,7 @@ class CdrModel {
                 break;
             case 'duration':
                 $duration = Filter::number($val, null, 0);
-                if ($duration > 0) {
+                if ($duration != null && $duration > 0) {
                     $where['duration'] = $duration;
                 }
                 break;
