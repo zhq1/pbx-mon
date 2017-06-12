@@ -53,7 +53,7 @@ table tr td {
     font-weight: solid;
 }
 
-.form-group .number {
+.form-group .number, .form-group .ip {
     width: 120px;
 
 }
