@@ -160,6 +160,9 @@
           layer.alert('路由表 ' + name + ' 同步成功！', {icon: 1});
         } else {
           layer.alert('路由表 ' + name + ' 同步失败！', {icon: 2});
+          setTimeout(function() {
+              window.location.reload();
+          }, 1000);
         }
       });
     });
