@@ -19,15 +19,9 @@ class CdrModel {
     }   
 
     public function query(array $where) {
-        print_r($where);
-        echo '<br>====================================================<br>';
         $data = $this->checkArgs($where);
-        var_dump($data);
-        echo '<br>====================================================<br>';
         $where = $this->whereAssembly($data);
         $sql = 'SELECT * FROM `' . $this->table . '` WHERE ' . $where . 'ORDER BY id DESC LIMIT 36';
-        echo $sql;
-        exit;
         $sth = $this->db->prepare($sql);
         
         if (isset($data['last']) && $data['last'] != null) {
