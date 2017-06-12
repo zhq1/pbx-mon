@@ -157,12 +157,9 @@
         var url = '/route/sync?id=' + id;
         $.get(url, function(response, status) {
         if (status == 'success' && response.status == 200) {
-          layer.alert('路由表 ' + name + ' 同步成功！', {icon: 1});
+          layer.alert('路由表 ' + name + ' 同步成功！', {icon: 1, time: 1000});
         } else {
           layer.alert('路由表 ' + name + ' 同步失败！', {icon: 2});
-          setTimeout(function() {
-              window.location.reload();
-          }, 1000);
         }
       });
     });
