@@ -28,7 +28,7 @@ class CdrModel {
             $sth->bindParam(':id', $data['last'], PDO::PARAM_INT);
         }
             
-        if (isset($data['type'], $data['number']) && $data['type'] != null) {
+        if (isset($data['type'], $data['number']) && $data['type'] != null && $data['number'] != null) {
             switch ($data['type']) {
                 case 1:
                     $sth->bindParam(':caller', $data['number'], PDO::PARAM_STR);
@@ -41,7 +41,7 @@ class CdrModel {
             }
         }
 
-        if (isset($data['class']) && $data['class'] != null) {
+        if (isset($data['class'], $data['ip']) && $data['class'] != null && $data['ip'] != null) {
             switch ($data['class']) {
                 case 1:
                     $sth->bindParam(':src_ip', $data['ip'], PDO::PARAM_STR);
