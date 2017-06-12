@@ -57,17 +57,17 @@ class SystemModel {
             $dialplan = new DialplanModel();
             $extensions = $dialplan->getAll($rid);
 
-            if (count($extensions) > 0) {
-                $xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
-                $xml .= '<include>' . "\n";
-                $xml .= '  <context name="' . $result['name'] . '">' . "\n";
-                $xml .= '    <extension name="unloop">' . "\n";
-                $xml .= '      <condition field="${unroll_loops}" expression="^true$"/>' . "\n";
-                $xml .= '      <condition field="${sip_looped_call}" expression="^true$">' . "\n";
-                $xml .= '        <action application="deflect" data="${destination_number}"/>' . "\n";
-                $xml .= '      </condition>' . "\n";
-                $xml .= '    </extension>' . "\n\n";
+            $xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
+            $xml .= '<include>' . "\n";
+            $xml .= '  <context name="' . $result['name'] . '">' . "\n";
+            $xml .= '    <extension name="unloop">' . "\n";
+            $xml .= '      <condition field="${unroll_loops}" expression="^true$"/>' . "\n";
+            $xml .= '      <condition field="${sip_looped_call}" expression="^true$">' . "\n";
+            $xml .= '        <action application="deflect" data="${destination_number}"/>' . "\n";
+            $xml .= '      </condition>' . "\n";
+            $xml .= '    </extension>' . "\n\n";
 
+            if (count($extensions) > 0) {
                 foreach ($extensions as $obj) {
                     $xml .= '    <extension name="' . $obj['id'] . '">' . "\n";
 
@@ -95,19 +95,18 @@ class SystemModel {
                     $xml .= '      </condition>' . "\n";
                     $xml .= '    </extension>' . "\n\n";
                 }
-
-                $xml .= '  </context>' . "\n";
-                $xml .= '</include>' . "\n";
-
-                $fp = fopen($file, "w");
-                if ($fp) {
-                    fwrite($fp, $xml);
-                    fclose($fp);
-                    return true;
-                }
-
-                error_log('Cannot open file ' . $file . ' permission denied');
             }
+
+            $xml .= '  </context>' . "\n";
+            $xml .= '</include>' . "\n";
+
+            $fp = fopen($file, "w");
+            if ($fp) {
+                fwrite($fp, $xml);
+                fclose($fp);
+                return true;
+            }
+            error_log('Cannot open file ' . $file . ' permission denied');
         }
 
         return false;
