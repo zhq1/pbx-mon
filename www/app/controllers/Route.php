@@ -43,8 +43,12 @@ class RouteController extends Yaf\Controller_Abstract {
             return false;
         }
 
-        $this->getView()->assign('data', $route->get($request->getQuery('id')));
-        return true;
+        $response['status'] = 200;
+        $response['message'] = "success";
+        $response['data'] = $route->get($request->getQuery('id'))
+        header('Content-type: application/json');
+        echo json_encode($response);
+        return false;
     }
 
     public function deleteAction() {
