@@ -102,7 +102,7 @@ class RouteModel {
         $data = $this->checkArgs($data);
 
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
-            $sql = 'INSERT INTO `' . $this->table . '`(`name`, `ip`, `port`, `call`, `route`, `description`) VALUES(:name, :ip, :port, :call, :route, :description)';
+            $sql = 'INSERT INTO `' . $this->table . '`(`name`, `type`, `description`) VALUES(:name, :type, :description)';
             $sth = $this->db->prepare($sql);
 
             foreach ($data as $key => $val) {
