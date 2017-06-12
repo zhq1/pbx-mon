@@ -106,9 +106,9 @@
 
   function change(id) {
     var url = '/route/edit?id=' + id;
-    $.get(url, function(obj, status){
+    $.get(url, function(response, status){
       if (status == 'success') {
-        var obj = data;
+        var obj = response;
         var templete = '<form class="form-horizontal" action="/route/edit?id="' + obj.data.id + ' method="post" style="width:420px">'+
           '<div class="form-group">'+
           '<label class="col-sm-3 control-label">路由名称</label>'+
