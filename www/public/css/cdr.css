@@ -77,5 +77,6 @@ form .btn {
 }
 
 #loading {
-    margin-top: 5px;
+    margin-top: 0px;
+    margin-bottom: 15px;
 }
