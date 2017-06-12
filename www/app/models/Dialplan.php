@@ -39,7 +39,8 @@ class DialplanModel {
             $sql = 'SELECT * FROM `' . $this->table . '` WHERE rid = :rid ORDER BY id';
             $sth = $this->db->prepare($sql);
             $sth->bindParam(':rid', $rid, PDO::PARAM_INT);
-            $result = $this->db->query($sql)->fetchAll();
+            $sth->execute();
+            return $sth->fetchAll();
         }
 
         return $result;
