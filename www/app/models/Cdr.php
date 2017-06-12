@@ -153,7 +153,7 @@ class CdrModel {
             }
         }
 
-        if (isset($data['class']) && $data['class'] != null) {
+        if (isset($data['class'], $data['ip']) && $data['class'] != null && $data['ip'] != null) {
             switch ($data['class']) {
                 case 1:
                     $where .= $append ? 'AND src_ip = :src_ip ' : 'src_ip = :src_ip ';
