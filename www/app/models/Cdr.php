@@ -23,15 +23,12 @@ class CdrModel {
         $where = $this->whereAssembly($data);
         $sql = 'SELECT * FROM `' . $this->table . '` WHERE ' . $where . 'ORDER BY id DESC LIMIT 36';
         $sth = $this->db->prepare($sql);
-        echo $sql,'<br>';
-        var_dump($data);
-        echo '<br>';
-        
+
         if (isset($data['last']) && $data['last'] != null) {
             $sth->bindParam(':id', $data['last'], PDO::PARAM_INT);
         }
             
-        if (isset($data['type']) && $data['type'] != null) {
+        if (isset($data['type'], $data['number']) && $data['type'] != null) {
             switch ($data['type']) {
                 case 1:
                     $sth->bindParam(':caller', $data['number'], PDO::PARAM_STR);
@@ -64,8 +61,6 @@ class CdrModel {
         $sth->bindParam(':begin', $data['begin'], PDO::PARAM_STR);
         $sth->bindParam(':end', $data['end'], PDO::PARAM_STR);
         $sth->execute();
-        var_dump($sth->errorInfo());
-        exit;
         return $sth->fetchAll();
     }
 
@@ -106,7 +101,10 @@ class CdrModel {
                 }
                 break;
             case 'number':
-                $where['number'] = Filter::alpha($val, null, 1);
+                $number = Filter::alpha($val, null, 1);
+                if ($number != null) {
+                    $where['number'] = $number;
+                }
                 break;
             case 'class':
                 $class = Filter::number($val, null);
@@ -115,10 +113,16 @@ class CdrModel {
                 }
                 break;
             case 'ip':
-                $where['ip'] = Filter::ip($val, null, 7);
+                $ip = Filter::ip($val, null);
+                if ($ip != null) {
+                    $where['ip'] = $ip;
+                }
                 break;
             case 'duration':
-                $where['duration'] = Filter::number($val, null, 0);
+                $duration = Filter::number($val, null, 0);
+                if ($duration > 0) {
+                    $where['duration'] = $duration;
+                }
                 break;
             default:
                 break;
