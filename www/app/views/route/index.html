@@ -152,7 +152,7 @@
 
   function sync(id, name) {
     layer.confirm('亲，确定要开始同步？', {
-        btn: ['是','否']
+        btn: ['是','否'], icon: 3
       }, function(){
         var url = '/route/sync?id=' + id;
         $.get(url, function(response, status) {
