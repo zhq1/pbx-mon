@@ -12,16 +12,14 @@ class CdrController extends Yaf\Controller_Abstract {
 
     public function indexAction() {
         $request = $this->getRequest();
-
         $cdr = new CdrModel();
-	
         $where = $request->getQuery();
 
         if (isset($where['sub'])) {
             $data = $cdr->query($where);
             $this->getView()->assign("data", $data);
             $this->getView()->assign("where", $this->check($where));
-	    $len = count($data);
+	        $len = count($data);
             $this->getView()->assign('last', $len > 0 ? intval($data[$len - 1]['id']) : null);
         } else {
             $this->getView()->assign("data", null);
@@ -54,23 +52,29 @@ class CdrController extends Yaf\Controller_Abstract {
     }
     
     public function check(array $data) {
-        $where = [];
+        $where = array();
         foreach ($data as $key => $value) {
             switch ($key) {
 	        case 'begin':
-                $where['begin'] = htmlspecialchars(Filter::dateTime($value),  ENT_QUOTES );
+                $where['begin'] = htmlspecialchars(Filter::dateTime($value, date('Y-m-d 08:00:00')),  ENT_QUOTES );
                 break;
             case 'end':
-                $where['end'] = htmlspecialchars(Filter::dateTime($value), ENT_QUOTES);
+                $where['end'] = htmlspecialchars(Filter::dateTime($value, date('Y-m-d 20:00:00')), ENT_QUOTES);
                 break;
-	        case 'caller':
-                $where['caller'] = htmlspecialchars(Filter::alpha($value), ENT_QUOTES);
+	        case 'numtype':
+                $where['numtype'] = htmlspecialchars(Filter::number($value, 1), ENT_QUOTES);
                 break;
-            case 'called':
-                $where['called'] = htmlspecialchars(Filter::alpha($value), ENT_QUOTES);
+            case 'number':
+                $where['number'] = htmlspecialchars(Filter::alpha($value, ''), ENT_QUOTES);
+                break;
+            case 'iptype':
+                $where['iptype'] = htmlspecialchars(Filter::number($value, 1), ENT_QUOTES);
+                break;
+            case 'ip':
+                $where['ip'] = htmlspecialchars(Filter::string($value, ''), ENT_QUOTES);
                 break;
             case 'duration':
-                $where['duration'] = Filter::number($value);
+                $where['duration'] = Filter::number($value, 0);
                 break;
             }
         }

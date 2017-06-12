@@ -313,8 +313,8 @@ class SystemModel {
     }
     
     public function getDisk() {
-        $total = round(@disk_total_space(".")/(1024*1024*1024),3); //总
-        $avail = round(@disk_free_space(".")/(1024*1024*1024),3); //可用
+        $total = round(@disk_total_space("/var/record")/(1024*1024*1024),3); //总
+        $avail = round(@disk_free_space("/var/record")/(1024*1024*1024),3); //可用
         $use = $total - $avail; //已用
         $percentage = (floatval($total) != 0) ? round($avail / $total * 100, 0) : 0;
 
