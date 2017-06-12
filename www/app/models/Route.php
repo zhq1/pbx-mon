@@ -98,17 +98,11 @@ class RouteModel {
     }
     
     public function create(array $data = null) {
-    	var_dump($data);
-    	echo '<br>==============================<br>';
         $count = count($this->column);
         $data = $this->checkArgs($data);
-        var_dump($data);
 
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
             $sql = 'INSERT INTO `' . $this->table . '`(`name`, `ip`, `port`, `call`, `route`, `description`) VALUES(:name, :ip, :port, :call, :route, :description)';
-            echo '=================================<br>';
-            echo $sql;
-            exit;
             $sth = $this->db->prepare($sql);
 
             foreach ($data as $key => $val) {
@@ -149,21 +143,14 @@ class RouteModel {
             case 'name':
                 $res['name'] = Filter::alpha($val, null, 1, 32);
                 break;
-            case 'ip':
-                $res['ip'] = Filter::ip($val, null);
-                break;
-            case 'port':
-                $res['port'] = Filter::port($val, null, 5060);
-                break;
-            case 'call':
-                $res['call'] = Filter::number($val, null, 0);
-                break;
-            case 'route':
-                $res['route'] = Filter::string($val, null, 1, 64);
+            case 'type':
+                $res['ip'] = Filter::number($val, 1);
                 break;
             case 'description':
                 $res['description'] = Filter::string($val, 'no description', 1, 64);
                 break;
+             default:
+             	break;
             }
         }
 
