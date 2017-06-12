@@ -111,7 +111,7 @@ class RouteModel {
 
             if ($sth->execute()) {
             	$system = new SystemModel();
-            	var_dump($tihs->db->lastInsertId());
+            	var_dump($sth->lastInsertId());
             	exit;
             	$system->regenPlan($id);
             	return true;
