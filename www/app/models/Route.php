@@ -98,11 +98,17 @@ class RouteModel {
     }
     
     public function create(array $data = null) {
+    	var_dump($data);
+    	echo '<br>==============================<br>'
         $count = count($this->column);
         $data = $this->checkArgs($data);
+        var_dump($data);
 
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
             $sql = 'INSERT INTO `' . $this->table . '`(`name`, `ip`, `port`, `call`, `route`, `description`) VALUES(:name, :ip, :port, :call, :route, :description)';
+            echo '=================================<br>'
+            echo $sql;
+            exit;
             $sth = $this->db->prepare($sql);
 
             foreach ($data as $key => $val) {
