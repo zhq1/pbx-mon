@@ -45,7 +45,7 @@ class RouteController extends Yaf\Controller_Abstract {
 
         $response['status'] = 200;
         $response['message'] = "success";
-        $response['data'] = $route->get($request->getQuery('id'))
+        $response['data'] = $route->get($request->getQuery('id'));
         header('Content-type: application/json');
         echo json_encode($response);
         return false;
