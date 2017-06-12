@@ -63,6 +63,24 @@ class RouteController extends Yaf\Controller_Abstract {
     public function dialplanAction() {
         return true;
     }
+
+    public function syncAction() {
+        $request = $this->getRequest();
+        $system = new SystemModel();
+        if ($system->regenPlan($this->getRequest()->getQuery('id'))) {
+            $response['status'] = 200;
+            $response['message'] = "success";
+            header('Content-type: application/json');
+            echo json_encode($response);
+            return false;
+        }
+
+        $response['status'] = 400;
+        $response['message'] = "sync failed";
+        header('Content-type: application/json');
+        echo json_encode($response);
+        return false;
+    }
 }
 
 
