@@ -104,7 +104,12 @@
     });
   }
 
-  function change() {
+  function change(id) {
+    var url = '/route/edit?id=' + id;
+    $.get(url, function(data, status){
+      console.log(data);
+    });
+    return;
     var templete = '<form class="form-horizontal" action="/route/edit" method="post" style="width:420px">'+
   '<div class="form-group">'+
     '<label class="col-sm-3 control-label">路由名称</label>'+
