@@ -55,12 +55,13 @@ class RouteModel {
             $sth->bindParam(':id', $id, PDO::PARAM_INT);
 
             foreach ($data as $key => $val) {
-                $sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+                $sth->bindParam(':' . $key, $data[$key], is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
             }
 
             if ($sth->execute()) {
-                $this->regenPlan();
-                $this->reloadXml();
+            	$system = new SystemModel();
+                $system->regenPlan($id);
+                $system->reloadXml();
                 return true;
             }
         }
@@ -88,8 +89,8 @@ class RouteModel {
             $dialplan->deleteAll($id);
 
             /* Reload configure file */
-            $this->regenPlan();
-            $this->reloadXml();
+            $system = new SystemModel();
+            $system->reloadXml();
             return true;
         }
 
@@ -105,10 +106,15 @@ class RouteModel {
             $sth = $this->db->prepare($sql);
 
             foreach ($data as $key => $val) {
-                $sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+                $sth->bindParam(':' . $key, $data[$key], is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
             }
 
-            return $sth->execute() ? true : false;
+            if ($sth->execute()) {
+            	$system = new SystemModel();
+            	$id = $tihs->db->lastInsertId();
+            	$system->regenPlan($id);
+            	return true;
+            }
         }
 
         return false;
@@ -118,7 +124,7 @@ class RouteModel {
         $id = intval($id);
         if ($id > 0 && $this->db) {
             $sql = 'SELECT id FROM `' . $this->table . '` WHERE id = ' . $id . ' LIMIT 1';
-            $result = $this->db->query($sql);
+            $result = $this->db->query($sql)->fetchAll();
             if (count($result) > 0) {
                 return true;
             }
