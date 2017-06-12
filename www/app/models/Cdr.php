@@ -21,7 +21,7 @@ class CdrModel {
     public function query(array $where) {
         $data = $this->checkArgs($where);
         $where = $this->whereAssembly($data);
-        $sql = 'SELECT * FROM `' . $this->table . '` WHERE ' . $where . 'ORDER BY id DESC LIMIT 36';
+        $sql = 'SELECT * FROM `' . $this->table . '` WHERE ' . $where . 'ORDER BY id DESC LIMIT 32';
         $sth = $this->db->prepare($sql);
 
         if (isset($data['last']) && $data['last'] != null) {

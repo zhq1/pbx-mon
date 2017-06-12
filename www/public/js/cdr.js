@@ -87,7 +87,7 @@ function loadMore() {
                     '<td><a href="/record/' + obj.data[i].file + '">本地下载</a></td></tr>';
                 $(text).appendTo("#data");
             }
-            if (obj.data.length < 36) {
+            if (obj.data.length < 32) {
                 $("#loading").css("display","none");
             }
         });
