@@ -71,3 +71,7 @@ form .btn {
     width: 60px;
     margin-right: 18px;
 }
+
+.row .table {
+    margin-top: 5px;
+}
