@@ -138,15 +138,15 @@ class CdrModel {
             $where .= 'id < :id ';
         }
 
-        $where .= $append ? 'AND create_time BETWEEN :begin AND :end ' : 'create_time BETWEEN :begin AND :end ';
-
         if (isset($data['type']) && $data['type'] != null) {
             switch ($data['type']) {
                 case 1:
-                    $where .= 'AND caller = :caller ';
+                    $where .= $append ? 'AND caller = :caller ' : 'caller = :caller ';
+                    $append = true;
                     break;
                 case 2:
-                    $where .= 'AND called = :called ';
+                    $where .= $append ? 'AND called = :called ' : 'called = :called ';
+                    $append = true;
                     break;
                 default:
                     break;
@@ -156,10 +156,12 @@ class CdrModel {
         if (isset($data['class']) && $data['class'] != null) {
             switch ($data['class']) {
                 case 1:
-                    $where .= 'AND src_ip = :src_ip ';
+                    $where .= $append ? 'AND src_ip = :src_ip ' : 'src_ip = :src_ip ';
+                    $append = true;
                     break;
                 case 2:
-                    $where .= 'AND dst_ip = :dst_ip ';
+                    $where .= $append ? 'AND dst_ip = :dst_ip ' : 'dst_ip = :dst_ip ';
+                    $append = true;
                     break;
                 default:
                     break;
@@ -167,8 +169,10 @@ class CdrModel {
         }
 
         if (isset($data['duration']) && $data['duration'] != null) {
-            $where .= 'AND duration > :duration ';
+            $where .= $append ? 'AND duration > :duration ' : 'duration > :duration ';
         }
+
+        $where .= $append ? 'AND create_time BETWEEN :begin AND :end ' : 'create_time BETWEEN :begin AND :end ';
 
         return $where;
     }
