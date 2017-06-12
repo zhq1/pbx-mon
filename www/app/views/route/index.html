@@ -151,13 +151,17 @@
   }
 
   function sync(id, name) {
-    var url = '/route/sync?id=' + id;
-    $.get(url, function(response, status) {
-      if (status == 'success' && response.status == 200) {
-        layer.alert('路由表 ' + name + ' 同步成功！', {icon: 1});
-      } else {
-        layer.alert('路由表 ' + name + ' 同步失败！', {icon: 2});
-      }
+    layer.confirm('亲，确定要开始同步？', {
+        btn: ['是','否']
+      }, function(){
+        var url = '/route/sync?id=' + id;
+        $.get(url, function(response, status) {
+        if (status == 'success' && response.status == 200) {
+          layer.alert('路由表 ' + name + ' 同步成功！', {icon: 1});
+        } else {
+          layer.alert('路由表 ' + name + ' 同步失败！', {icon: 2});
+        }
+      });
     });
   }
 
