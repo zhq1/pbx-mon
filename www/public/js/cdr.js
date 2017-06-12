@@ -1,11 +1,13 @@
 function loadMore() {
     var arg = '';
     var append = false;
-    var start = $('#start').val();
+    var begin = $('#begin').val();
     var end = $('#end').val();
     var duration = $('#duration').val();
-    var caller = $('#caller').val();
-    var called = $('#called').val();
+    var type = $('#type').val();
+    var number = $('#number').val();
+    var classs = $('#class').val();
+    var ip = $('#called').val();
 
     if (last > 0) {
         arg += 'last=' + last.toString();
@@ -13,10 +15,10 @@ function loadMore() {
     }
 
     if (append) {
-        arg += '&start=' + start;
+        arg += '&begin=' + begin;
         append = true;
     } else {
-        arg += 'start=' + start;
+        arg += 'begin=' + begin;
     }
 
     if (append) {
@@ -27,6 +29,20 @@ function loadMore() {
     }
 
     if (append) {
+        arg += '&type=' + type;
+        append = true;
+    } else {
+        arg += 'type=' + type;
+    }
+
+    if (append) {
+        arg += '&number=' + number;
+        append = true;
+    } else {
+        arg += 'number=' + number;
+    }
+
+    if (append) {
         arg += '&duration=' + duration;
         append = true;
     } else {
@@ -34,17 +50,17 @@ function loadMore() {
     }
 
     if (append) {
-        arg += '&caller=' + caller;
+        arg += '&class=' + classs;
         append = true;
     } else {
-        arg += 'caller=' + caller;
+        arg += 'class=' + classs;
     }
 
     if (append) {
-        arg += '&called=' + called;
+        arg += '&ip=' + ip;
         append = true;
     } else {
-        arg += 'called=' + called;
+        arg += 'ip=' + ip;
     }
 
     $.get('/cdr/ajxquery?' + arg, function (resp, status) {
