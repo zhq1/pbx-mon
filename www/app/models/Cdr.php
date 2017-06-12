@@ -24,6 +24,7 @@ class CdrModel {
         $sql = 'SELECT * FROM `' . $this->table . '` WHERE ' . $where . 'ORDER BY id DESC LIMIT 36';
         $sth = $this->db->prepare($sql);
         echo $sql,'<br>';
+        var_dump($data),'<br>';
         if (isset($data['last']) && $data['last'] != null) {
             $sth->bindParam(':id', $data['last'], PDO::PARAM_INT);
         }
@@ -134,7 +135,7 @@ class CdrModel {
             $where .= 'id < :id ';
         }
 
-        if (isset($data['type']) && $data['type'] != null) {
+        if (isset($data['type'], $data['number']) && $data['type'] != null && $data['number']) {
             switch ($data['type']) {
                 case 1:
                     $where .= $append ? 'AND caller = :caller ' : 'caller = :caller ';
