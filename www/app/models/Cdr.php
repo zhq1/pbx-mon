@@ -24,7 +24,9 @@ class CdrModel {
         $sql = 'SELECT * FROM `' . $this->table . '` WHERE ' . $where . 'ORDER BY id DESC LIMIT 36';
         $sth = $this->db->prepare($sql);
         echo $sql,'<br>';
-        var_dump($data),'<br>';
+        var_dump($data);
+        echo '<br>';
+        
         if (isset($data['last']) && $data['last'] != null) {
             $sth->bindParam(':id', $data['last'], PDO::PARAM_INT);
         }
