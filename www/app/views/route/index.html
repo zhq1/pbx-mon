@@ -109,6 +109,8 @@
     $.get(url, function(response, status){
       if (status == 'success') {
         var obj = response.data;
+        var select1 = obj.type == 1 ? ' selected="selected"' : '';
+        var select2 = obj.type == 2 ? ' selected="selected"' : '';
         var templete = '<form class="form-horizontal" action="/route/edit?id="' + obj.id + ' method="post" style="width:420px">'+
             '<div class="form-group">'+
             '<label class="col-sm-3 control-label">路由名称</label>'+
@@ -120,8 +122,8 @@
             '<label class="col-sm-3 control-label">路由类型</label>'+
             '<div class="col-sm-8">'+
             '<select class="form-control" name="type">'+
-            '<option value="1">普通路由</option>'+
-            '<option value="2">高级路由</option>'+
+            '<option value="1"' + select1 + '>普通路由</option>'+
+            '<option value="2"' + select2 + '>高级路由</option>'+
             '</select>'+
             '</div>'+
             '</div>'+
