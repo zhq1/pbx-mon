@@ -19,7 +19,7 @@ class CdrModel {
     }   
 
     public function query(array $where) {
-        var_dump($where);
+        print_r($where);
         echo '<br>====================================================<br>';
         $data = $this->checkArgs($where);
         var_dump($data);
@@ -138,7 +138,7 @@ class CdrModel {
             $where .= 'id < :id ';
         }
 
-        $where .= $append ? 'AND create_time BETWEEN :begin AND :end ' : 'AND create_time BETWEEN :begin AND :end ';
+        $where .= $append ? 'AND create_time BETWEEN :begin AND :end ' : 'create_time BETWEEN :begin AND :end ';
 
         if (isset($data['type']) && $data['type'] != null) {
             switch ($data['type']) {
