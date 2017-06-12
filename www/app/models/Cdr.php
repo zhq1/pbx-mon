@@ -61,6 +61,8 @@ class CdrModel {
         $sth->bindParam(':begin', $data['begin'], PDO::PARAM_STR);
         $sth->bindParam(':end', $data['end'], PDO::PARAM_STR);
         $sth->execute();
+        var_dump($sth->errorInfo());
+        exit;
         return $sth->fetchAll();
     }
 
