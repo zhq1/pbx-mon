@@ -20,10 +20,10 @@ class CdrModel {
 
     public function query(array $where) {
         var_dump($where);
-        echo '====================================================<br>';
+        echo '<br>====================================================<br>';
         $data = $this->checkArgs($where);
         var_dump($data);
-        echo '====================================================<br>';
+        echo '<br>====================================================<br>';
         $where = $this->whereAssembly($data);
         $sql = 'SELECT * FROM `' . $this->table . '` WHERE ' . $where . 'ORDER BY id DESC LIMIT 36';
         echo $sql;
