@@ -117,7 +117,6 @@ class RouteModel {
             }
         }
 
-        exit;
         return false;
     }
 
