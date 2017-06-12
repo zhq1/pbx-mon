@@ -143,7 +143,7 @@ class RouteModel {
                 $res['name'] = Filter::alpha($val, null, 1, 32);
                 break;
             case 'type':
-                $res['ip'] = Filter::number($val, 1);
+                $res['type'] = Filter::number($val, 1);
                 break;
             case 'description':
                 $res['description'] = Filter::string($val, 'no description', 1, 64);
