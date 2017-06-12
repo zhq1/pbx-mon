@@ -61,14 +61,14 @@ class CdrController extends Yaf\Controller_Abstract {
             case 'end':
                 $where['end'] = htmlspecialchars(Filter::dateTime($value, date('Y-m-d 20:00:00')), ENT_QUOTES);
                 break;
-	        case 'numtype':
-                $where['numtype'] = htmlspecialchars(Filter::number($value, 1), ENT_QUOTES);
+	        case 'type':
+                $where['type'] = htmlspecialchars(Filter::number($value, 1), ENT_QUOTES);
                 break;
             case 'number':
                 $where['number'] = htmlspecialchars(Filter::alpha($value, ''), ENT_QUOTES);
                 break;
-            case 'iptype':
-                $where['iptype'] = htmlspecialchars(Filter::number($value, 1), ENT_QUOTES);
+            case 'class':
+                $where['class'] = htmlspecialchars(Filter::number($value, 1), ENT_QUOTES);
                 break;
             case 'ip':
                 $where['ip'] = htmlspecialchars(Filter::string($value, ''), ENT_QUOTES);

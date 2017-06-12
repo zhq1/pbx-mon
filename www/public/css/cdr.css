@@ -48,12 +48,12 @@ table tr td {
     margin-right: 5px;
 }
 
-.form-group .start, .form-group .end {
+.form-group .begin, .form-group .end {
     width: 155px;
     font-weight: solid;
 }
 
-.form-group .caller, .form-group .called {
+.form-group .number {
     width: 120px;
 
 }

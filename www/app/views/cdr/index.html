@@ -54,43 +54,39 @@
           <div class="form-group">
             <label>通话时间: </label>
 	        <?php
-	          if (isset($where['begin'])) {
-                echo '<input type="text" id="start" class="form-control input-sm start" name="begin" value="',$where['begin'],'" />';
-	          } else {
-                echo '<input type="text" id="start" class="form-control input-sm start" name="begin" value="',date('Y-m-d 08:00:00'),'" />';
-	          }
+          echo '<input type="text" id="begin" class="form-control input-sm begin" name="begin" value="',isset($where['begin']) ? $where['begin'] : date('Y-m-d 20:00:00'),'" />';
 	        ?>
           </div>
           -
           <div class="form-group">
 	        <?php
-	          if (isset($where['end'])) {
-	            echo '<input type="text" id="end" class="form-control input-sm end" name="end" value="',$where['end'],'" />';
-	          } else {
-	      	    echo '<input type="text" id="end" class="form-control input-sm end" name="end" value="',date('Y-m-d 20:00:00'),'" />';
-	          }
+	        echo '<input type="text" id="end" class="form-control input-sm end" name="end" value="',isset($where['end']) ? $where['end'] : date('Y-m-d 20:00:00'),'" />';
 	        ?>
           </div>
           <div class="form-group">
             <label>
-              <select name="type">
-                <option value="1">主叫号码</option>
-                <option value="2">被叫号码</option>
+              <select id="type" name="type">
+              <?php
+                echo '<option value="1"',(isset($where['type']) && $where['type'] == 1) ? ' selected="selected"' : '','>主叫号码</option>';
+                echo '<option value="2"',(isset($where['type']) && $where['type'] == 2) ? ' selected="selected"' : '','>被叫号码</option>';
+              ?>
               </select>
             </label>
 	        <?php
-	        echo '<input type="text" id="number" class="form-control input-sm caller" placeholder="请输入号码" name="number" value="',isset($where['number']) ? $where['number'] : '','" />';
+	        echo '<input type="text" id="number" class="form-control input-sm number" placeholder="请输入号码" name="number" value="',isset($where['number']) ? $where['number'] : '','" />';
 	        ?>
           </div>
           <div class="form-group">
             <label>
-              <select name="class">
-                <option value="1">呼入 IP</option>
-                <option value="2">呼出 IP</option>
+              <select id="calss" name="class">
+              <?php
+                echo '<option value="1"',(isset($where['class']) && $where['class'] == 1) ? ' selected="selected"' : '','>呼入 IP</option>';
+                echo '<option value="2"',(isset($where['class']) && $where['class'] == 2) ? ' selected="selected"' : '','>呼出 IP</option>';
+              ?>
               </select>
             </label>
 	        <?php
-	        echo '<input type="text" id="called" class="form-control input-sm called" placeholder="请输入ip地址" name="ip" value="',isset($where['ip']) ? $where['ip'] : '','" />';
+	        echo '<input type="text" id="called" class="form-control input-sm ip" placeholder="请输入ip地址" name="ip" value="',isset($where['ip']) ? $where['ip'] : '','" />';
 	        ?>
           </div>
           <div class="form-group hidden-xs hidden-sm">
