@@ -108,6 +108,7 @@
     var url = '/route/edit?id=' + id;
     $.get(url, function(data, status){
       console.log(data);
+      console.log(status);
     });
     return;
     var templete = '<form class="form-horizontal" action="/route/edit" method="post" style="width:420px">'+
