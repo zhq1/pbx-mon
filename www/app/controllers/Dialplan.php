@@ -90,6 +90,24 @@ class DialplanController extends Yaf\Controller_Abstract {
 
         return false;
     }
+
+    public function upAction() {
+        $rid = $this->getRequest()->getQuery('rid');
+        $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/dialplan?rid=' . $rid;
+        $response = $this->getResponse();
+        $response->setRedirect($url);
+        $response->response();
+        return false;
+    }
+
+    public function downAction() {
+        $rid = $this->getRequest()->getQuery('rid');
+        $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/dialplan?rid=' . $rid;
+        $response = $this->getResponse();
+        $response->setRedirect($url);
+        $response->response();
+        return false;
+    }
 }
 
 
