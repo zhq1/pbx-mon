@@ -77,7 +77,7 @@ class RouteController extends Yaf\Controller_Abstract {
 
             $obj['sofia'] = $sofia;
         }
-        $this->getView()->assign("data", $route->getAll());
+        $this->getView()->assign("data", $data);
         return true;
     }
 
