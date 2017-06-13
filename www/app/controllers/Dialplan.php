@@ -51,7 +51,7 @@ class DialplanController extends Yaf\Controller_Abstract {
         if ($request->isPost()) {
             $rid = $this->getRequest()->getQuery('rid');
             $dialplan = new DialplanModel();
-            $route->create($rid, $request->getPost());
+            $dialplan->create($rid, $request->getPost());
             $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/dialplan?rid=' . $rid;
             $response = $this->getResponse();
             $response->setRedirect($url);
