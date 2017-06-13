@@ -114,21 +114,27 @@ class DialplanModel {
 
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
             $max = $this->getLastId($data['rid']);
-            if (($max >= 100) && ($max++ < (($data['rid'] + 1) * 100))) {
-                $data['id'] =  $max;
-                $sql = 'INSERT INTO `' . $this->table . '` VALUES(:id, :rid, :rexp, :type, :sofia, :server, :description)';
-                $sth = $this->db->prepare($sql);
 
-                foreach ($data as $key => $val) {
-                    $sth->bindParam(':' . $key, $data[$key], is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
-                }
+            if ($max == 0) {
+                $data['id'] = $data['rid'] * 100 + 1;
+            } else if (($max >= 100) && ($max++ < (($data['rid'] + 1) * 100))) {
+                $data['id'] = $max;
+            } else {
+                return false;
+            }
 
-                if ($sth->execute()) {
-                    $system = new SystemModel();
-                    $system->regenPlan($data['rid']);
-                    $system->reloadXml();
-                    return true;
-                }
+            $sql = 'INSERT INTO `' . $this->table . '` VALUES(:id, :rid, :rexp, :type, :sofia, :server, :description)';
+            $sth = $this->db->prepare($sql);
+
+            foreach ($data as $key => $val) {
+                $sth->bindParam(':' . $key, $data[$key], is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+            }
+
+            if ($sth->execute()) {
+                $system = new SystemModel();
+                $system->regenPlan($data['rid']);
+                $system->reloadXml();
+                return true;
             }
         }
 
