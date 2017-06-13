@@ -223,7 +223,7 @@ class DialplanModel {
         if ($rid > 0) {
             $ben = $rid * 100;
             $end = ($rid + 1) * 100;
-            $sql = 'SELECT max(id) AS id FROM `' . $this->table '` WHERE id BETWEEN ' . $ben . ' AND ' . $end . ' ORDER BY id';
+            $sql = 'SELECT max(id) AS id FROM `' . $this->table . '` WHERE id BETWEEN ' . $ben . ' AND ' . $end . ' ORDER BY id';
             $result = $this->db->query($sql)->fetchAll();
             if ((count($result) > 0) && (intval($result['id']) >= $ben)) {
                 return intval($result['id']);
