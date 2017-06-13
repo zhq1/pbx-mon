@@ -111,7 +111,7 @@
         var obj = response.data;
         var select1 = obj.type == 1 ? ' selected="selected"' : '';
         var select2 = obj.type == 2 ? ' selected="selected"' : '';
-        var templete = '<form class="form-horizontal" action="/route/edit?id="' + obj.id + ' method="post" style="width:420px">'+
+        var templete = '<form class="form-horizontal" action="/route/edit?id=' + obj.id + '" method="post" style="width:420px">'+
             '<div class="form-group">'+
             '<label class="col-sm-3 control-label">路由名称</label>'+
             '<div class="col-sm-8">'+
