@@ -46,6 +46,7 @@ class RouteModel {
     public function change($id = null, array $data = null) {
         $id = intval($id);
         $data = $this->checkArgs($data);
+        unset($data['name']);
         $column = $this->keyAssembly($data);
 
         if ($id > 0 && count($data) > 0) {
