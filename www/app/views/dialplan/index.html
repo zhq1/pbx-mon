@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Bit Cloud, Inc.">
+    <meta name="author" content="typefo">
+    <link rel="icon" href="favicon.ico">
+    <title>Pbx Monitor System</title>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/route.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand">
+            <img alt="Brand" src="/img/logo.png" width="34" style="margin-top:-8px" />
+          </a>
+          <a class="navbar-brand">pbxMon</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/cdr">通话记录</a></li>
+            <li><a href="/server">网关管理</a></li>
+            <li><a href="/route">路由管理</a></li>
+            <li><a href="/interface">接口管理</a></li>
+            <li><a href="/report">数据报表</a></li>
+            <li><a href="/system/status">服务器状态</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/system/option"><span class="glyphicon glyphicon-cog"></span> 系统设置</a></li>
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> 退 出</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <ol class="breadcrumb">
+          <li><a href="/cdr">Home</a></li>
+          <li><a href="/route">Dialplan</a></li>
+          <li class="active"><?php echo isset($route) ? $route['name'] : 'unknown';?></li>
+          <li class="pull-right add"><button class="btn btn-success btn-xs" onclick="create()"><span class="glyphicon glyphicon-plus"></span> 创 建</button></li>
+        </ol>
+      </div>
+      <div class="row">
+        <table class="table table-hover table-condensed">
+          <thead>
+          <tr><th class="tab-left">#</th><th class="text-left">路由规则</th><th>匹配类型</th><th>呼出接口</th><th>目标网关</th><th>备注信息</th><th colspan="2">排 序</th><th>删 除</th><th class="tab-right">编 辑</th></tr>
+          </thead>
+          <tbody>
+          <?php
+          if (isset($data)) {
+            $id = 1;
+            foreach ($data as $obj) {
+              echo '<tr><td class="tab-left">',$id,'</td><td class="text-left">',$obj['rexp'],'</td><td>',$obj['type'],'</td><td>',$obj['sofia'],'</td><td>',$obj['server'],'</td><td>',$obj['description'],'</td><td><a class="text-muted" href="/dialplan/up?id="',$obj['id'],'><span class="glyphicon glyphicon-arrow-up"></span></a></td><td><a class="text-muted" href="/dialplan/down?id=',$obj['id'],'"><span class="glyphicon glyphicon-arrow-down"></span></a></td><td><button class="btn btn-default btn-xs" onClick="drop(',$obj['id'],')"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><button class="btn btn-default btn-xs" onclick="change(',$obj['id'],')"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>';
+            }
+          }
+          ?>
+          </tbody>
+        </table>
+        </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/layer.js"></script>
+  <script type="text/javascript">
+  function create() {
+    var templete = '<form class="form-horizontal" action="/route/dialplan/edit" method="post" style="width:530px">'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">路由规则</label>'+
+        '<div class="col-sm-5">'+
+        '<input type="text" class="form-control" name="rexp" placeholder="Enter route rule">'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">拨号路由规则</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">匹配类型</label>'+
+        '<div class="col-sm-5">'+
+        '<select class="form-control" name="type">'+
+        '<option value="1">被叫号码</option>'+
+        '<option value="2">主叫号码</option>'+
+        '</select>'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">路由匹配对象</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">呼出接口</label>'+
+        '<div class="col-sm-5">'+
+        '<select class="form-control" name="sofia">'+
+        '<option value="1">internal (112.58.45.80)</option>'+
+        '<option value="2">external (10.24.58.12)</option>'+
+        '</select>'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">绑定呼出接口</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">目标网关</label>'+
+        '<div class="col-sm-5">'+
+        '<input type="text" class="form-control" name="server" placeholder="Enter gateway">'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">呼出目标网关</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">备注信息</label>'+
+        '<div class="col-sm-5">'+
+        '<input type="text" class="form-control" name="description" placeholder="Enter description">'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">路由备注信息</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<div class="col-sm-offset-4 col-sm-8">'+
+        '<button type="submit" class="btn btn-success">创 建</button><button class="btn btn-default">取 消</button>'+
+        '</div>'+
+        '</div>'+
+        '</form>';
+
+    layer.open({
+      type: 1,
+      title: '创建路由规则',
+      area: ['580px', '370px'],
+      content: templete
+    });
+  }
+
+  function change() {
+    var templete = '<form class="form-horizontal" style="width:550px">'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">路由规则</label>'+
+        '<div class="col-sm-5">'+
+        '<input type="text" class="form-control" value="^(80884567)$" placeholder="Enter route rule">'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">拨号路由规则</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">匹配类型</label>'+
+        '<div class="col-sm-5">'+
+        '<select class="form-control">'+
+        '<option>被叫号码</option>'+
+        '<option>主叫号码</option>'+
+        '</select>'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">路由匹配对象</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">呼出接口</label>'+
+        '<div class="col-sm-5">'+
+        '<select class="form-control">'+
+        '<option>internal (112.58.45.80)</option>'+
+        '<option>external (10.24.58.12)</option>'+
+        '</select>'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">绑定呼出接口</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">目标网关</label>'+
+        '<div class="col-sm-5">'+
+        '<input type="text" class="form-control" value="58.240.24.88" placeholder="Enter gateway">'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">呼出目标网关</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">备注信息</label>'+
+        '<div class="col-sm-5">'+
+        '<input type="text" class="form-control" value="no description" placeholder="Enter description">'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">路由备注信息</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<div class="col-sm-offset-4 col-sm-8">'+
+        '<button type="submit" class="btn btn-success">保 存</button><button class="btn btn-default">取 消</button>'+
+        '</div>'+
+        '</div>'+
+        '</form>';
+
+    layer.open({
+      type: 1,
+      title: '编辑路由规则',
+      area: ['580px', '370px'],
+      content: templete
+    });
+  }
+  </script>
+</html>
