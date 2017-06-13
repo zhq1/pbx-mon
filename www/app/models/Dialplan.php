@@ -113,18 +113,22 @@ class DialplanModel {
         $data = $this->checkArgs($data);
 
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
-            $sql = 'INSERT INTO `' . $this->table . '`(`rid`, `rexp`, `type`, `sofia`, `server`, `description`) VALUES(:rid, :rexp, :type, :sofia, :server, :description)';
-            $sth = $this->db->prepare($sql);
+            $max = $this->getLastId($data['rid']);
+            if (($max >= 100) && ($max++ < (($data['rid'] + 1) * 100))) {
+                $data['id'] =  $max;
+                $sql = 'INSERT INTO `' . $this->table . '` VALUES(:id, :rid, :rexp, :type, :sofia, :server, :description)';
+                $sth = $this->db->prepare($sql);
 
-            foreach ($data as $key => $val) {
-                $sth->bindParam(':' . $key, $data[$key], is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
-            }
+                foreach ($data as $key => $val) {
+                    $sth->bindParam(':' . $key, $data[$key], is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+                }
 
-            if ($sth->execute()) {
-                $system = new SystemModel();
-                $system->regenPlan($data['rid']);
-                $system->reloadXml();
-                return true;
+                if ($sth->execute()) {
+                    $system = new SystemModel();
+                    $system->regenPlan($data['rid']);
+                    $system->reloadXml();
+                    return true;
+                }
             }
         }
 
@@ -212,5 +216,20 @@ class DialplanModel {
         }
 
         return $text;
+    }
+
+    public function getLastId($rid = null) {
+        $rid = intval($rid);
+        if ($rid > 0) {
+            $ben = $rid * 100;
+            $end = ($rid + 1) * 100;
+            $sql = 'SELECT max(id) AS id FROM `' . $this->table '` WHERE id BETWEEN ' . $ben . ' AND ' . $end . ' ORDER BY id';
+            $result = $this->db->query($sql)->fetchAll();
+            if ((count($result) > 0) && (intval($result['id']) >= $ben)) {
+                return intval($result['id']);
+            }
+        }
+
+        return 0;
     }
 }
