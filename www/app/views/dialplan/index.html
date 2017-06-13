@@ -212,12 +212,8 @@
 
   function sort(id, op) {
     var url = '/dialplan/' + op + '?id=' + id;
-    $.get(url, function(response, status) {
-      if (status == 'success') {
-        setTimeout(function() {
-          window.location.reload();
-        }, 500);
-      }
+    $.get(url, function() {
+        window.location.reload();
     });
   }
   </script>
