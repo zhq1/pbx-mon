@@ -113,11 +113,11 @@ class DialplanModel {
         $data = $this->checkArgs($data);
 
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
-            $sql = 'INSERT INTO `' . $this->table . '`(rid, rexp, type, sofia, server, description) VALUES(:rid, :rexp, :type, :sofia, :server, :description)';
+            $sql = 'INSERT INTO `' . $this->table . '`(`rid`, `rexp`, `type`, `sofia`, `server`, `description`) VALUES(:rid, :rexp, :type, :sofia, :server, :description)';
             $sth = $this->db->prepare($sql);
 
             foreach ($data as $key => $val) {
-                $sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+                $sth->bindParam(':' . $key, $data[$key], is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
             }
 
             if ($sth->execute()) {
@@ -159,19 +159,34 @@ class DialplanModel {
         foreach ($data as $key => $val) {
             switch ($key) {
             case 'rid':
-                $res['rid'] = Filter::number($val, null, 1);
+                $rid = Filter::number($val, null, 1);
+                if ($rid != null) {
+                    $route = new RouteModel();
+                    if ($route->isExist($rid)) {
+                        $res['rid'] = $rid;
+                    }
+                }
                 break;
             case 'rexp':
                 $res['rexp'] = Filter::string($val, null);
                 break;
             case 'type':
-                $res['type'] = Filter::number($val, null, 1);
+                $type = Filter::number($val, null, 1);
+                if (in_array($type, [1, 2], true)) {
+                    $res['type'] = $type;
+                }
                 break;
             case 'sofia':
-                $res['sofia'] = Filter::alpha($val, null);
+                $sofia = Filter::number($val, null);
+                if ($sofia != null) {
+                    $interface = new InterfaceModel();
+                    if ($interface->isExist($sofia)) {
+                        $res['sofia'] = $sofia;
+                    }
+                }
                 break;
             case 'server':
-                $res['server'] = Filter::string($val, null);
+                $res['server'] = Filter::string($val, null, 7, 32);
                 break;
             case 'description':
                 $res['description'] = Filter::string($val, 'no description', 1, 64);

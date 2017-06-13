@@ -54,13 +54,30 @@ class RouteController extends Yaf\Controller_Abstract {
     public function deleteAction() {
         $id = $this->getRequest()->getQuery('id');
         $route = new RouteModel();
-
         $route->delete($id);
 
         return false;
     }
 
     public function dialplanAction() {
+        $id = $this->getRequest()->getQuery('id');
+        $interface = new InterfaceModel();
+        $interfaces = $interface->getAll();
+
+        $dialplan = new DialplanModel();
+        $data = $dialplan->getAll();
+        foreach ($data as &$obj) {
+            $obj['type'] = $obj['type'] == 1 ? '主叫号码' : $obj['type'] == 2 ? '被叫号码' : 'nuknown';
+            $sofia = 'unknown';
+            foreach ($interfaces as $res) {
+                if ($obj['sofia'] == $res['id']) {
+                    $sofia = $res['name'];
+                }
+            }
+
+            $obj['sofia'] = $sofia;
+        }
+        $this->getView()->assign("data", $route->getAll());
         return true;
     }
 

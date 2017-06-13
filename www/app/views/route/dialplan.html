@@ -48,23 +48,18 @@
       </div>
       <div class="row">
         <table class="table table-hover table-condensed">
-        	<thead><tr><th class="tab-left">#</th><th class="text-left">路由规则</th><th>匹配类型</th><th>呼出接口</th><th>目标网关</th><th>备注信息</th><th colspan="2">排 序</th><th>删 除</th><th class="tab-right">编 辑</th></tr></thead>
+          <thead>
+          <tr><th class="tab-left">#</th><th class="text-left">路由规则</th><th>匹配类型</th><th>呼出接口</th><th>目标网关</th><th>备注信息</th><th colspan="2">排 序</th><th>删 除</th><th class="tab-right">编 辑</th></tr>
+          </thead>
           <tbody>
-            <tr><td class="tab-left">1</td><td class="text-left">^86(.*)$</td><td>被叫号码</td><td>internal</td><td>112.2.25.80</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-up"></span></a></td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-down"></span></a></td><td><button class="btn btn-default btn-xs" onClick="remove()"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><button class="btn btn-default btn-xs" onclick="change()"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>
-
-            <tr><td class="tab-left">2</td><td class="text-left">^90(.*)$</td><td>被叫号码</td><td>internal</td><td>112.2.25.80</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-up"></span></a></td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-down"></span></a></td><td><button class="btn btn-default btn-xs" onClick="remove()"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><button class="btn btn-default btn-xs" onclick="change()"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>
-
-            <tr><td class="tab-left">3</td><td class="text-left">^9011(.*)$</td><td>被叫号码</td><td>internal</td><td>112.2.25.80</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-up"></span></a></td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-down"></span></a></td><td><button class="btn btn-default btn-xs" onClick="remove()"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><button class="btn btn-default btn-xs" onclick="change()"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>
-
-            <tr><td class="tab-left">4</td><td class="text-left">^(80884567)$</td><td>被叫号码</td><td>internal</td><td>112.2.25.80</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-up"></span></a></td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-down"></span></a></td><td><button class="btn btn-default btn-xs" onClick="remove()"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><button class="btn btn-default btn-xs" onclick="change()"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>
-
-            <tr><td class="tab-left">5</td><td class="text-left">^(80884567)$</td><td>被叫号码</td><td>internal</td><td>112.2.25.80</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-up"></span></a></td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-down"></span></a></td><td><button class="btn btn-default btn-xs" onClick="remove()"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><button class="btn btn-default btn-xs" onclick="change()"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>
-
-            <tr><td class="tab-left">6</td><td class="text-left">^(051280884567)$</td><td>被叫号码</td><td>internal</td><td>112.2.25.80</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-up"></span></a></td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-down"></span></a></td><td><button class="btn btn-default btn-xs" onClick="remove()"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><button class="btn btn-default btn-xs" onclick="change()"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>
-
-            <tr><td class="tab-left">7</td><td class="text-left">^021(68554567)$</td><td>被叫号码</td><td>internal</td><td>112.2.25.80</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-up"></span></a></td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-down"></span></a></td><td><button class="btn btn-default btn-xs" onClick="remove()"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><button class="btn btn-default btn-xs" onclick="change()"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>
-
-            <tr><td class="tab-left">8</td><td class="text-left">^135|136|188</td><td>被叫号码</td><td>internal</td><td>112.2.25.80</td><td>no description</td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-up"></span></a></td><td><a class="text-muted" href="#"><span class="glyphicon glyphicon-arrow-down"></span></a></td><td><button class="btn btn-default btn-xs" onClick="remove()"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><button class="btn btn-default btn-xs" onclick="change()"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>
+          <?php
+          if (isset($data)) {
+            $id = 1;
+            foreach ($data as $obj) {
+              echo '<tr><td class="tab-left">',$id,'</td><td class="text-left">',$obj['rexp'],'</td><td>',$obj['type'],'</td><td>',$obj['sofia'],'</td><td>',$obj['server'],'</td><td>',$obj['description'],'</td><td><a class="text-muted" href="/dialplan/up?id="',$obj['id'],'><span class="glyphicon glyphicon-arrow-up"></span></a></td><td><a class="text-muted" href="/dialplan/down?id=',$obj['id'],'"><span class="glyphicon glyphicon-arrow-down"></span></a></td><td><button class="btn btn-default btn-xs" onClick="drop(',$obj['id'],')"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><button class="btn btn-default btn-xs" onclick="change(',$obj['id'],')"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>';
+            }
+          }
+          ?>
           </tbody>
         </table>
         </div>
@@ -75,64 +70,64 @@
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript">
   function create() {
-    var templete = '<form class="form-horizontal" style="width:530px">'+
-  '<div class="form-group">'+
-    '<label class="col-sm-4 control-label">路由规则</label>'+
-    '<div class="col-sm-5">'+
-      '<input type="text" class="form-control" placeholder="Enter route rule">'+
-    '</div>'+
-    '<div class="col-sm-3">'+
-      '<span class="help-block">拨号路由规则</span>'+
-    '</div>'+
-  '</div>'+
-  '<div class="form-group">'+
-    '<label class="col-sm-4 control-label">匹配类型</label>'+
-    '<div class="col-sm-5">'+
-      '<select class="form-control">'+
-          '<option>被叫号码</option>'+
-          '<option>主叫号码</option>'+
-      '</select>'+
-    '</div>'+
-    '<div class="col-sm-3">'+
-      '<span class="help-block">路由匹配对象</span>'+
-    '</div>'+
-  '</div>'+
-  '<div class="form-group">'+
-    '<label class="col-sm-4 control-label">呼出接口</label>'+
-    '<div class="col-sm-5">'+
-      '<select class="form-control">'+
-          '<option>internal (112.58.45.80)</option>'+
-          '<option>external (10.24.58.12)</option>'+
-      '</select>'+
-    '</div>'+
-    '<div class="col-sm-3">'+
-      '<span class="help-block">绑定呼出接口</span>'+
-    '</div>'+
-  '</div>'+
-  '<div class="form-group">'+
-    '<label class="col-sm-4 control-label">目标网关</label>'+
-    '<div class="col-sm-5">'+
-      '<input type="text" class="form-control" placeholder="Enter gateway">'+
-    '</div>'+
-    '<div class="col-sm-3">'+
-      '<span class="help-block">呼出目标网关</span>'+
-    '</div>'+
-  '</div>'+
-  '<div class="form-group">'+
-    '<label class="col-sm-4 control-label">备注信息</label>'+
-    '<div class="col-sm-5">'+
-      '<input type="text" class="form-control" placeholder="Enter description">'+
-    '</div>'+
-    '<div class="col-sm-3">'+
-      '<span class="help-block">路由备注信息</span>'+
-    '</div>'+
-  '</div>'+
-  '<div class="form-group">'+
-    '<div class="col-sm-offset-4 col-sm-8">'+
-      '<button type="submit" class="btn btn-success">创 建</button><button class="btn btn-default">取 消</button>'+
-    '</div>'+
-  '</div>'+
-'</form>';
+    var templete = '<form class="form-horizontal" action="/route/dialplan/edit" method="post" style="width:530px">'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">路由规则</label>'+
+        '<div class="col-sm-5">'+
+        '<input type="text" class="form-control" name="rexp" placeholder="Enter route rule">'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">拨号路由规则</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">匹配类型</label>'+
+        '<div class="col-sm-5">'+
+        '<select class="form-control" name="type">'+
+        '<option value="1">被叫号码</option>'+
+        '<option value="2">主叫号码</option>'+
+        '</select>'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">路由匹配对象</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">呼出接口</label>'+
+        '<div class="col-sm-5">'+
+        '<select class="form-control" name="sofia">'+
+        '<option value="1">internal (112.58.45.80)</option>'+
+        '<option value="2">external (10.24.58.12)</option>'+
+        '</select>'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">绑定呼出接口</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">目标网关</label>'+
+        '<div class="col-sm-5">'+
+        '<input type="text" class="form-control" name="server" placeholder="Enter gateway">'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">呼出目标网关</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">备注信息</label>'+
+        '<div class="col-sm-5">'+
+        '<input type="text" class="form-control" name="description" placeholder="Enter description">'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">路由备注信息</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<div class="col-sm-offset-4 col-sm-8">'+
+        '<button type="submit" class="btn btn-success">创 建</button><button class="btn btn-default">取 消</button>'+
+        '</div>'+
+        '</div>'+
+        '</form>';
 
     layer.open({
       type: 1,
@@ -144,63 +139,63 @@
 
   function change() {
     var templete = '<form class="form-horizontal" style="width:550px">'+
-  '<div class="form-group">'+
-    '<label class="col-sm-4 control-label">路由规则</label>'+
-    '<div class="col-sm-5">'+
-      '<input type="text" class="form-control" value="^(80884567)$" placeholder="Enter route rule">'+
-    '</div>'+
-    '<div class="col-sm-3">'+
-      '<span class="help-block">拨号路由规则</span>'+
-    '</div>'+
-  '</div>'+
-  '<div class="form-group">'+
-    '<label class="col-sm-4 control-label">匹配类型</label>'+
-    '<div class="col-sm-5">'+
-      '<select class="form-control">'+
-          '<option>被叫号码</option>'+
-          '<option>主叫号码</option>'+
-      '</select>'+
-    '</div>'+
-    '<div class="col-sm-3">'+
-      '<span class="help-block">路由匹配对象</span>'+
-    '</div>'+
-  '</div>'+
-  '<div class="form-group">'+
-    '<label class="col-sm-4 control-label">呼出接口</label>'+
-    '<div class="col-sm-5">'+
-      '<select class="form-control">'+
-          '<option>internal (112.58.45.80)</option>'+
-          '<option>external (10.24.58.12)</option>'+
-      '</select>'+
-    '</div>'+
-    '<div class="col-sm-3">'+
-      '<span class="help-block">绑定呼出接口</span>'+
-    '</div>'+
-  '</div>'+
-  '<div class="form-group">'+
-    '<label class="col-sm-4 control-label">目标网关</label>'+
-    '<div class="col-sm-5">'+
-      '<input type="text" class="form-control" value="58.240.24.88" placeholder="Enter gateway">'+
-    '</div>'+
-    '<div class="col-sm-3">'+
-      '<span class="help-block">呼出目标网关</span>'+
-    '</div>'+
-  '</div>'+
-  '<div class="form-group">'+
-    '<label class="col-sm-4 control-label">备注信息</label>'+
-    '<div class="col-sm-5">'+
-      '<input type="text" class="form-control" value="no description" placeholder="Enter description">'+
-    '</div>'+
-    '<div class="col-sm-3">'+
-      '<span class="help-block">路由备注信息</span>'+
-    '</div>'+
-  '</div>'+
-  '<div class="form-group">'+
-    '<div class="col-sm-offset-4 col-sm-8">'+
-      '<button type="submit" class="btn btn-success">保 存</button><button class="btn btn-default">取 消</button>'+
-    '</div>'+
-  '</div>'+
-'</form>';
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">路由规则</label>'+
+        '<div class="col-sm-5">'+
+        '<input type="text" class="form-control" value="^(80884567)$" placeholder="Enter route rule">'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">拨号路由规则</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">匹配类型</label>'+
+        '<div class="col-sm-5">'+
+        '<select class="form-control">'+
+        '<option>被叫号码</option>'+
+        '<option>主叫号码</option>'+
+        '</select>'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">路由匹配对象</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">呼出接口</label>'+
+        '<div class="col-sm-5">'+
+        '<select class="form-control">'+
+        '<option>internal (112.58.45.80)</option>'+
+        '<option>external (10.24.58.12)</option>'+
+        '</select>'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">绑定呼出接口</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">目标网关</label>'+
+        '<div class="col-sm-5">'+
+        '<input type="text" class="form-control" value="58.240.24.88" placeholder="Enter gateway">'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">呼出目标网关</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label class="col-sm-4 control-label">备注信息</label>'+
+        '<div class="col-sm-5">'+
+        '<input type="text" class="form-control" value="no description" placeholder="Enter description">'+
+        '</div>'+
+        '<div class="col-sm-3">'+
+        '<span class="help-block">路由备注信息</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<div class="col-sm-offset-4 col-sm-8">'+
+        '<button type="submit" class="btn btn-success">保 存</button><button class="btn btn-default">取 消</button>'+
+        '</div>'+
+        '</div>'+
+        '</form>';
 
     layer.open({
       type: 1,
