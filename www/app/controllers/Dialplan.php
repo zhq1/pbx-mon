@@ -30,7 +30,6 @@ class DialplanController extends Yaf\Controller_Abstract {
         $route = new RouteModel();
         $this->getView()->assign('route', $route->get($rid));
         $this->getView()->assign("data", $data);
-        exit;
         return true;
 	}
 
