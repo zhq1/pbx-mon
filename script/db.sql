@@ -58,7 +58,7 @@ CREATE TABLE `dialplan` (
        `rid` int not null,
        `rexp` varchar(64) not null,
        `type` int not null,
-       `sofia` varchar(32) not null,
+       `sofia` int not null,
        `server` varchar(32) not null,
        `description` varchar(64) not null
 );
