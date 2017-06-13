@@ -40,7 +40,7 @@ class DialplanModel {
             $sth = $this->db->prepare($sql);
             $sth->bindParam(':rid', $rid, PDO::PARAM_INT);
             $sth->execute();
-            return $sth->fetchAll();
+            $result = $sth->fetchAll();
         }
 
         return $result;
