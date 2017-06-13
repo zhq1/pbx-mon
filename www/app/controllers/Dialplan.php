@@ -16,7 +16,17 @@ class DialplanController extends Yaf\Controller_Abstract {
         $dialplan = new DialplanModel();
         $data = $dialplan->getAll($rid);
         foreach ($data as &$obj) {
-            $obj['type'] = ($obj['type'] == '1') ? '主叫号码' : ($obj['type'] == '2') ? '被叫号码' : 'unknown';
+            $obj['type'] = 'unknown';
+            switch ($obj['type']) {
+                case '1':
+                    $obj['type'] = '主叫号码';
+                    break;
+                case '2':
+                    $obj['type'] = '被叫号码';
+                    break;
+                default:
+                    break;
+            }
             $sofia = 'unknown';
             foreach ($interfaces as $res) {
                 if ($obj['sofia'] == $res['id']) {
