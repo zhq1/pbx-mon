@@ -96,8 +96,13 @@
         '<label class="col-sm-4 control-label">呼出接口</label>'+
         '<div class="col-sm-5">'+
         '<select class="form-control" name="sofia">'+
-        '<option value="1">internal (112.58.45.80)</option>'+
-        '<option value="2">external (10.24.58.12)</option>'+
+        <?php
+        if (isset($interfaces)) {
+            foreach ($interfaces as $interface) {
+                echo "'<option value=\"", $interface['id'],"\">",$interface['name']," (",$interface['ip'],")</option>'+";
+            }
+        }
+        ?>
         '</select>'+
         '</div>'+
         '<div class="col-sm-3">'+
