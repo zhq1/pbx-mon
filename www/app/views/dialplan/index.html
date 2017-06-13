@@ -99,7 +99,7 @@
         <?php
         if (isset($interfaces)) {
             foreach ($interfaces as $interface) {
-                echo "'<option value=\"", $interface['id'],"\">",$interface['name']," (",$interface['ip'],")</option>'+";
+                echo "'<option value=\"", $interface['id'],"\">",$interface['name']," (",$interface['ip'],")</option>'+\n";
             }
         }
         ?>
