@@ -16,6 +16,7 @@ class DialplanController extends Yaf\Controller_Abstract {
         $dialplan = new DialplanModel();
         $data = $dialplan->getAll($rid);
         foreach ($data as &$obj) {
+            $obj['type'] = $obj['type'];
             var_dump($obj);
             echo '<br>';
             /*
