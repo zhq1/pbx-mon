@@ -16,11 +16,6 @@ class DialplanController extends Yaf\Controller_Abstract {
         $dialplan = new DialplanModel();
         $data = $dialplan->getAll($rid);
         foreach ($data as &$obj) {
-            $obj['type'] = $obj['type'];
-            var_dump($obj);
-            echo '<br>';
-            /*
-            $obj['type'] = 'unknown';
             switch ($obj['type']) {
                 case '1':
                     $obj['type'] = '主叫号码';
@@ -29,9 +24,10 @@ class DialplanController extends Yaf\Controller_Abstract {
                     $obj['type'] = '被叫号码';
                     break;
                 default:
+                    $obj['type'] = 'unknown';
                     break;
             }
-            */
+
             $sofia = 'unknown';
             foreach ($interfaces as $res) {
                 if ($obj['sofia'] == $res['id']) {
@@ -45,9 +41,6 @@ class DialplanController extends Yaf\Controller_Abstract {
         $route = new RouteModel();
         $this->getView()->assign('route', $route->get($rid));
         $this->getView()->assign("data", $data);
-        echo '=================================<br>';
-        var_dump($data);
-        exit;
         return true;
 	}
 
