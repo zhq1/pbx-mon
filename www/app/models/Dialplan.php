@@ -158,18 +158,18 @@ class DialplanModel {
 
         if ($this->isExist($id) && $this->isExist($fid)) {
             if (($fid % 100) != 0) {
-                $sql = 'UPDATE `',$this->table,'` SET id = 1 WHERE id = ' . $fid;
+                $sql = 'UPDATE `' . $this->table . '` SET id = 1 WHERE id = ' . $fid;
                 if ($this->db->query($sql)) {
-                    $sql = 'UPDATE `',$this->table,'` SET id = ',$fid,' WHERE id = ' . $id;
+                    $sql = 'UPDATE `' . $this->table . '` SET id = ' . $fid . ' WHERE id = ' . $id;
                     if ($this->db->query($sql)) {
-                        $sql = 'UPDATE `',$this->table,'` SET id = ',$id,' WHERE id = 1';
+                        $sql = 'UPDATE `' . $this->table . '` SET id = ' . $id . ' WHERE id = 1';
                         if ($this->db->query($sql)) {
                             return true;
                         }
-                        $sql = 'UPDATE `',$this->table,'` SET id = ',$id,' WHERE id = ' . $fid;
+                        $sql = 'UPDATE `' . $this->table . '` SET id = ' . $id . ' WHERE id = ' . $fid;
                         $this->db->query($sql);
                     } else {
-                        $sql = 'UPDATE `',$this->table,'` SET id = ',$fid,' WHERE id = 1';
+                        $sql = 'UPDATE `' . $this->table . '` SET id = ' . $fid .' WHERE id = 1';
                     }
                 }
             }
