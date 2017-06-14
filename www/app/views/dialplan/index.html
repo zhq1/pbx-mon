@@ -151,7 +151,7 @@
         console.log(response);
         var obj = response.data;
         var sofia = response.sofia;
-        var templete = '<form class="form-horizontal" action="/dialplan/edit?id="' + obj.id + ' method="post" style="width:550px">'+
+        var templete = '<form class="form-horizontal" action="/dialplan/edit?id=' + obj.id + '" method="post" style="width:550px">'+
             '<div class="form-group">'+
             '<label class="col-sm-4 control-label">路由规则</label>'+
             '<div class="col-sm-5">'+
