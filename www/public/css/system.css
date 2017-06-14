@@ -21,6 +21,10 @@ body {
     background-color: #5da55d;
 }
 
+.badge-primary {
+    background-color: #518abb;
+}
+
 .badge-warning {
     background-color: #efa133;
 }
