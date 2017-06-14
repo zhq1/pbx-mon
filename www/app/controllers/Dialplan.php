@@ -95,7 +95,13 @@ class DialplanController extends Yaf\Controller_Abstract {
     }
 
     public function upAction() {
-        $rid = $this->getRequest()->getQuery('rid');
+        $dialplan = new DialplanModel();
+        $id = $this->getRequest()->getQuery('id');
+        $dialplan->setUp($id);
+        $response['status'] = 200;
+        $response['message'] = "success";
+        header('Content-type: application/json');
+        echo json_encode($response);
         return false;
     }
 

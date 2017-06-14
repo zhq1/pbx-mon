@@ -154,6 +154,28 @@ class DialplanModel {
 
     public function setUp($id = null) {
         $id = intval($id);
+        $fid = $id - 1;
+
+        if ($this->isExist($id) && $this->isExist($fid)) {
+            if ($fid % 100) != 0) {
+                $sql = 'UPDATE `',$this->table,'` SET id = 1 WHERE id = ' . $fid;
+                if ($this->db->query($sql)) {
+                    $sql = 'UPDATE `',$this->table,'` SET id = ',$fid,' WHERE id = ' . $id;
+                    if ($this->db->query($sql)) {
+                        $sql = 'UPDATE `',$this->table,'` SET id = ',$id,' WHERE id = 1';
+                        if ($this->db->query($sql)) {
+                            return true;
+                        }
+                        $sql = 'UPDATE `',$this->table,'` SET id = ',$id,' WHERE id = ' . $fid;
+                        $this->db->query($sql);
+                    } else {
+                        $sql = 'UPDATE `',$this->table,'` SET id = ',$fid,' WHERE id = 1';
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     public function setDown($id = null) {
