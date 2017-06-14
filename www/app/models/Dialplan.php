@@ -89,17 +89,23 @@ class DialplanModel {
 
     public function delete($id = null) {
         $id = intval($id);
-        if ($id > 0){
-            $sql = 'DELETE FROM `' . $this->table . '` WHERE id = ' . $id;
-            if ($this->db->query($sql)) {
-                $dialplan = $this->get($id);
-                if (count($dialplan) > 0) {
-                    $system = new SystemModel();
-                    $system->regenPlan($dialplan['rid']);
-                    $system->reloadXml();
-                }
-                return true;
+
+        if (!$this->isExist($id)){
+            return false;
+        }
+
+        $obj = $this->get($id);
+        if (count($obj) > 0) {
+            $max = $this->getLastId($obj['rid']);
+            for ($i = $id + 1; $id <= $max; $i++) {
+                $sql = 'UPDATE `dialplan` SET id = ' . ($i - 1) . ' WHERE id = ' . $i;
+                $this->db->query($sql);
             }
+
+            $system = new SystemModel();
+            $system->regenPlan($obj['rid']);
+            $system->reloadXml();
+            return true;
         }
 
         return false;
