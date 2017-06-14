@@ -56,7 +56,7 @@
           if (isset($data)) {
             $id = 1;
             foreach ($data as $obj) {
-              echo '<tr><td class="tab-left">',$id,'</td><td class="text-left">',$obj['rexp'],'</td><td>',$obj['type'],'</td><td>',$obj['sofia'],'</td><td>',$obj['server'],'</td><td>',$obj['description'],'</td><td><a class="text-muted" href="javascript:void(0);" onClick="sort(',"'up',",$obj['id'],')"><span class="glyphicon glyphicon-arrow-up"></span></a></td><td><a class="text-muted" href="javascript:void(0);" onClick="sort(',"'down',",$obj['id'],')"><span class="glyphicon glyphicon-arrow-down"></span></a></td><td><button class="btn btn-default btn-xs" onClick="drop(',$obj['id'],')"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><button class="btn btn-default btn-xs" onclick="change(',$obj['id'],')"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>';
+              echo '<tr><td class="tab-left">',$id,'</td><td class="text-left">',$obj['rexp'],'</td><td>',$obj['type'],'</td><td>',$obj['sofia'],'</td><td>',$obj['server'],'</td><td>',$obj['description'],'</td><td><a class="text-muted" href="javascript:void(0);" onClick="sort(',"'up',",$obj['id'],')"><span class="glyphicon glyphicon-arrow-up"></span></a></td><td><a class="text-muted" href="javascript:void(0);" onClick="sort(',"'down',",$obj['id'],')"><span class="glyphicon glyphicon-arrow-down"></span></a></td><td><button class="btn btn-default btn-xs" onClick="drop(',$obj['id'],')"><span class="glyphicon glyphicon-trash"></span> 删 除</button></td><td><button class="btn btn-default btn-xs" onclick="change(',$obj['id'],')"><span class="glyphicon glyphicon-edit"></span> 编 辑</button></td></tr>',"\n";
               $id++;
             }
           }

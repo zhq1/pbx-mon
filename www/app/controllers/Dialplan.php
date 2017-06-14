@@ -87,10 +87,6 @@ class DialplanController extends Yaf\Controller_Abstract {
     }
 
     public function deleteAction() {
-        $id = $this->getRequest()->getQuery('id');
-        $route = new RouteModel();
-        $route->delete($id);
-
         return false;
     }
 
