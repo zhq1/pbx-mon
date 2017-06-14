@@ -199,7 +199,7 @@ class DialplanModel {
                 $res['server'] = Filter::string(str_replace(' ', '', $val), null, 7, 32);
                 break;
             case 'description':
-                $res['description'] = Filter::string(str_replace(' ', '', $val), 'no description', 1, 64);
+                $res['description'] = Filter::string($val, 'no description', 1, 64);
                 break;
             }
         }
