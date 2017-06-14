@@ -51,8 +51,11 @@ class InterfaceController extends Yaf\Controller_Abstract {
         $id = $this->getRequest()->getQuery('id');
         $interface = new InterfaceModel();
 
-        $interface->delete($id);
-        
+        $success = $interface->delete($id);
+        $response['status'] = $success ? 200 : 400;
+        $response['message'] = $success ? "success" : 'failed';
+        header('Content-type: application/json');
+        echo json_encode($response);
         return false;
     }
 }

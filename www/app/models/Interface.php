@@ -74,6 +74,12 @@ class InterfaceModel {
         $id = intval($id);
         $result = $this->get($id);
         if (count($result) > 0){
+
+            /* Check whether it has been referenced */
+            if ($this->checkUsed($id)) {
+                return false;
+            }
+
             $file = $this->config->fs->path . '/conf/sofia/' . $result['name'] . '.xml';
             if (file_exists($file)) {
                 unlink($file);
@@ -186,6 +192,17 @@ class InterfaceModel {
                 return false;
             }
 
+            return true;
+        }
+
+        return false;
+    }
+
+    public function checkUsed($id) {
+        $id = intval($id);
+        $sql = 'SELECT * FROM `dialplan` WHERE sofia = ' . $id;
+        $result = $this->db->query($sql)->fetchAll();
+        if (count($result) > 0) {
             return true;
         }
 
