@@ -157,7 +157,7 @@ class DialplanModel {
         $fid = $id - 1;
 
         if ($this->isExist($id) && $this->isExist($fid)) {
-            if ($fid % 100) != 0) {
+            if (($fid % 100) != 0) {
                 $sql = 'UPDATE `',$this->table,'` SET id = 1 WHERE id = ' . $fid;
                 if ($this->db->query($sql)) {
                     $sql = 'UPDATE `',$this->table,'` SET id = ',$fid,' WHERE id = ' . $id;
