@@ -96,16 +96,19 @@ class DialplanModel {
 
         $obj = $this->get($id);
         if (count($obj) > 0) {
-            $max = $this->getLastId($obj['rid']);
-            for ($i = $id + 1; $i <= $max; $i++) {
-                $sql = 'UPDATE `dialplan` SET id = ' . ($i - 1) . ' WHERE id = ' . $i;
-                $this->db->query($sql);
-            }
+            $sql = 'DELETE FROM `dialplan` WHERE id = ' . $id;
+            if ($this->db->query($sql)) {
+                $max = $this->getLastId($obj['rid']);
+                for ($i = $id + 1; $i <= $max; $i++) {
+                    $sql = 'UPDATE `dialplan` SET id = ' . ($i - 1) . ' WHERE id = ' . $i;
+                    $this->db->query($sql);
+                }
 
-            $system = new SystemModel();
-            $system->regenPlan($obj['rid']);
-            $system->reloadXml();
-            return true;
+                $system = new SystemModel();
+                $system->regenPlan($obj['rid']);
+                $system->reloadXml();
+                return true;
+            }
         }
 
         return false;
