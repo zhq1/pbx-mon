@@ -48,10 +48,15 @@ class DialplanModel {
     
     public function change($id = null, array $data = null) {
         $id = intval($id);
+        var_dump($data);
+        echo '<br>==============================================<br>';
         $data = $this->checkArgs($data);
         unset($data['rid']);
         $column = $this->keyAssembly($data);
-
+        var_dump($data);
+        echo '==================================================<br>';
+        echo $column;
+        exit;
         if ($id > 0 && count($data) > 0) {
             $sql = 'UPDATE `' . $this->table . '` SET ' . $column . ' WHERE id = :id';
             $sth = $this->db->prepare($sql);
