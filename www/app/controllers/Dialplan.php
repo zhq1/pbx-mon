@@ -87,6 +87,13 @@ class DialplanController extends Yaf\Controller_Abstract {
     }
 
     public function deleteAction() {
+        $id = $this->getRequest()->getQuery('id');
+        $dialplan = new DialplanModel();
+        $dialplan->delete($id);
+        $response['status'] = 200;
+        $response['message'] = "success";
+        header('Content-type: application/json');
+        echo json_encode($response);
         return false;
     }
 
