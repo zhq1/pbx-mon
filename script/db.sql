@@ -52,6 +52,8 @@ CREATE TABLE `route` (
        `description` varchar(64) not null
 );
 
+INSERT INTO `route`(`name`, `type`, `description`) VALUES('default', 2, 'no description');
+
 -- pbxmon dialplan table
 CREATE TABLE `dialplan` (
        `id` int primary key not null,

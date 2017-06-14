@@ -101,6 +101,11 @@ class RouteModel {
         $count = count($this->column);
         $data = $this->checkArgs($data);
 
+        /* Reserved routing table */
+        if (in_array($data, ['route', 'default'])) {
+            return false;
+        }
+
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
             $sql = 'INSERT INTO `' . $this->table . '`(`name`, `type`, `description`) VALUES(:name, :type, :description)';
             $sth = $this->db->prepare($sql);

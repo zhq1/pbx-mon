@@ -175,7 +175,7 @@ class SystemModel {
                 $xml .= '    <param name="rfc2833-pt" value="101"/>' . "\n";
                 $xml .= '    <param name="sip-port" value="' . $obj['port'] . '"/>' . "\n";
                 $xml .= '    <param name="dialplan" value="XML"/>' . "\n";
-                $xml .= '    <param name="context" value="default"/>' . "\n";
+                $xml .= '    <param name="context" value="route"/>' . "\n";
                 $xml .= '    <param name="dtmf-duration" value="2000"/>' . "\n";
                 $xml .= '    <param name="inbound-codec-prefs" value="' . $obj['in_code'] . '"/>' . "\n";
                 $xml .= '    <param name="outbound-codec-prefs" value="' . $obj['out_code'] . '"/>' . "\n";
