@@ -10,7 +10,13 @@ class RouteController extends Yaf\Controller_Abstract {
 
     public function indexAction() {
         $route = new RouteModel();
-        $this->getView()->assign("data", $route->getAll());
+        $data = $route->getAll();
+        $dialplan = new DialplanModel();
+
+        foreach ($data as &$obj) {
+            $obj['count'] = $dialplan->getCount($obj['id']);
+        }
+        $this->getView()->assign("data", $data);
         return true;
 	}
 

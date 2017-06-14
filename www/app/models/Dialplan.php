@@ -46,6 +46,17 @@ class DialplanModel {
         return $result;
     }
     
+    public function getCount($rid = null) {
+        $rid = intval($rid);
+        $sql = 'SELECT count(id) AS count FROM `' . $this->table . '` WHERE rid = ' . $rid;
+        $result = $this->db->query($sql)->fetchAll();
+        if (count($result) > 0) {
+            return intval($result[0]['count']);
+        }
+
+        return 0;
+    }
+
     public function change($id = null, array $data = null) {
         $id = intval($id);
         $data = $this->checkArgs($data);

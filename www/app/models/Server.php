@@ -58,12 +58,16 @@ class ServerModel {
             }
 
             if ($sth->execute()) {
-                if (isset($data['call'])) {
-                    $system = new SystemModel();
+                $system = new SystemModel();
+                if (isset($data['ip']) || isset($data['call'])) {
                     $system->regenAcl();
                     $system->reloadAcl();
                 }
 
+                if (isset($data['ip']) || isset($data['route'])) {
+                    $system->regenDefXml();
+                    $system->relaodXml();
+                }
                 return true;
             }
         }
@@ -82,7 +86,9 @@ class ServerModel {
             if ($result['call'] == 1) {
                 $system = new SystemModel();
                 $system->regenAcl();
+                $system->regenDefXml();
                 $system->reloadAcl();
+                $system->relaodXml();
             }
             return true;
         }
@@ -107,11 +113,14 @@ class ServerModel {
         	}
 
         	if ($sth->execute()) {
+                $system = new SystemModel();
                 if ($data['call'] == 1) {
-                    $system = new SystemModel();
                     $system->regenAcl();
-                    //$system->reloadAcl();
+                    $system->reloadAcl();
                 }
+                
+                $system->regenDefXml();
+                $system->relaodXml();
                 return true;
             }
         }

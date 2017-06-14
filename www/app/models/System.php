@@ -117,7 +117,7 @@ class SystemModel {
         $server = new ServerModel();
         $result = $server->getAll();
         if (count($result) > 0) {
-            $file = $this->config->fs->path . '/conf/dialplan/default.xml';
+            $file = $this->config->fs->path . '/conf/dialplan/route.xml';
 
             /* Check if the file is writable */
             if (!is_writable($file)) {
@@ -127,7 +127,7 @@ class SystemModel {
 
             $xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
             $xml .= '<include>' . "\n";
-            $xml .= '  <context name="' . $route['name'] . '">' . "\n";
+            $xml .= '  <context name="route">' . "\n";
             $xml .= '    <extension name="unloop">' . "\n";
             $xml .= '      <condition field="${unroll_loops}" expression="^true$"/>' . "\n";
             $xml .= '      <condition field="${sip_looped_call}" expression="^true$">' . "\n";
