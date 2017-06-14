@@ -75,8 +75,10 @@ class DialplanController extends Yaf\Controller_Abstract {
             return false;
         }
 
+        $interface = new InterfaceModel();
         $response['status'] = 200;
         $response['message'] = "success";
+        $response['sofia'] = $interface->getAll();
         $response['data'] = $route->get($request->getQuery('id'));
         header('Content-type: application/json');
         echo json_encode($response);
