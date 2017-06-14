@@ -153,7 +153,7 @@ class DialplanModel {
         $id = intval($id);
         if ($id > 0 && $this->db) {
             $sql = 'SELECT id FROM `' . $this->table . '` WHERE id = ' . $id . ' LIMIT 1';
-            $result = $this->db->query($sql);
+            $result = $this->db->query($sql)->fetchAll();
             if (count($result) > 0) {
                 return true;
             }
@@ -178,7 +178,7 @@ class DialplanModel {
                 }
                 break;
             case 'rexp':
-                $res['rexp'] = Filter::string($val, null);
+                $res['rexp'] = Filter::string(str_replace(' ', '', $val), null);
                 break;
             case 'type':
                 $type = Filter::number($val, null, 1);
@@ -196,10 +196,10 @@ class DialplanModel {
                 }
                 break;
             case 'server':
-                $res['server'] = Filter::string($val, null, 7, 32);
+                $res['server'] = Filter::string(str_replace(' ', '', $val), null, 7, 32);
                 break;
             case 'description':
-                $res['description'] = Filter::string($val, 'no description', 1, 64);
+                $res['description'] = Filter::string(str_replace(' ', '', $val), 'no description', 1, 64);
                 break;
             }
         }
