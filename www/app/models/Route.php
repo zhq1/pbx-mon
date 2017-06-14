@@ -72,6 +72,12 @@ class RouteModel {
 
     public function delete($id = null) {
         $id = intval($id);
+
+        /* Check whether it has been referenced */
+        if ($this->checkUsed($id)) {
+            return false;
+        }
+
         $result = $this->get($id);
         if (count($result) > 0) {
             $file = $this->config->fs->path . '/conf/dialplan/' . $result['name'] . '.xml';
@@ -176,5 +182,16 @@ class RouteModel {
         }
 
         return $text;
+    }
+
+    public function checkUsed($rid = null) {
+        $rid = intval($rid);
+        $sql = 'SELECT * FROM `server` WHERE route = ' . $rid;
+        $result = $this->db->query($sql)->fetchAll();
+        if (count($result) > 0) {
+            return true;
+        }
+
+        return false;
     }
 }
