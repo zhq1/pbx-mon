@@ -98,6 +98,7 @@ class InterfaceModel {
             echo '1111111111111111111111111111<br>';
             /* Check that the name has been used */
             if (!$this->checkNmae($data['name'])) {
+                exit;
                 return false;
             }
             echo '222222222222222222222222222222222<br>';
