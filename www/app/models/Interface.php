@@ -188,7 +188,7 @@ class InterfaceModel {
             $sth = $this->db->prepare($sql);
             $sth->bindParam(':name', $name, PDO::PARAM_STR);
             $sth->execute();
-            if (count($sth->fetch()) > 0) {
+            if (count($sth->fetchAll()) > 0) {
                 return false;
             }
 
