@@ -100,7 +100,6 @@ class DialplanModel {
             $sql = 'DELETE FROM `' . $this->table . '` WHERE rid = ' . $rid;
             if ($this->db->query($sql)) {
                 $system = new SystemModel();
-                $system->regenPlan($rid);
                 $system->reloadXml();
             }
             return true;
