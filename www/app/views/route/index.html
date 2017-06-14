@@ -91,12 +91,12 @@
         '</div>'+
         '<div class="form-group">'+
         '<div class="col-sm-offset-3 col-sm-8">'+
-        '<button type="submit" class="btn btn-success">创 建</button><button onClick="layer.closeAll(' + "'page'"+ ')" class="btn btn-default">取 消</button>'+
+        '<button type="submit" class="btn btn-success">创 建</button><button onClick="layer.closeAll()" class="btn btn-default">取 消</button>'+
         '</div>'+
         '</div>'+
         '</form>';
 
-    var index = layer.open({
+    layer.open({
       type: 1,
       title: '创建路由表',
       area: ['435px', '265px'],
@@ -135,7 +135,7 @@
             '</div>'+
             '<div class="form-group">'+
             '<div class="col-sm-offset-3 col-sm-8">'+
-            '<button type="submit" class="btn btn-success">保 存</button><button onClick="layer.closeAll(' + "'page'"+ ')" class="btn btn-default">取 消</button>'+
+            '<button type="submit" class="btn btn-success">保 存</button><button onClick="layer.closeAll()" class="btn btn-default">取 消</button>'+
             '</div>'+
             '</div>'+
             '</form>';
