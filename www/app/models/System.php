@@ -140,9 +140,10 @@ class SystemModel {
             $route = new RouteModel();
             foreach ($result as $obj) {
                 $res = $route->get($obj['route']);
+                $value = (count($res) > 0) ? $res['name'] : 'default';
                 $xml .= '    <extension name="' . $obj['ip'] . '">' . "\n";
                 $xml .= '      <condition field="network_addr" expression="^' . str_replace('.', '\.', $obj['ip']) . '$">' . "\n";
-                $xml .= '        <action application="transfer" data="${destination_number} XML ' . count($res) > 0 ? $res['name'] : 'default' . '"/>' . "\n";
+                $xml .= '        <action application="transfer" data="${destination_number} XML ' . $value . '"/>' . "\n";
                 $xml .= '      </condition>' . "\n";
                 $xml .= '    </extension>' . "\n\n";
             }
