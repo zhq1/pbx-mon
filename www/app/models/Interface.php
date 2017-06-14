@@ -88,12 +88,9 @@ class InterfaceModel {
     }
     
     public function create(array $data = null) {
-        var_dump($data);
-        echo '<br>============================</br>';
     	$count = count($this->column);
         $data = $this->checkArgs($data);
-        var_dump($data);
-        exit;
+
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
 
             /* Check that the name has been used */
@@ -101,7 +98,7 @@ class InterfaceModel {
                 return false;
             }
 
-        	$sql = 'INSERT INTO `' . $this->table . '`(name, ip, port, in_code, out_code, description) VALUES(:name, :ip, :port, :in_code, :out_code, :description)';
+        	$sql = 'INSERT INTO `' . $this->table . '`(`name`, `ip`, `port`, `in_code`, `out_code`, `description`) VALUES(:name, :ip, :port, :in_code, :out_code, :description)';
         	$sth = $this->db->prepare($sql);
 
         	foreach ($data as $key => $val) {
