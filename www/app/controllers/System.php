@@ -23,6 +23,10 @@ class SystemController extends Yaf\Controller_Abstract {
     return true;
   }
 
+  public function collectionAction() {
+    return true;
+  }
+
   public function passwordAction() {
         $message = null;
         $request = $this->getRequest();
