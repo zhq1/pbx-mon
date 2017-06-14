@@ -170,12 +170,19 @@
         btn: ['是','否'], icon: 3
       }, function(){
         var url = '/route/delete?id=' + id;
-        $.get(url, function(){
-          layer.msg('删除成功!', {icon: 1, time: 1000});
-            setTimeout(function() {
-              window.location.reload();
-            }, 1000);
-          });
+        $.get(url, function(response, status){
+          if (status == 'success') {
+            if (response.status == 200) {
+              layer.msg('删除成功!', {icon: 1, time: 1000});
+                setTimeout(function() {
+                  window.location.reload();
+                }, 1000);
+              });
+            } else {
+              layer.msg('抱歉，此路由表可能正在被某些网关所使用，暂时无法删除!', {icon: 2});
+            }
+          }
+          
         });
     }
   </script>

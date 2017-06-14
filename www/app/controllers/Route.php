@@ -60,8 +60,11 @@ class RouteController extends Yaf\Controller_Abstract {
     public function deleteAction() {
         $id = $this->getRequest()->getQuery('id');
         $route = new RouteModel();
-        $route->delete($id);
-
+        $success = $route->delete($id);
+        $response['status'] = $success ? 200 : 400;
+        $response['message'] = $success ? 'success' : 'failed';
+        header('Content-type: application/json');
+        echo json_encode($response);
         return false;
     }
 
