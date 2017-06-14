@@ -97,7 +97,7 @@ class DialplanController extends Yaf\Controller_Abstract {
     public function upAction() {
         $dialplan = new DialplanModel();
         $id = $this->getRequest()->getQuery('id');
-        $dialplan->setUp($id);
+        $dialplan->setPriority('up', $id);
         $response['status'] = 200;
         $response['message'] = "success";
         header('Content-type: application/json');
@@ -106,6 +106,13 @@ class DialplanController extends Yaf\Controller_Abstract {
     }
 
     public function downAction() {
+        $dialplan = new DialplanModel();
+        $id = $this->getRequest()->getQuery('id');
+        $dialplan->setPriority('down', $id);
+        $response['status'] = 200;
+        $response['message'] = "success";
+        header('Content-type: application/json');
+        echo json_encode($response);
         return false;
     }
 }

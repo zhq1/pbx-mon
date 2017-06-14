@@ -152,34 +152,30 @@ class DialplanModel {
         return false;
     }
 
-    public function setUp($id = null) {
+    public function setPriority($op = null, $id = null) {
         $id = intval($id);
-        $fid = $id - 1;
+        $kid = ($op == 'up') ? $id - 1 : $id + 1;
 
-        if ($this->isExist($id) && $this->isExist($fid)) {
-            if (($fid % 100) != 0) {
-                $sql = 'UPDATE `' . $this->table . '` SET id = 1 WHERE id = ' . $fid;
+        if ($this->isExist($id) && $this->isExist($kid)) {
+            if (($kid % 100) != 0) {
+                $sql = 'UPDATE `' . $this->table . '` SET id = 1 WHERE id = ' . $kid;
                 if ($this->db->query($sql)) {
-                    $sql = 'UPDATE `' . $this->table . '` SET id = ' . $fid . ' WHERE id = ' . $id;
+                    $sql = 'UPDATE `' . $this->table . '` SET id = ' . $kid . ' WHERE id = ' . $id;
                     if ($this->db->query($sql)) {
                         $sql = 'UPDATE `' . $this->table . '` SET id = ' . $id . ' WHERE id = 1';
                         if ($this->db->query($sql)) {
                             return true;
                         }
-                        $sql = 'UPDATE `' . $this->table . '` SET id = ' . $id . ' WHERE id = ' . $fid;
+                        $sql = 'UPDATE `' . $this->table . '` SET id = ' . $id . ' WHERE id = ' . $kid;
                         $this->db->query($sql);
                     } else {
-                        $sql = 'UPDATE `' . $this->table . '` SET id = ' . $fid .' WHERE id = 1';
+                        $sql = 'UPDATE `' . $this->table . '` SET id = ' . $kid .' WHERE id = 1';
                     }
                 }
             }
         }
 
         return false;
-    }
-
-    public function setDown($id = null) {
-        $id = intval($id);
     }
 
     public function isExist($id = null) {
