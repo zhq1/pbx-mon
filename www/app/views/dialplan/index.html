@@ -148,7 +148,6 @@
     var url = '/dialplan/edit?id=' + id;
     $.get(url, function(response, status){
       if (status == 'success') {
-        console.log(response);
         var obj = response.data;
         var sofia = response.sofia;
         var templete = '<form class="form-horizontal" action="/dialplan/edit?id=' + obj.id + '" method="post" style="width:550px">'+
