@@ -88,9 +88,12 @@ class InterfaceModel {
     }
     
     public function create(array $data = null) {
+        var_dump($data);
+        echo '<br>============================</br>';
     	$count = count($this->column);
         $data = $this->checkArgs($data);
-
+        var_dump($data);
+        exit;
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
 
             /* Check that the name has been used */
@@ -119,7 +122,7 @@ class InterfaceModel {
         $id = intval($id);
         if ($id > 0 && $this->db) {
             $sql = 'SELECT id FROM `' . $this->table . '` WHERE id = ' . $id . ' LIMIT 1';
-            $result = $this->db->query($sql);
+            $result = $this->db->query($sql)->fetchAll();
             if (count($result) > 0) {
                 return true;
             }
