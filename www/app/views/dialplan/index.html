@@ -224,7 +224,7 @@
     });
   }
 
-  function sort(id, op) {
+  function sort(op, id) {
     var url = '/dialplan/' + op + '?id=' + id;
     $.get(url, function() {
         window.location.reload();
