@@ -21,11 +21,3 @@ body {
 	margin-top: 20px;
 	padding: 20px;
 }
-
-.form-control-static {
-    min-height: 34px;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
