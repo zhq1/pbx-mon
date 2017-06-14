@@ -64,7 +64,7 @@ class DialplanController extends Yaf\Controller_Abstract {
 
     public function editAction() {
         $request = $this->getRequest();
-        $route = new RouteModel();
+        $dialplan = new DialplanModel();
 
         if ($request->isPost()) {
             $route->change($request->getQuery('id'), $request->getPost());
@@ -79,7 +79,7 @@ class DialplanController extends Yaf\Controller_Abstract {
         $response['status'] = 200;
         $response['message'] = "success";
         $response['sofia'] = $interface->getAll();
-        $response['data'] = $route->get($request->getQuery('id'));
+        $response['data'] = $dialplan->get($request->getQuery('id'));
         header('Content-type: application/json');
         echo json_encode($response);
         return false;
