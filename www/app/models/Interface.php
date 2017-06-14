@@ -88,20 +88,16 @@ class InterfaceModel {
     }
     
     public function create(array $data = null) {
-        var_dump($data);
-        echo '<br>===================================<br>';
     	$count = count($this->column);
         $data = $this->checkArgs($data);
-        var_dump($data);
-        echo '======================================<br>';
+
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
-            echo '1111111111111111111111111111<br>';
+
             /* Check that the name has been used */
             if (!$this->checkNmae($data['name'])) {
-                exit;
                 return false;
             }
-            echo '222222222222222222222222222222222<br>';
+
         	$sql = 'INSERT INTO `' . $this->table . '`(`name`, `ip`, `port`, `in_code`, `out_code`, `description`) VALUES(:name, :ip, :port, :in_code, :out_code, :description)';
         	$sth = $this->db->prepare($sql);
 
@@ -109,15 +105,13 @@ class InterfaceModel {
         		$sth->bindParam(':' . $key, $data[$key], is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
         	}
 
-            echo '333333333333333333333333333333<br>';
-            exit;
         	if ($sth->execute()) {
                 $system = new SystemModel();
                 $system->regenSofia();
                 return true;
             }
         }
-        exit;
+
         return false;
     }
 
