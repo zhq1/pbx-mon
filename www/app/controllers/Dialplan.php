@@ -67,11 +67,11 @@ class DialplanController extends Yaf\Controller_Abstract {
         $dialplan = new DialplanModel();
 
         if ($request->isPost()) {
-            $route->change($request->getQuery('id'), $request->getPost());
-            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/route';
-            $response = $this->getResponse();
-            $response->setRedirect($url);
-            $response->response();
+            $dialplan->change($request->getQuery('id'), $request->getPost());
+            $response['status'] = 200;
+            $response['message'] = "success";
+            header('Content-type: application/json');
+            echo json_encode($response);
             return false;
         }
 

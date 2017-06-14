@@ -49,6 +49,7 @@ class DialplanModel {
     public function change($id = null, array $data = null) {
         $id = intval($id);
         $data = $this->checkArgs($data);
+        unset($data['rid']);
         $column = $this->keyAssembly($data);
 
         if ($id > 0 && count($data) > 0) {
@@ -213,10 +214,10 @@ class DialplanModel {
         foreach ($data as $key => $val) {
             if ($val != null) {
                 if ($text != '' && $append) {
-                    $text .= ", $key = :$key";
+                    $text .= ", `$key` = :$key";
                 } else {
                     $append = true;
-                    $text .= "$key = :$key";
+                    $text .= "`$key` = :$key";
                 }
             }
         }
