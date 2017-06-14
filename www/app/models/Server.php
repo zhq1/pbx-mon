@@ -66,7 +66,7 @@ class ServerModel {
 
                 if (isset($data['ip']) || isset($data['route'])) {
                     $system->regenDefXml();
-                    $system->relaodXml();
+                    $system->reloadXml();
                 }
                 return true;
             }
@@ -88,7 +88,7 @@ class ServerModel {
                 $system->regenAcl();
                 $system->regenDefXml();
                 $system->reloadAcl();
-                $system->relaodXml();
+                $system->reloadXml();
             }
             return true;
         }
@@ -118,9 +118,9 @@ class ServerModel {
                     $system->regenAcl();
                     $system->reloadAcl();
                 }
-                
+
                 $system->regenDefXml();
-                $system->relaodXml();
+                $system->reloadXml();
                 return true;
             }
         }
