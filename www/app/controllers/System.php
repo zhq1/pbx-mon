@@ -15,7 +15,7 @@ class SystemController extends Yaf\Controller_Abstract {
         return true;
 	}
 
-    public function optionAction() {
+  public function optionAction() {
         return true;
 	}
 

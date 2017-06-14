@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Bit Cloud, Inc.">
+    <meta name="author" content="typefo">
+    <link rel="icon" href="favicon.ico">
+    <title>Pbx Monitor System</title>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/system.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand">
+            <img alt="Brand" src="/img/logo.png" width="34" style="margin-top:-8px" />
+          </a>
+          <a class="navbar-brand">pbxMon</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/cdr">通话记录</a></li>
+            <li><a href="/server">网关管理</a></li>
+            <li><a href="/route">路由管理</a></li>
+            <li><a href="/interface">接口管理</a></li>
+            <li><a href="/report">数据报表</a></li>
+            <li><a href="/system/status">服务器状态</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/user/setting"><span class="glyphicon glyphicon-cog"></span> 系统设置</a></li>
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> 退 出</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <ol class="breadcrumb">
+          <li><a href="/cdr">Home</a></li>
+          <li><a href="#">System</a></li>
+          <li class="active">Cluster</li>
+          <li class="pull-right help"><span class="glyphicon glyphicon-question-sign"></span> <a href="#">帮助信息</a></li>
+        </ol>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <ul class="nav nav-tabs">
+          <li role="presentation"><a href="/system/option">常规选项</a></li>
+          <li role="presentation" class="active"><a href="/system/cluster">集群配置</a></li>
+          <li role="presentation"><a href="/system/password">修改密码</a></li>
+        </ul>
+      </div>
+      <div class="row box">
+        <p class="form-control-static"><span class="badge badge-success"><strong>AppId: </strong></span> f238070650de11e7b114b2f933d5fe66</p>
+        <p class="form-control-static"><span class="badge badge-primary"><strong>Token: </strong></span> Tx7eHk42fc2Ma61Ze0e0f385J9Gg0j1p</p>
+        <hr />
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="" /> Enable data collection
+          </label>
+        </div>
+        <div>
+          <p><small class="text-muted"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Cluster functionality is only used for docking remote platform management</small></p>
+        </div>
+        <div>
+        <p><span class="badge badge-success" style="margin-left:-3px"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span></span> push service is ok </p>
+        </div>
+      </div
+    </div>
+  </body>
+  <script type="text/javascript" src="/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/layer.js"></script>
+</html>
