@@ -47,6 +47,7 @@ class InterfaceModel {
     public function change($id = null, array $data = null) {
         $id = intval($id);
         $data = $this->checkArgs($data);
+        unset($data['name']);
         $column = $this->keyAssembly($data);
 
         if ($id > 0 && count($data) > 0) {
@@ -55,7 +56,7 @@ class InterfaceModel {
             $sth->bindParam(':id', $id, PDO::PARAM_INT);
             
             foreach ($data as $key => $val) {
-                $sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+                $sth->bindParam(':' . $key, $data[$key], is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
             }
 
             if ($sth->execute()) {
@@ -91,11 +92,17 @@ class InterfaceModel {
         $data = $this->checkArgs($data);
 
         if ((count($data) == $count) && (!in_array(null, $data, true))) {
+
+            /* Check that the name has been used */
+            if (!$this->checkNmae($data['name'])) {
+                return false;
+            }
+
         	$sql = 'INSERT INTO `' . $this->table . '`(name, ip, port, in_code, out_code, description) VALUES(:name, :ip, :port, :in_code, :out_code, :description)';
         	$sth = $this->db->prepare($sql);
 
         	foreach ($data as $key => $val) {
-        		$sth->bindParam(':' . $key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+        		$sth->bindParam(':' . $key, $data[$key], is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
         	}
 
         	if ($sth->execute()) {
@@ -157,14 +164,31 @@ class InterfaceModel {
         foreach ($data as $key => $val) {
             if ($val != null) {
                 if ($text != '' && $append) {
-                    $text .= ", $key = :$key";
+                    $text .= ", `$key` = :$key";
                 } else {
                     $append = true;
-                    $text .= "$key = :$key";
+                    $text .= "`$key` = :$key";
                 }
             }
         }
 
         return $text;
+    }
+
+    public function checkNmae($name = null) {
+        $name = Filter::alpha($name, null, 1, 32);
+        if ($name != null) {
+            $sql = 'SELECT * FROM `interface` WHERE name = :name';
+            $sth = $this->db->prepare($sql);
+            $sth->bindParam(':name', $name, PDO::PARAM_STR);
+            $sth->execute();
+            if (count($sth->fetch()) > 0) {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }
