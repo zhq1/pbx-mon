@@ -56,7 +56,7 @@
               if (isset($data)) {
                 foreach ($data as $obj) {
                   echo '<tr>';
-                  echo '<td><span class="badge badge-default"><span class="glyphicon glyphicon-modal-window"></span></span></td><td>',$obj['name'],'</td>';
+                  echo '<td><span class="glyphicon glyphicon-modal-window"></span></td><td>',$obj['name'],'</td>';
                   echo '<td>',$obj['ip'],'</td><td>',$obj['port'],'</td>';
                   $style = $obj['call'] == 1 ? 'success' : 'default';
                   $text = $obj['call'] == 1 ? 'Yes' : 'No';
