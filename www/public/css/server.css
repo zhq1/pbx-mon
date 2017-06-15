@@ -3,6 +3,7 @@ body {
     color: #555555;
     font-size: 15px;
     font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    background-color: #efefef;
 }
 
 .navbar .navbar-nav li a {
