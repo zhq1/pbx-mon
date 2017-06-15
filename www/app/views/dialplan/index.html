@@ -113,7 +113,7 @@
         '<div class="form-group">'+
         '<label class="col-sm-4 control-label">目标网关</label>'+
         '<div class="col-sm-5">'+
-        '<input type="text" class="form-control" name="server" list="server" placeholder="Enter gateway">'+
+        '<input type="text" class="form-control" name="server" list="server" onClick="srvlist()" placeholder="Enter gateway">'+
         '<datalist id="server">'+
         '<option value="Internet Explorer">'+
         '<option value="Google Chrome">'+
@@ -252,6 +252,19 @@
             layer.msg('删除失败!', {icon: 2, time: 1000});
           }
         });
+    });
+  }
+
+  function srvlist() {
+    var url = '/api/server';
+    $.get(url, function(response, status) {
+      if (status == 'success') {
+        var list = '';
+        for (var i in response.data) {
+          list += '<option value="' + response.data[i].ip + response.data[i].port + '">';
+        }
+        $(list).appendTo("#server");
+      }
     });
   }
   </script>
