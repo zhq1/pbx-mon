@@ -77,7 +77,7 @@
         console.log(response);
         var list = '';
         for (var i in response.data) {
-          list += '<option value="' + response.data[i].name + ' (' + response.data[i].ip + ':' + response.data[i].port + ')">';
+          list += '<option value="' + response.data[i].ip + ':' + response.data[i].port + '">' + response.data[i].name + ' (' + response.data[i].ip + ')' + '</option>';
         }
         $(list).appendTo("#server");
       }
