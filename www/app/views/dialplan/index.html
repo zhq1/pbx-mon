@@ -70,7 +70,7 @@
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript">
-  function srvlist(id) {
+  function srvlist() {
     var url = '/api/server';
     $.get(url, function(response, status) {
       if (status == 'success') {
@@ -79,7 +79,7 @@
         for (var i in response.data) {
           list += '<option value="' + response.data[i].name + ' (' + response.data[i].ip + ':' + response.data[i].port + ')">';
         }
-        $(list).appendTo("#" + id);
+        $(list).appendTo("#server");
       }
     });
   }
@@ -127,8 +127,8 @@
         '<div class="form-group">'+
         '<label class="col-sm-4 control-label">目标网关</label>'+
         '<div class="col-sm-5">'+
-        '<input type="text" class="form-control" name="server" list="list1" placeholder="Enter gateway">'+
-        '<datalist id="list1">'+
+        '<input type="text" class="form-control" name="server" list="server" placeholder="Enter gateway">'+
+        '<datalist id="server">'+
         '</datalist>'+
         '</div>'+
         '<div class="col-sm-3">'+
@@ -159,7 +159,7 @@
       content: templete
     });
 
-    srvlist('list1');
+    srvlist();
   }
 
   function change(id) {
@@ -210,8 +210,8 @@
             '<div class="form-group">'+
             '<label class="col-sm-4 control-label">目标网关</label>'+
             '<div class="col-sm-5">'+
-            '<input type="text" class="form-control" name="server" value="' + obj.server+ '" list="list2" placeholder="Enter gateway">'+
-            '<datalist id="list2">'+
+            '<input type="text" class="form-control" name="server" value="' + obj.server+ '" list="server" placeholder="Enter gateway">'+
+            '<datalist id="server">'+
             '</datalist>'+
             '</div>'+
             '<div class="col-sm-3">'+
@@ -243,7 +243,7 @@
       }
     });
 
-    srvlist('list2');
+    srvlist();
   }
 
   function sort(op, id) {
