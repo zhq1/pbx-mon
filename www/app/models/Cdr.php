@@ -135,22 +135,24 @@ class CdrModel {
     public function whereAssembly(array $data) {
         $and = '';
         $where = '';
+        $append = false;
 
-        if (count($data) > 1) {
-            $and = 'AND ';
-        }
-
-        if (isset($data['last'])) {
+        if (isset($data['last']) && $data['last'] != null) {
+            $append = true;
             $where .= 'id < :id ';
         }
 
         if (isset($data['type'], $data['number'])) {
             switch ($data['type']) {
                 case 1:
+                    $and = $append ? 'AND ' : '';
                     $where .= $and . 'caller = :caller ';
+                    $append = true;
                     break;
                 case 2:
+                    $and = $append ? 'AND ' : '';
                     $where .= $and . 'called = :called ';
+                    $append = true;
                     break;
                 default:
                     break;
@@ -160,10 +162,14 @@ class CdrModel {
         if (isset($data['class'], $data['ip'])) {
             switch ($data['class']) {
                 case 1:
+                    $and = $append ? 'AND ' : '';
                     $where .= $and . 'src_ip = :src_ip ';
+                    $append = true;
                     break;
                 case 2:
+                    $and = $append ? 'AND ' : '';
                     $where .= $and . 'dst_ip = :dst_ip ';
+                    $append = true;
                     break;
                 default:
                     break;
@@ -171,9 +177,12 @@ class CdrModel {
         }
 
         if (isset($data['duration'])) {
+            $and = $append ? 'AND ' : '';
             $where .= $and . 'duration > :duration ';
+            $append = true;
         }
 
+        $and = $append ? 'AND ' : '';
         $where .= $and . 'create_time BETWEEN :begin AND :end ';
 
         return $where;
