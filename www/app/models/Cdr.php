@@ -133,6 +133,7 @@ class CdrModel {
     }
 
     public function whereAssembly(array $data) {
+        $and = '';
         $where = '';
         $append = false;
 
@@ -144,11 +145,13 @@ class CdrModel {
         if (isset($data['type'], $data['number']) && $data['type'] != null && $data['number']) {
             switch ($data['type']) {
                 case 1:
-                    $where .= $append ? 'AND caller = :caller ' : 'caller = :caller ';
+                    $and = $append ? 'AND ' : '';
+                    $where .= $and . 'caller = :caller ';
                     $append = true;
                     break;
                 case 2:
-                    $where .= $append ? 'AND called = :called ' : 'called = :called ';
+                    $and = $append ? 'AND ' : '';
+                    $where .= $and . 'called = :called ';
                     $append = true;
                     break;
                 default:
@@ -159,11 +162,13 @@ class CdrModel {
         if (isset($data['class'], $data['ip']) && $data['class'] != null && $data['ip'] != null) {
             switch ($data['class']) {
                 case 1:
-                    $where .= $append ? 'AND src_ip = :src_ip ' : 'src_ip = :src_ip ';
+                    $and = $append ? 'AND ' : '';
+                    $where .= $and . 'src_ip = :src_ip ';
                     $append = true;
                     break;
                 case 2:
-                    $where .= $append ? 'AND dst_ip = :dst_ip ' : 'dst_ip = :dst_ip ';
+                    $and = $append ? 'AND ' : '';
+                    $where .= $and . 'dst_ip = :dst_ip ';
                     $append = true;
                     break;
                 default:
@@ -172,11 +177,13 @@ class CdrModel {
         }
 
         if (isset($data['duration']) && $data['duration'] != null) {
-            $where .= $append ? 'AND duration > :duration ' : 'duration > :duration ';
+            $and = $append ? 'AND ' : '';
+            $where .= $and . 'duration > :duration ';
             $append = true;
         }
 
-        $where .= $append ? 'AND create_time BETWEEN :begin AND :end ' : 'create_time BETWEEN :begin AND :end ';
+        $and = $append ? 'AND ' : '';
+        $where .= $and . 'create_time BETWEEN :begin AND :end ';
 
         return $where;
     }
