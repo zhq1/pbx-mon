@@ -10,7 +10,7 @@
 require('../config.php');
 
 try {
-    / get request data */
+    /* get request data */
     $data = json_decode(file_get_contents('php://input'), true);
     
     if ($data) {
@@ -33,6 +33,25 @@ try {
 
             /* Close mysql connection */
     	    $db = null;
+
+    	    /* Check redis extension */
+    	    if (!extension_loaded('redis')) {
+    	    	error_log('Unable to find redis driver extension', 0);
+    	    	exit(0);
+    	    }
+
+    	    /* initialize redis connection */
+    	    $redis = new Redis(REDIS_HOST, REDIS_PORT);
+    	    if (REDIS_PASS) {
+    	    	$redis->auth(REDIS_PASS);
+    	    }
+
+    	    $redis->hIncrBy('server.' . $src_ip, 'in', 1);
+    	    $redis->hIncrBy('server.' . $dst_ip, 'out', 1);
+    	    $redis->hIncrBy('server.' . $dst_ip, 'duration', $duration);
+
+    	    /* Close redis connection */
+    	    $redis->close();
         }
     } else {
         error_log('Cannot parse request appliation/json data', 0);
