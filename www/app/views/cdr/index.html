@@ -107,7 +107,7 @@
 	        <?php
 	          if ($data) {
 	            foreach ($data as $obj) {
-                  echo '<tr><td>',$obj['id'],'</td><td>',$obj['caller'],'</td><td>',$obj['called'],'</td><td>',gmstrftime('%H:%M:%S', $obj['duration']),'</td><td>',long2ip($obj['src_ip']),'</td><td>',long2ip($obj['dst_ip']),'</td><td>',$obj['create_time'],'</td><td><a href="javascript:void(0);" res="' . $obj['file'] . '" onClick="show(this)"><span class="glyphicon glyphicon-headphones"></span> 试 听</a></td><td><a href="/record/',$obj['file'],'">本地下载</a></td></tr>';
+                  echo '<tr><td>',$obj['id'],'</td><td>',$obj['caller'],'</td><td>',$obj['called'],'</td><td>',gmstrftime('%H:%M:%S', $obj['duration']),'</td><td>',long2ip($obj['src_ip']),'</td><td>',long2ip($obj['dst_ip']),'</td><td>',$obj['create_time'],'</td><td><a href="javascript:void(0);" res="' . $obj['file'] . '" onClick="show(this)"><span class="glyphicon glyphicon-headphones"></span> 试 听</a></td><td><a href="/record/',$obj['file'],'">本地下载</a></td></tr>',"\n";
 	            }
 	          }
             ?>
@@ -119,7 +119,7 @@
         echo '<div id="loading">',"\n";
         echo '<nav>',"\n";
         echo '<ul class="pager">',"\n";
-        echo '<li><a href="javascript:;" onClick="loadMore()">点击这里，加载更多 &middot;&middot;&middot;</a></li>',"\n";
+        echo '<li><a href="javascript:void(0);" onClick="loadMore()">点击这里，加载更多 &middot;&middot;&middot;</a></li>',"\n";
         echo '</ul>',"\n";
         echo '</nav>',"\n";
         echo '</div>',"\n";
