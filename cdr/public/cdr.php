@@ -46,9 +46,10 @@ try {
     	    	$redis->auth(REDIS_PASS);
     	    }
 
-    	    $redis->hIncrBy('server.' . $src_ip, 'in', 1);
-    	    $redis->hIncrBy('server.' . $dst_ip, 'out', 1);
-    	    $redis->hIncrBy('server.' . $dst_ip, 'duration', $duration);
+    	    $key = date('Ymd');
+    	    $redis->hIncrBy('server.' . $key . '.' . $src_ip, 'in', 1);
+    	    $redis->hIncrBy('server.' . $key . '.' . $dst_ip, 'out', 1);
+    	    $redis->hIncrBy('server.' . $key . '.' . $dst_ip, 'duration', $duration);
 
     	    /* Close redis connection */
     	    $redis->close();

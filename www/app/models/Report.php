@@ -29,11 +29,15 @@ class ReportModel {
         
     }
 
-    public function get($server = null) {
-        $key = ip2long($server);
+    public function get($server = null, $date = null) {
+        $ip = ip2long($server);
         $reply = $this->column;
         if ($key !== false && $this->redis) {
-            $reply = $this->redis->hMGet($this->prefix . '.' . $key, $this->column);
+            if ($data != null) {
+                $prefix = $this->prefix . '.' . $date . '.';
+                $reply = $this->redis->hMGet($prefix . $ip, $this->column);
+            }
+            
         }
 
         return $reply;
