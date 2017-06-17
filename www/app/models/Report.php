@@ -32,7 +32,7 @@ class ReportModel {
     public function get($server = null, $date = null) {
         $ip = ip2long($server);
         $reply = array();
-        if ($key !== false && $this->redis) {
+        if (($ip !== false) && $this->redis) {
             if ($data != null) {
                 $prefix = $this->prefix . '.' . $date . '.';
                 $reply = $this->redis->hMGet($prefix . $ip, $this->column);
