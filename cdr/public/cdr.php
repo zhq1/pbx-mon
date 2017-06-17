@@ -54,7 +54,7 @@ try {
     	    $redis->close();
         }
     } else {
-        error_log('Cannot parse request appliation/json data', 0);
+        error_log('Cannot parse requests appliation/json data', 0);
     }
 
 } catch (PDOException $e) {

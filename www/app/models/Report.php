@@ -6,24 +6,33 @@
  * By typefo <typefo@qq.com>
  */
 
+use Db\Redis;
 use Tool\Filter;
+
 
 class ReportModel {
     public $db   = null;
-    private $table = 'report';
-    
+    public $redis = null;
+    public $config = null;
+    public $prefix = 'server';
+    public $column = ['in', 'out', 'duration'];
+
     public function __construct() {
         $this->db = Yaf\Registry::get('db');
+        $this->config = Yaf\Registry::get('config');
+
+        if ($this->config) {
+            $config = $this->config->redis;
+            $this->redis = new Redis($config->host, $config->port, $config->password, $config->db);
+        }
+        
     }
 
-    public function get($id = null) {
-        $id = intval($id);
-        if ($id > 0 && $this->db) {
-            $sql = 'SELECT * FROM ' . $this->table . ' WHERE id = :id LIMIT 1';
-            $sth = $this->db->prepare($sql);
-            $sth->bindParam(':id', $id, PDO::PARAM_INT);
-            $sth->execute();
-            return $sth->fetch();
+    public function get($server = null) {
+        $key = ip2long($server);
+        $reply = $this->column;
+        if ($key !== false && $this->redis) {
+            $reply = $this->redis->hMGet($prefix . '.' . $key, $this->column);
         }
 
         return null;
@@ -31,9 +40,14 @@ class ReportModel {
 
     public function getAll() {
         $result = array();
-        if ($this->db) {
-            $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY id';
-            $result = $this->db->query($sql)->fetchAll();
+        if ($this->db && $this->redis) {
+            $server = new ServerModel();
+            $res = $server->getAll();
+            if (count($res) > 0) {
+                foreach ($res as $r) {
+                    $result[$r['id']] = array_merge($r, $this->get($r['ip']);
+                }
+            } 
         }
 
         return $result;

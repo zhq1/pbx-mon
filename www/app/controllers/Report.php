@@ -9,7 +9,12 @@
 class ReportController extends Yaf\Controller_Abstract {
 
     public function indexAction() {
-        return true;
+    	$report = new ReportModel();
+    	//$this->getView()->assign("data", $report->getAll());
+    	echo '<pre>';
+    	var_dump($report->getAll())
+    	echo '</pre>';
+        return false;
 	}
 }
 
