@@ -27,7 +27,9 @@ class Redis {
     	    $this->password = $password;
     	    $this->database = $database;
 
-    	    $this->handle = new \Redis($host, $port);
+    	    $this->handle = new \Redis();
+    	    $this->handle->connect($host, $port);
+
     	    if ($password) {
     	    	$this->handle->auth($password);
     	    }
