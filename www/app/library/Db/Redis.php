@@ -30,7 +30,7 @@ class Redis {
     	    $this->handle = new \Redis();
     	    $this->handle->connect($host, $port);
 
-    	    if ($password) {
+    	    if (!empty($password)) {
     	    	$this->handle->auth($password);
     	    }
 
