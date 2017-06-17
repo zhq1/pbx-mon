@@ -34,12 +34,9 @@ class ReportModel {
         $reply = array();
 
         if (($ip !== false) && $this->redis) {
-            echo 'fjweofijewfjoewjfw<br>';
-            if ($data != null) {
+            if ($date != null) {
                 $prefix = $this->prefix . '.' . $date . '.';
                 $reply = $this->redis->hMGet($prefix . $ip, $this->column);
-                var_dump($reply);
-                exit;
             }
             
         }
