@@ -36,6 +36,8 @@ class ReportModel {
             if ($data != null) {
                 $prefix = $this->prefix . '.' . $date . '.';
                 $reply = $this->redis->hMGet($prefix . $ip, $this->column);
+                var_dump($reply);
+                exit;
             }
             
         }
