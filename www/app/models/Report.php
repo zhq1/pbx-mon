@@ -36,7 +36,7 @@ class ReportModel {
             $reply = array_merge($reply, $this->redis->hMGet($prefix . '.' . $key, $this->column));
         }
 
-        return reply;
+        return $reply;
     }
 
     public function getAll() {
