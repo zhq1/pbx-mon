@@ -45,7 +45,7 @@ class ReportModel {
             $res = $server->getAll();
             if (count($res) > 0) {
                 foreach ($res as $r) {
-                    $result[$r['id']] = array_merge($r, $this->get($r['ip']);
+                    $result[$r['id']] = array_merge($r, $this->get($r['ip']));
                 }
             } 
         }
