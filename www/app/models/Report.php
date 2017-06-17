@@ -23,7 +23,8 @@ class ReportModel {
 
         if ($this->config) {
             $config = $this->config->redis;
-            $this->redis = new Redis($config->host, $config->port, $config->password, $config->db);
+            $redis = new Redis($config->host, $config->port, $config->password, $config->db);
+            $this->redis = $redis->handle;
         }
         
     }
@@ -32,8 +33,6 @@ class ReportModel {
         $key = ip2long($server);
         $reply = $this->column;
         if ($key !== false && $this->redis) {
-            var_dump($this->redis);
-            exit;
             $reply = $this->redis->hMGet($prefix . '.' . $key, $this->column);
         }
 

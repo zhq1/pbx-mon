@@ -35,7 +35,6 @@ class Redis {
     	    }
 
     	    $this->handle->select($database);
-    	    return $this->handle;
     }
 }
 
