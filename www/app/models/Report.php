@@ -43,14 +43,15 @@ class ReportModel {
         return $reply;
     }
 
-    public function getAll() {
+    public function getAll($date = null) {
         $result = array();
         if ($this->db && $this->redis) {
             $server = new ServerModel();
             $res = $server->getAll();
             if (count($res) > 0) {
+                $date = $date ? $date : date('Ymd');
                 foreach ($res as $r) {
-                    $result[$r['id']] = array_merge($r, $this->get($r['ip']));
+                    $result[$r['id']] = array_merge($r, $this->get($r['ip'], $date));
                 }
             } 
         }
