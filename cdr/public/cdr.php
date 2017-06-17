@@ -1,7 +1,7 @@
 <?php
 
 /*
- * The api interface
+ * The cdr api interface
  * Link http://github.com/typefo/pbx-mon
  * By typefo <typefo@qq.com>
  */
