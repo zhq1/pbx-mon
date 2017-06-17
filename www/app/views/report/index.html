@@ -53,7 +53,7 @@
           <?php
           if ($data) {
             foreach ($data as $obj) {
-              echo '<tr><td>',$obj['id'],'</td>';
+              echo '<tr><td class="tab-left"><span class="glyphicon glyphicon-dashboard"></span></td>';
               echo '<td>',$obj['name'],'</td>';
               echo '<td>',$obj['ip'],'</td>';
               echo '<td>',intval($obj['in']),'</td>';
@@ -61,7 +61,7 @@
               $duration = intval($obj['duration']);
               echo '<td>',gmstrftime('%H:%M:%S', $duration),'</td>';
               $avg = ($duration > 0) ? ($duration / intval($obj['out'])) : 0;
-              echo '<td>',gmstrftime('%H:%M:%S',$avg),'</td></tr>',"\n";
+              echo '<td class="tab-right">',gmstrftime('%H:%M:%S',$avg),'</td></tr>',"\n";
             }
           }
           ?>
