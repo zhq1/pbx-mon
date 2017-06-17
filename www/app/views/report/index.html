@@ -53,7 +53,7 @@
           <?php
           if ($data) {
             foreach ($data as $obj) {
-              echo '<tr><td>',$obj['id'],'</td><td>',$obj['name'],'</td><td>',$obj['ip'],'</td><td>',$obj['in'],'</td><td>',$obj['out'],'</td><td>',$obj['duration'],'</td><td>00:02:25</td></tr>',"\n";
+              echo '<tr><td>',$obj['id'],'</td><td>',$obj['name'],'</td><td>',$obj['ip'],'</td><td>',intval($obj['in']),'</td><td>',intval($obj['out']),'</td><td>',intval($obj['duration']),'</td><td>00:02:25</td></tr>',"\n";
             }
           }
           ?>
