@@ -33,7 +33,7 @@ class ReportModel {
         $key = ip2long($server);
         $reply = $this->column;
         if ($key !== false && $this->redis) {
-            $reply = $this->redis->hMGet($prefix . '.' . $key, $this->column);
+            $reply = $this->redis->hMGet($this->prefix . '.' . $key, $this->column);
         }
 
         return $reply;
