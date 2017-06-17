@@ -25,7 +25,7 @@ class Redis {
     	    $this->host = $host;
     	    $this->port = $port;
     	    $this->password = $password;
-    	    $this->database = $db;
+    	    $this->database = $database;
 
     	    $this->handle = new \Redis($host, $port);
     	    if ($password) {
