@@ -12,7 +12,7 @@ class ReportController extends Yaf\Controller_Abstract {
     	$report = new ReportModel();
     	//$this->getView()->assign("data", $report->getAll());
     	echo '<pre>';
-    	var_dump($report->getAll())
+    	var_dump($report->getAll());
     	echo '</pre>';
         return false;
 	}
