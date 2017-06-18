@@ -1,20 +1,20 @@
 <?php
 
 /*
- * The api interface
+ * The cdr api interface
  * Link http://github.com/typefo/pbx-mon
  * By typefo <typefo@qq.com>
  */
 
-// load configure file
+/* load configure file */
 require('../config.php');
 
 try {
-    // get post json data
+    /* get request data */
     $data = json_decode(file_get_contents('php://input'), true);
     
     if ($data) {
-    	// Variable processing
+    	/* Variable processing */
         $req = isset($data['variables']) ? $data['variables'] : '';
         $uuid = isset($req['uuid']) ? $req['uuid'] : 'unknown';
         $src_ip = isset($req['sip_network_ip']) ? ip2long($req['sip_network_ip']) : 0;
@@ -26,16 +26,36 @@ try {
         $create_time = isset($req['start_stamp']) ? urldecode($req['start_stamp']) : '1970-01-01 08:00:00';
 
         if ($duration > 0) {
-        	// Initialize mysql connection
+        	/* Initialize mysql connection */
     		$db = new PDO('mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
 
             $db->query("INSERT INTO cdr(caller, called, duration, src_ip, rpf, file, create_time) values('$caller', '$called', $duration, $src_ip, $dst_ip, '$rpf', '$file', '$create_time')");
 
-            // Close mysql connection
+            /* Close mysql connection */
     	    $db = null;
+
+    	    /* Check redis extension */
+    	    if (!extension_loaded('redis')) {
+    	    	error_log('Unable to find redis driver extension', 0);
+    	    	exit(0);
+    	    }
+
+    	    /* initialize redis connection */
+    	    $redis = new Redis(REDIS_HOST, REDIS_PORT);
+    	    if (REDIS_PASS) {
+    	    	$redis->auth(REDIS_PASS);
+    	    }
+
+    	    $key = date('Ymd');
+    	    $redis->hIncrBy('server.' . $key . '.' . $src_ip, 'in', 1);
+    	    $redis->hIncrBy('server.' . $key . '.' . $dst_ip, 'out', 1);
+    	    $redis->hIncrBy('server.' . $key . '.' . $dst_ip, 'duration', $duration);
+
+    	    /* Close redis connection */
+    	    $redis->close();
         }
     } else {
-        error_log('php parse cdr application/json data failure', 0);
+        error_log('Cannot parse requests appliation/json data', 0);
     }
 
 } catch (PDOException $e) {

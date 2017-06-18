@@ -24,11 +24,11 @@ class CdrModel {
         $sql = 'SELECT * FROM `' . $this->table . '` WHERE ' . $where . 'ORDER BY id DESC LIMIT 32';
         $sth = $this->db->prepare($sql);
 
-        if (isset($data['last']) && $data['last'] != null) {
+        if (isset($data['last'])) {
             $sth->bindParam(':id', $data['last'], PDO::PARAM_INT);
         }
             
-        if (isset($data['type'], $data['number']) && $data['type'] != null && $data['number'] != null) {
+        if (isset($data['type'], $data['number'])) {
             switch ($data['type']) {
                 case 1:
                     $sth->bindParam(':caller', $data['number'], PDO::PARAM_STR);
@@ -41,7 +41,7 @@ class CdrModel {
             }
         }
 
-        if (isset($data['class'], $data['ip']) && $data['class'] != null && $data['ip'] != null) {
+        if (isset($data['class'], $data['ip'])) {
             switch ($data['class']) {
                 case 1:
                     $sth->bindParam(':src_ip', $data['ip'], PDO::PARAM_STR);
@@ -82,17 +82,17 @@ class CdrModel {
             switch ($key) {
             case 'last':
                 $last = Filter::number($val, null);
-                if ($last != null && $last > 0) {
+                if (($last != null) && $last > 0) {
                     $where['last'] = $last;
                 }
                 break;
             case 'begin':
                 $begin = Filter::dateTime($val, null);
-                $where['begin'] = $begin != null ? $begin : date('Y-m-d 08:00:00');
+                $where['begin'] = ($begin != null) ? $begin : date('Y-m-d 08:00:00');
                 break;
             case 'end':
                 $end = Filter::dateTime($val, null);
-                $where['end'] = $end != null ? $end : date('Y-m-d 20:00:00');
+                $where['end'] = ($end != null) ? $end : date('Y-m-d 20:00:00');
                 break;
             case 'type':
                 $type = Filter::number($val, null);
@@ -108,7 +108,7 @@ class CdrModel {
                 break;
             case 'class':
                 $class = Filter::number($val, null);
-                if ($class != null && in_array($class, [1, 2], true)) {
+                if (($class != null) && in_array($class, [1, 2], true)) {
                     $where['class'] = $class;
                 }
                 break;
@@ -120,7 +120,7 @@ class CdrModel {
                 break;
             case 'duration':
                 $duration = Filter::number($val, null, 0);
-                if ($duration != null && $duration > 0) {
+                if (($duration != null) && $duration > 0) {
                     $where['duration'] = $duration;
                 }
                 break;
@@ -142,7 +142,7 @@ class CdrModel {
             $where .= 'id < :id ';
         }
 
-        if (isset($data['type'], $data['number']) && $data['type'] != null && $data['number']) {
+        if (isset($data['type'], $data['number'])) {
             switch ($data['type']) {
                 case 1:
                     $and = $append ? 'AND ' : '';
@@ -159,7 +159,7 @@ class CdrModel {
             }
         }
 
-        if (isset($data['class'], $data['ip']) && $data['class'] != null && $data['ip'] != null) {
+        if (isset($data['class'], $data['ip'])) {
             switch ($data['class']) {
                 case 1:
                     $and = $append ? 'AND ' : '';
@@ -176,7 +176,7 @@ class CdrModel {
             }
         }
 
-        if (isset($data['duration']) && $data['duration'] != null) {
+        if (isset($data['duration'])) {
             $and = $append ? 'AND ' : '';
             $where .= $and . 'duration > :duration ';
             $append = true;

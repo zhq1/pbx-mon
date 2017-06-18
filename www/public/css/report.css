@@ -9,6 +9,14 @@ body {
     font-size: 16px;
 }
 
+.tab-left {
+    width: 60px;
+}
+
+.tab-right {
+    width: 120px;
+}
+
 .breadcrumb .pull-right:before {
     content: "";
 }

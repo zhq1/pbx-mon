@@ -9,18 +9,60 @@ body {
     font-size: 16px;
 }
 
+.tab-left {
+    width: 60px;
+}
+
+.tab-right {
+    width: 100px;
+}
+
+.navbar .navbar-nav li a {
+    font-size: 16px;
+}
+
 .breadcrumb {
     padding-right: 15px;
+}
+
+.breadcrumb .add {
+    margin-right: 8px;
 }
 
 .breadcrumb .pull-right:before {
     content: "";
 }
 
-.main .row {
-    margin-top: 18px;
+.badge-default {
+    background-color: #999999;
 }
 
-.progress {
-    margin-bottom: 0px;
+.badge-success {
+    background-color: #5da55d;
+}
+
+.badge-warning {
+    background-color: #efa133;
+}
+
+.badge-danger {
+    background-color: #ce514e;
+}
+
+table th, table tr td {
+    text-align: center;
+}
+
+.table>thead>tr>th, .table>tbody>tr>td {
+    border-top: 1px solid #fafafa;
+    border-bottom: 1px solid #fafafa;
+}
+
+form {
+    margin-top: 10px;
+}
+
+form .form-group button, form .form-group a {
+    width: 80px;
+    margin-right: 20px;
 }
