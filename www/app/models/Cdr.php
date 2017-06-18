@@ -44,10 +44,10 @@ class CdrModel {
         if (isset($data['class'], $data['ip'])) {
             switch ($data['class']) {
                 case 1:
-                    $sth->bindParam(':src_ip', $data['ip'], PDO::PARAM_STR);
+                    $sth->bindParam(':src_ip', $data['ip'], PDO::PARAM_INT);
                     break;
                 case 2:
-                    $sth->bindParam(':dst_ip', $data['ip'], PDO::PARAM_STR);
+                    $sth->bindParam(':dst_ip', $data['ip'], PDO::PARAM_INT);
                     break;
                 default:
                     break;
@@ -115,7 +115,7 @@ class CdrModel {
             case 'ip':
                 $ip = Filter::ip($val, null);
                 if ($ip != null) {
-                    $where['ip'] = $ip;
+                    $where['ip'] = ip2long($ip);
                 }
                 break;
             case 'duration':
