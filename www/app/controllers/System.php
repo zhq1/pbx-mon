@@ -15,19 +15,11 @@ class SystemController extends Yaf\Controller_Abstract {
         return true;
 	}
 
-  public function optionAction() {
+    public function optionAction() {
         return true;
-	}
+    }
 
-  public function clusterAction() {
-    return true;
-  }
-
-  public function collectionAction() {
-    return true;
-  }
-
-  public function passwordAction() {
+    public function passwordAction() {
         $message = null;
         $request = $this->getRequest();
 	    
