@@ -216,7 +216,8 @@ class DialplanModel {
                 }
                 break;
             case 'rexp':
-                $res['rexp'] = Filter::string(str_replace(' ', '', $val), null);
+                $chars = ['"', "'", "\r", "\n", "\t", ' '];
+                $res['rexp'] = Filter::string(str_replace($chars, '', $val), null);
                 break;
             case 'type':
                 $type = Filter::number($val, null, 1);
