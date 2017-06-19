@@ -54,10 +54,10 @@
     <load module="mod_commands"/>
     <!-- <load module="mod_conference"/> -->
     <load module="mod_curl"/>
-    <load module="mod_db"/>
+    <!-- <load module="mod_db"/> -->
     <load module="mod_dptools"/>
     <!-- <load module="mod_expr"/> -->
-    <load module="mod_fifo"/>
+    <!-- <load module="mod_fifo"/> -->
     <!-- <load module="mod_hash"/> -->
     <!--<load module="mod_mongo"/> -->
     <!-- <load module="mod_voicemail"/> -->
