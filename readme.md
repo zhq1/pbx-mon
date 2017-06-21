@@ -81,8 +81,8 @@
 
 安装 G729 语音模块
 
-    $ tar -xzvf mod_bcg729.tar.gz
-    $ cd mod_bcg729
+	$ git clone https://github.com/typefo/mod_g729.git
+    $ cd mod_g729
     $ make
     $ make install
 
