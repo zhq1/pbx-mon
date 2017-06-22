@@ -37,9 +37,9 @@ class ConfigModel {
     }
 
     public function getAll() {
-        $reply = $this->column;
+        $reply = $this->option;
 
-        foreach ($this->column as $val) {
+        foreach ($this->option as $val) {
             $reply[$val] = $this->get($val);
         }
 
@@ -51,7 +51,7 @@ class ConfigModel {
             return false;
         }
 
-        if (in_array($key, $this->column, true)) {
+        if (in_array($key, $this->option, true)) {
             return $this->redis->set($key, $val);
         }
 
