@@ -33,7 +33,7 @@ class ConfigModel {
 
         $reply = $this->redis->get('config.' . $key);
 
-        return ($reply != false) ? $reply : null;
+        return ($reply !== false) ? $reply : null;
     }
 
     public function getAll() {
