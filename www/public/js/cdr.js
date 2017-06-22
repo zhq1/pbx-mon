@@ -77,6 +77,7 @@ function loadMore() {
                     '<td>' + obj.data[i].id + '</td>' +
                     '<td>' + obj.data[i].caller + '</td>' +
                     '<td>' + obj.data[i].called + '</td>' +
+                    '<td>' + obj.data[i].location + '</td>' +
                     '<td>' + getForSeconds(obj.data[i].duration) + '</td>' +
                     '<td>' + long2ip(obj.data[i].src_ip) + '</td>' +
                     '<td>' + long2ip(obj.data[i].dst_ip) + '</td>' +

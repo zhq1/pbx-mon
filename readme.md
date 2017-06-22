@@ -2,15 +2,18 @@
 
 ![screenshot](./script/screenshot.png)
 
-#### 服务器环境
+#### 依赖包及环境
 
+- php 5.4
+- Yaf 2.3.5
+- Redis 3.2
+- MariaDB 5.5
+- phpredis 3.1.2
+- FreeSWITCH 1.6.18
+- mod_g729 1.0.3
+- CentOS 7.3
 
-- PHP框架:  Yaf 2.3.5
-- 操作系统: CentOS 7.2
-- 数据库 :  MariaDB 5.5
-- PBX系统： FreeSWITCH 1.6.15
-
-#### 功能与特性
+#### pbxMon 功能与特性
 
 - 支持 G729 转码
 - 实时录音查询系统
@@ -26,7 +29,6 @@
     www             后台 Web 管理系统，安装位置 /var/www
     config          Nginx、PHP 、MySQL 和 FreeSWITCH 的配置文件
     script          MySQL 数据库表 SQL 文件
-    package         Yaf 框架以及 G729 模块相关软件包
 
 #### 安装方法
 
@@ -64,8 +66,8 @@
 
 编译安装 FreeSWITCH
 
-    $ wget http://files.freeswitch.org/freeswitch-releases/freeswitch-1.6.15.tar.gz
-    $ cd freeswitch-1.6.15
+    $ wget http://files.freeswitch.org/freeswitch-releases/freeswitch-1.6.18.tar.gz
+    $ cd freeswitch-1.6.18
     $ emacs modules.conf
     $ ./configure --disable-debug --disable-libyuv --disable-libvpx
     $ make
@@ -81,19 +83,33 @@
 
 安装 G729 语音模块
 
-    $ tar -xzvf mod_bcg729.tar.gz
-    $ cd mod_bcg729
+	$ git clone https://github.com/typefo/mod_g729.git
+    $ cd mod_g729
     $ make
     $ make install
 
+安装 phpredis
+
+	$ git clone https://github.com/phpredis/phpredis.git
+	$ cd phpredis
+	$ phpize
+	$ ./configure
+	$ make
+	$ make install
+
 安装 yaf 框架
 
+	$ wget https://pecl.php.net/get/yaf-2.3.5.tgz
     $ tar -xzvf yaf-2.3.5.tgz
     $ cd yaf-2.3.5
     $ phpize
     $ ./configure
     $ make
     $ make install
+
+导入数据库表
+
+	$ mysql < script/db.sql
 
 安装 Web 平台系统
 

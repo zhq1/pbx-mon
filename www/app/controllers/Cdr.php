@@ -17,6 +17,9 @@ class CdrController extends Yaf\Controller_Abstract {
 
         if (isset($where['sub'])) {
             $data = $cdr->query($where);
+            foreach ($data as &$obj) {
+                $obj['location'] = $cdr->getphgeo($obj['called']);
+            }
             $this->getView()->assign("data", $data);
             $this->getView()->assign("where", $this->check($where));
 	        $len = count($data);
@@ -35,6 +38,9 @@ class CdrController extends Yaf\Controller_Abstract {
             $cdr = new CdrModel();
             $data = $cdr->query($request->getQuery());
             if ($data) {
+                foreach ($data as &$obj) {
+                    $obj['location'] = $cdr->getphgeo($obj['called']);
+                }
                 $response['status'] = 200;
                 $response['message'] = 'success';
                 $response['data'] = $data;

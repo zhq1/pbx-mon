@@ -71,7 +71,9 @@ class RouteController extends Yaf\Controller_Abstract {
     public function syncAction() {
         $request = $this->getRequest();
         $system = new SystemModel();
-        if ($system->regenPlan($this->getRequest()->getQuery('id'))) {
+        $rid = $this->getRequest()->getQuery('id');
+        if ($system->regenPlan($rid)) {
+            $system->reloadXml();
             $response['status'] = 200;
             $response['message'] = "success";
             header('Content-type: application/json');
