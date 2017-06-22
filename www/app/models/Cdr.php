@@ -6,6 +6,7 @@
  * By typefo <typefo@qq.com>
  */
 
+use Db\Redis;
 use Tool\Filter;
 
 class CdrModel {
