@@ -11,11 +11,20 @@ use Tool\Filter;
 class CdrModel {
 
     public $db = null;
+    public $config = null;
+    public $redis = null;
     private $table = 'cdr';
     private $where = ['begin', 'end', 'type', 'number', 'class', 'ip', 'duration', 'last'];
 
     public function __construct() {
         $this->db = Yaf\Registry::get('db');
+        $this->config = Yaf\Registry::get('config');
+
+        if ($this->config) {
+            $config = $this->config->redis;
+            $redis = new Redis($config->host, $config->port, $config->password, $config->db);
+            $this->redis = $redis->handle;
+        }
     }   
 
     public function query(array $where) {
@@ -186,5 +195,16 @@ class CdrModel {
         $where .= $and . 'create_time BETWEEN :begin AND :end ';
 
         return $where;
+    }
+
+    public function getphgeo($phone = null) {
+    	if (!empty($phone) && is_string($phone)) {
+    		$reply = $this->redis->get(substr($phone, 0, 7));
+    		if ($reply) {
+    			return $reply;
+    		}
+    	}
+
+    	return 'unknown';
     }
 }
