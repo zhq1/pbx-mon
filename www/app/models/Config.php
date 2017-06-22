@@ -37,7 +37,7 @@ class ConfigModel {
     }
 
     public function getAll() {
-        $reply = $this->option;
+        $reply = array();
 
         foreach ($this->option as $val) {
             $reply[$val] = $this->get($val);
