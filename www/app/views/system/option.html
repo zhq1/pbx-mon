@@ -58,7 +58,7 @@
       <div class="row box">
         <div class="checkbox">
           <label>
-             <input type="checkbox" checked="checked"> Enable call recording - all gateway for global
+             <input type="checkbox"<?php echo isset($config['record']) && intval($config['record']) === 1 ? 'checked="checked"' : ''; ?>> Enable call recording - all gateway for global
           </label>
         </div>
         <div class="checkbox disabled">
@@ -68,7 +68,7 @@
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox" checked="checked"> Allow multiple user to log in simultaneously
+            <input type="checkbox"<?php echo isset($config['record']) && intval($config['multiple']) === 1 ? 'checked="checked"' : ''; ?>> Allow multiple user to log in simultaneously
           </label>
         </div>
         <hr />

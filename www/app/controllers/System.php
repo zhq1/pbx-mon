@@ -11,11 +11,13 @@ class SystemController extends Yaf\Controller_Abstract {
     public function statusAction() {
         $system = new SystemModel();
 
-        $this->getView()->assign("status", $system->sysInfo());
+        $this->getView()->assign('status', $system->sysInfo());
         return true;
 	}
 
     public function optionAction() {
+        $config = new ConfigModel();
+        $this->getView()->assign('config', $config->getAll());
         return true;
     }
 
