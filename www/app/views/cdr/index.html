@@ -107,7 +107,7 @@
 	        <?php
 	          if ($data) {
 	            foreach ($data as $obj) {
-                  echo '<tr><td>',$obj['id'],'</td><td><span class="label label-success"><span class="badge-info">苏州</span>',$obj['caller'],'</span></td><td>',$obj['called'],'</td><td>',gmstrftime('%H:%M:%S', $obj['duration']),'</td><td>',long2ip($obj['src_ip']),'</td><td>',long2ip($obj['dst_ip']),'</td><td>',$obj['create_time'],'</td><td><a href="javascript:void(0);" res="' . $obj['file'] . '" onClick="show(this)"><span class="glyphicon glyphicon-headphones"></span> 试 听</a></td><td><a href="/record/',$obj['file'],'">本地下载</a></td></tr>',"\n";
+                  echo '<tr><td>',$obj['id'],'</td><td><span class="label label-success"><span class="badge badge-info">苏州</span>',$obj['caller'],'</span></td><td>',$obj['called'],'</td><td>',gmstrftime('%H:%M:%S', $obj['duration']),'</td><td>',long2ip($obj['src_ip']),'</td><td>',long2ip($obj['dst_ip']),'</td><td>',$obj['create_time'],'</td><td><a href="javascript:void(0);" res="' . $obj['file'] . '" onClick="show(this)"><span class="glyphicon glyphicon-headphones"></span> 试 听</a></td><td><a href="/record/',$obj['file'],'">本地下载</a></td></tr>',"\n";
 	            }
 	          }
             ?>
