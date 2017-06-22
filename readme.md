@@ -2,13 +2,16 @@
 
 ![screenshot](./script/screenshot.png)
 
-#### 服务器环境
+#### 依赖包及环境
 
-
-- PHP框架:  Yaf 2.3.5
-- 操作系统: CentOS 7.2
-- 数据库 :  MariaDB 5.5
-- PBX系统： FreeSWITCH 1.6.15
+- php 5.4
+- Yaf 2.3.5
+- Redis 3.2
+- MariaDB 5.5
+- phpredis 3.1.2
+- FreeSWITCH 1.6.18
+- mod_g729 1.0.3
+- CentOS 7.3
 
 #### 功能与特性
 
@@ -26,7 +29,6 @@
     www             后台 Web 管理系统，安装位置 /var/www
     config          Nginx、PHP 、MySQL 和 FreeSWITCH 的配置文件
     script          MySQL 数据库表 SQL 文件
-    package         Yaf 框架以及 G729 模块相关软件包
 
 #### 安装方法
 
@@ -86,8 +88,18 @@
     $ make
     $ make install
 
+安装 phpredis
+
+	$ git clone https://github.com/phpredis/phpredis.git
+	$ cd phpredis
+	$ phpize
+	$ ./configure
+	$ make
+	$ make install
+
 安装 yaf 框架
 
+	$ wget https://pecl.php.net/get/yaf-2.3.5.tgz
     $ tar -xzvf yaf-2.3.5.tgz
     $ cd yaf-2.3.5
     $ phpize
