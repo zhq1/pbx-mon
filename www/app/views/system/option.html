@@ -63,12 +63,12 @@
         </div>
         <div class="checkbox disabled">
           <label>
-            <input type="checkbox" value="" disabled="disabled"> Enable blacklist filtering option
+            <input type="checkbox"<?php echo isset($config['blacklist']) && intval($config['blacklist']) === 1 ? 'checked="checked"' : ''; ?>disabled="disabled"> Enable blacklist filtering option
           </label>
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox"<?php echo isset($config['record']) && intval($config['multiple']) === 1 ? 'checked="checked"' : ''; ?>> Allow multiple user to log in simultaneously
+            <input type="checkbox"<?php echo isset($config['multiple']) && intval($config['multiple']) === 1 ? 'checked="checked"' : ''; ?>> Allow multiple user to log in simultaneously
           </label>
         </div>
         <hr />
