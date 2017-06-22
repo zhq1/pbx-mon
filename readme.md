@@ -107,6 +107,10 @@
     $ make
     $ make install
 
+导入数据库表
+
+	$ mysql < script/db.sql
+
 安装 Web 平台系统
 
     $ make install
