@@ -6,23 +6,36 @@
  * By typefo <typefo@qq.com>
  */
 
+use Db\Redis;
 use Tool\Filter;
 
 class LoginModel {
     public  $db = null;
+    public $redis = null;
+    public $config = null;
     private $username = null;
     private $password = null;
       
     public function __construct(array $data = null) {
-        if (isset($data['username']) && is_string($data['username']) && mb_strlen($data['username']) > 0) {
-            $this->username = Filter::alpha($data['username']);
+        if (!isset($data['username'], $data['password']) {
+            exit(0);
         }
 
-        if (isset($data['password']) && is_string($data['password']) && mb_strlen($data['password']) > 5) {
-            $this->password = sha1(md5($data['password']));
-        }
+        $this->username = Filter::alpha($data['username'], null, 1, 32);
+        $this->password = Filter::string($data['password'], null, 8, 64);
 
-        $this->db = Yaf\Registry::get('db');
+        if ($this->username && $this->password) {
+            $this->db = Yaf\Registry::get('db');
+            $config = Yaf\Registry::get('config');
+
+            if ($config) {
+                $this->config = $config;
+                $redis = new Redis($config->redis->host, $config->redis->password);
+                $this->redis = $redis->handle;
+            }
+
+            $this->password = sha1(md5($this->password));
+        }
     }
 
     public function verify() {
@@ -36,6 +49,16 @@ class LoginModel {
             if (is_array($result) && count($result) > 0) {
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    public function checkAcl($ip = null) {
+        $ip = Filter::ip($ip, null);
+        if ($ip != null) {
+            $ip = ip2long($ip);
+            return $this->redis->exists('whitelist.' . $ip);
         }
 
         return false;

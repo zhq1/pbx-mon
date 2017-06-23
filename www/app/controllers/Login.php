@@ -14,20 +14,33 @@ class LoginController extends Yaf\Controller_Abstract {
         $response = $this->getResponse();
         $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'];
 
-        // Check login action
+        /* Check login action */
         if ($request->isPost()) {
             $data = $request->getPost();
             $login = new LoginModel($data);
 
-            // Verify username and password
-            if ($login->verify()) {
-                $session = Yaf\Session::getInstance();
-                $session->set('login', true);
-                $response->setRedirect($url . '/cdr');
-                $response->response();
-                return false;
+            /* Verify username and password */
+            if (!$login->verify()) {
+                goto output;
             }
+
+            /* Check ip whitelist */
+            $config = new ConfigModel();
+            if ($config->get('config.security') === '1') {
+                if (!$login->checkAcl($_SERVER['REMOTE_ADDR'])) {
+                    goto output;
+                }
+            }
+            
+            $session = Yaf\Session::getInstance();
+            $session->set('login', true);
+            $response->setRedirect($url . '/cdr');
+            $response->response();
+            return false;
         }
+        
+
+:output;
 
         $response->setRedirect($url);
         $response->response();
