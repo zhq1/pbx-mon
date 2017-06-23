@@ -11,7 +11,7 @@ use Db\Redis;
 class ConfigModel {
     public $redis = null;
     public $config = null;
-    public $option = ['record', 'blacklist', 'multiple'];
+    public $option = ['record', 'blacklist', 'security'];
 
     public function __construct() {
         $this->config = Yaf\Registry::get('config');
