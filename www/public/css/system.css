@@ -22,6 +22,10 @@ body {
     width: 100px;
 }
 
+.tab-left span {
+    font-size: 13px;
+}
+
 .badge-default {
     background-color: #999999;
 }
