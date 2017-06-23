@@ -13,6 +13,14 @@ body {
     content: "";
 }
 
+.tab-left {
+    width: 60px;
+}
+
+.tab-right {
+    width: 100px;
+}
+
 .badge-default {
     background-color: #999999;
 }
