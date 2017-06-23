@@ -38,7 +38,7 @@ class AclModel {
         $list = $this->redis->keys('whitelist.*');
         foreach ($list as $val) {
             $ip = explode('.', $val)[1];
-            $obj['ip'] = long2ip($ip)
+            $obj['ip'] = long2ip($ip);
             $obj['create_time'] = intval($this->redis->get('whitelist.' . $ip));
             $reply[] = $obj;
         }
