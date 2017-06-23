@@ -40,7 +40,7 @@ class LoginController extends Yaf\Controller_Abstract {
         }
         
 
-:output;
+:output
 
         $response->setRedirect($url);
         $response->response();
