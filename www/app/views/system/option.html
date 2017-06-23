@@ -51,6 +51,7 @@
       <div class="row">
         <ul class="nav nav-tabs">
           <li role="presentation" class="active"><a href="/system/option">常规选项</a></li>
+          <li role="presentation"><a href="/system/security">Web白名单</a></li>
           <li role="presentation"><a href="/system/password">修改密码</a></li>
           <li role="presentation"><a href="/system/about">关于系统</a></li>
         </ul>
@@ -68,7 +69,7 @@
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox"<?php echo isset($config['multiple']) && intval($config['multiple']) === 1 ? 'checked="checked"' : ''; ?>> Enable Web blacklist and whitelist policy
+            <input type="checkbox"<?php echo isset($config['multiple']) && intval($config['multiple']) === 1 ? 'checked="checked"' : ''; ?>> Enable Web whitelist security policy
           </label>
         </div>
         <hr />

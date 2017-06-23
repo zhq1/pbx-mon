@@ -21,6 +21,10 @@ class SystemController extends Yaf\Controller_Abstract {
         return true;
     }
 
+    public function securityAction() {
+        return true;
+    }
+
     public function aboutAction() {
         return true;
     }
