@@ -22,6 +22,8 @@ class SystemController extends Yaf\Controller_Abstract {
     }
 
     public function securityAction() {
+        $acl = new AclModel();
+        $this->getView()->assign('data', $acl->getAll());
         return true;
     }
 

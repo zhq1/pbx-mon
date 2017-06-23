@@ -51,14 +51,4 @@ class LoginModel {
 
         return false;
     }
-
-    public function checkAcl($ip = null) {
-        $ip = Filter::ip($ip, null);
-        if ($ip != null) {
-            $ip = ip2long($ip);
-            return $this->redis->exists('whitelist.' . $ip);
-        }
-
-        return false;
-    }
 }

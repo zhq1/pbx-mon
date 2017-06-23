@@ -27,7 +27,8 @@ class LoginController extends Yaf\Controller_Abstract {
             /* Check ip whitelist */
             $config = new ConfigModel();
             if ($config->get('security') === '1') {
-                if (!$login->checkAcl($_SERVER['REMOTE_ADDR'])) {
+                $acl = new AclModel();
+                if (!$acl->check($_SERVER['REMOTE_ADDR'])) {
                     goto output;
                 }
             }
