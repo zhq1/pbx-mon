@@ -35,7 +35,7 @@ class SystemController extends Yaf\Controller_Abstract {
             return false;
         }
 
-        $op = $response->getQuery('op');
+        $op = $request->getQuery('op');
         if ($op && $op === 'delete') {
             $ip = $request->getQuery('ip');
             $acl->delete($ip);
