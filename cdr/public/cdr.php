@@ -17,8 +17,8 @@ try {
     	/* Variable processing */
         $req = isset($data['variables']) ? $data['variables'] : '';
         $uuid = isset($req['uuid']) ? $req['uuid'] : 'unknown';
-        $src_ip = isset($req['sip_network_ip']) ? ip2long($req['sip_network_ip']) : 0;
-        $dst_ip = isset($req['sip_network_ip']) ? ip2long($req['sip_network_ip']) : 0;
+        $src_ip = isset($req['sip_from_host']) ? ip2long($req['sip_from_host']) : 0;
+        $dst_ip = isset($req['sip_dest_host']) ? ip2long($req['sip_dest_host']) : 0;
         $caller = isset($req['sip_from_user']) ? $req['sip_from_user'] : 'unknown';
         $called = isset($req['called']) ? $req['called'] : 'unknown';
         $duration = isset($req['billsec']) ? intval($req['billsec']) : 0;

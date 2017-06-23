@@ -91,6 +91,7 @@ class SystemModel {
                     $xml .= '        <action application="set" data="ringback=${cn-ring}"/>' . "\n";
                     $xml .= '        <action application="set" data="RECORD_STEREO=false"/>' . "\n";
                     $xml .= '        <action application="set" data="RECORD_ANSWER_REQ=true"/>' . "\n";
+                    $xml .= '        <action application="set" data="sip_dest_host=' . explode(':', $obj['server'])[0] . '"/>' . "\n";
                     $xml .= '        <action application="record_session" data="/var/record/${strftime(%Y/%m/%d}/${caller_id_number}-${called}-${uuid}.wav"/>' . "\n";
                     $sofia = $interface->get($obj['sofia']);
                     $xml .= '        <action application="bridge" data="sofia/' . $sofia['name'] . '/${called}@' . $obj['server'] . '"/>' . "\n";
