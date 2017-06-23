@@ -22,8 +22,8 @@ body {
     width: 100px;
 }
 
-.tab-left span {
-    font-size: 7px;
+.text-success {
+    background-color: #6ea96f;
 }
 
 .badge-default {
