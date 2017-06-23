@@ -77,7 +77,7 @@
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript">
   function drop(ip) {
-    var url = '/system/security?op=delete?ip=' + ip;
+    var url = '/system/security?op=delete&ip=' + ip;
     $.get(url, function(response, status){
       if (status == 'success') {
         setTimeout(function() {

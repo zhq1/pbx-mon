@@ -37,8 +37,8 @@ class SystemController extends Yaf\Controller_Abstract {
 
         $op = $request->getQuery('op');
         if ($op && $op === 'delete') {
-            $ip = $request->getQuery('ip');
-            $acl->delete($ip);
+            $ip = intval($request->getQuery('ip'));
+            $acl->delete(long2ip($ip));
             $response['status'] = 200;
             $response['message'] = 'success';
             header('Content-type: application/json');
