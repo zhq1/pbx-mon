@@ -17,24 +17,22 @@ class LoginModel {
     private $password = null;
       
     public function __construct(array $data = null) {
-        if (!isset($data['username'], $data['password']) {
-            exit(0);
-        }
+        if (isset($data['username'], $data['password'])) {
+            $this->username = Filter::alpha($data['username'], null, 1, 32);
+            $this->password = Filter::string($data['password'], null, 8, 64);
 
-        $this->username = Filter::alpha($data['username'], null, 1, 32);
-        $this->password = Filter::string($data['password'], null, 8, 64);
+            if ($this->username && $this->password) {
+                $this->db = Yaf\Registry::get('db');
+                $config = Yaf\Registry::get('config');
 
-        if ($this->username && $this->password) {
-            $this->db = Yaf\Registry::get('db');
-            $config = Yaf\Registry::get('config');
+                if ($config) {
+                    $this->config = $config;
+                    $redis = new Redis($config->redis->host, $config->redis->password);
+                    $this->redis = $redis->handle;
+                }
 
-            if ($config) {
-                $this->config = $config;
-                $redis = new Redis($config->redis->host, $config->redis->password);
-                $this->redis = $redis->handle;
+                $this->password = sha1(md5($this->password));
             }
-
-            $this->password = sha1(md5($this->password));
         }
     }
 
