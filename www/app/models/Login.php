@@ -23,11 +23,11 @@ class LoginModel {
 
             if ($this->username && $this->password) {
                 $this->db = Yaf\Registry::get('db');
-                $config = Yaf\Registry::get('config');
+                $this->config = Yaf\Registry::get('config');
 
-                if ($config) {
-                    $this->config = $config;
-                    $redis = new Redis($config->redis->host, $config->redis->password);
+                if ($this->config) {
+                    $config = $this->config->redis;
+                    $redis = new Redis($config->host, $config->port, $config->password, $config->db);
                     $this->redis = $redis->handle;
                 }
 
