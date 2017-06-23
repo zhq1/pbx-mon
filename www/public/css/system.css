@@ -45,6 +45,11 @@ body {
     margin-top: 18px;
 }
 
+.table>thead>tr>th, .table>tbody>tr>td {
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
+}
+
 .box {
 	margin-top: 10px;
 	padding: 20px;
