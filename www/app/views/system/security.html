@@ -63,7 +63,7 @@
         <?php
         if (isset($data)) {
           foreach ($data as $obj) {
-            echo '<tr><td class="tab-left"><span class="glyphicon glyphicon-lock text-success"></span></td><td class="text-left">',$obj['ip'],'</td><td><small class="text-muted"> 创建于 ',$obj['create_time'],'</small> <button type="button" class="close" aria-label="Close"><span>&times;</span></button></td>',"\n";
+            echo '<tr><td class="tab-left"><span class="glyphicon glyphicon-lock text-success"></span></td><td class="text-left">',long2ip($obj['ip']),'</td><td><small class="text-muted"> 创建于 ',date('Y-m-d H:i:s', $obj['create_time']),'</small> <button type="button" class="close" onClick="drop(',$obj['ip'],')" aria-label="Close"><span>&times;</span></button></td>',"\n";
           }
         }
         ?>
@@ -75,4 +75,18 @@
   <script type="text/javascript" src="/js/jquery.min.js"></script>
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/layer.js"></script>
+  <script type="text/javascript">
+  function drop(ip) {
+    var url = '/system/security?op=delete?ip=' + ip;
+    $.get(url, function(response, status){
+      if (status == 'success') {
+        setTimeout(function() {
+          window.location.reload();
+        }, 1000);
+      } else {
+        layer.msg('Oops, 添加失败!', {icon: 2});
+      }
+    });
+  }
+  </script>
 </html>

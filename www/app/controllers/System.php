@@ -23,6 +23,29 @@ class SystemController extends Yaf\Controller_Abstract {
 
     public function securityAction() {
         $acl = new AclModel();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $ip = $request->getPost('ip');
+            $acl->add($ip);
+            $response['status'] = 200;
+            $response['message'] = 'success';
+            header('Content-type: application/json');
+            echo json_encode($response);
+            return false;
+        }
+
+        $op = $response->getQuery('op');
+        if ($op && $op === 'delete') {
+            $ip = $request->getQuery('ip');
+            $acl->delete($ip);
+            $response['status'] = 200;
+            $response['message'] = 'success';
+            header('Content-type: application/json');
+            echo json_encode($response);
+            return false;
+        }
+
         $this->getView()->assign('data', $acl->getAll());
         return true;
     }
