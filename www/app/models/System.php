@@ -69,6 +69,8 @@ class SystemModel {
             $xml .= '    </extension>' . "\n\n";
 
             if (count($extensions) > 0) {
+            	$config = new ConfigModel();
+            	$record = ($config->get('record') === '1') ? true : false;
                 $interface = new InterfaceModel();
                 foreach ($extensions as $obj) {
                     $xml .= '    <extension name="' . $obj['id'] . '">' . "\n";
@@ -89,10 +91,16 @@ class SystemModel {
                     $xml .= '        <action application="set" data="called=$1"/>' . "\n";
                     $xml .= '        <action application="set" data="call_timeout=60"/>' . "\n";
                     $xml .= '        <action application="set" data="ringback=${cn-ring}"/>' . "\n";
-                    $xml .= '        <action application="set" data="RECORD_STEREO=false"/>' . "\n";
-                    $xml .= '        <action application="set" data="RECORD_ANSWER_REQ=true"/>' . "\n";
+
+                    /* Check record */
+                    if ($record) {
+                    	$xml .= '        <action application="set" data="RECORD_STEREO=false"/>' . "\n";
+                    	$xml .= '        <action application="set" data="RECORD_ANSWER_REQ=true"/>' . "\n";
+                    	
+                    	$xml .= '        <action application="record_session" data="/var/record/${strftime(%Y/%m/%d}/${caller_id_number}-${called}-${uuid}.wav"/>' . "\n";
+                    }
+
                     $xml .= '        <action application="set" data="sip_dest_host=' . explode(':', $obj['server'])[0] . '"/>' . "\n";
-                    $xml .= '        <action application="record_session" data="/var/record/${strftime(%Y/%m/%d}/${caller_id_number}-${called}-${uuid}.wav"/>' . "\n";
                     $sofia = $interface->get($obj['sofia']);
                     $xml .= '        <action application="bridge" data="sofia/' . $sofia['name'] . '/${called}@' . $obj['server'] . '"/>' . "\n";
                     $xml .= '        <action application="hangup"/>' . "\n";
