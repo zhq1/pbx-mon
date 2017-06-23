@@ -58,17 +58,17 @@
       <div class="row box">
         <div class="checkbox">
           <label>
-             <input type="checkbox"<?php echo isset($config['record']) && intval($config['record']) === 1 ? 'checked="checked"' : ''; ?>> Enable call recording - all gateway for global
+             <input type="checkbox"<?php echo isset($config['record']) && intval($config['record']) === 1 ? 'checked="checked"' : ''; ?>> 开启通话录音 (<small>针对全局网关都有效</small>)
           </label>
         </div>
         <div class="checkbox disabled">
           <label>
-            <input type="checkbox"<?php echo isset($config['blacklist']) && intval($config['blacklist']) === 1 ? 'checked="checked"' : ''; ?>disabled="disabled"> Enable blacklist filtering option
+            <input type="checkbox"<?php echo isset($config['blacklist']) && intval($config['blacklist']) === 1 ? 'checked="checked"' : ''; ?>disabled="disabled"> 开启号码黑名单过滤 (<small>该功能即将上线</small>)
           </label>
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox"<?php echo isset($config['multiple']) && intval($config['multiple']) === 1 ? 'checked="checked"' : ''; ?>> Allow multiple user to log in simultaneously
+            <input type="checkbox"<?php echo isset($config['multiple']) && intval($config['multiple']) === 1 ? 'checked="checked"' : ''; ?>> 开启 Web 白名单和黑名单
           </label>
         </div>
         <hr />
