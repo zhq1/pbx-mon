@@ -66,3 +66,7 @@ form .form-group button, form .form-group a {
     width: 80px;
     margin-right: 20px;
 }
+
+.checkbox label, .radio label {
+    padding-left: 0px;
+}
