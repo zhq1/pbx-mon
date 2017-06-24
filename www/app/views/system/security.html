@@ -94,9 +94,9 @@
   }
 
   function show() {
-    layer.prompt({title: '输入任何口令，并确认', formType: 1}, function(ip, index){
+    layer.prompt({title: '输入被允许 ip 地址', formType: 2}, function(val, index){
       var url = '/system/security';
-      $.post(url, {'ip': ip}, function(response, status) {
+      $.post(url, {ip: val}, function(response, status) {
         if (status == 'success') {
           setTimeout(function() {
               window.location.reload();
