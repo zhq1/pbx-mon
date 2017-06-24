@@ -84,7 +84,17 @@
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript">
   function show(obj) {
-    console.log(obj.id + '->' + obj.checked);
+    var url = '';
+    switch (obj.id) {
+      case 'record':
+        url = '/system/option?key=record&val=' + (obj.checked ? '1' : '0');
+      case 'blacklist':
+        url = '/system/option?key=blacklist&val=' + (obj.checked ? '1' : '0');
+      case 'security':
+        url = '/system/option?key=security&val=' + (obj.checked ? '1' : '0');
+    }
+
+    console.log(url);
   }
   </script>
 </html>
