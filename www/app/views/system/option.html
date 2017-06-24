@@ -84,7 +84,11 @@
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript" src="/js/icheck.min.js"></script>
   <script type="text/javascript">
-  $('input').iCheck();
+  $('input').iCheck({
+    labelHover: false,
+    cursor: true
+  });
+  
   function change(obj) {
     var url = '/system/option?';
     switch (obj.id) {
