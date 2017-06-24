@@ -16,7 +16,23 @@ class SystemController extends Yaf\Controller_Abstract {
 	}
 
     public function optionAction() {
+        $request = $this->getRequest();
         $config = new ConfigModel();
+
+        $key = $request->getQuery('key');
+        if ($key) {
+            $val = intval($request->getQuery('val'));
+            if (in_array($val, [0, 1])) {
+                $config->set($key, $val);
+            }
+
+            $response['status'] = 200;
+            $response['message'] = 'success';
+            header('Content-type: application/json');
+            echo json_encode($response);
+            return false;
+        }
+
         $this->getView()->assign('config', $config->getAll());
         return true;
     }

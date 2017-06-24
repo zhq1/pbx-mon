@@ -52,6 +52,7 @@ class ConfigModel {
         }
 
         if (in_array($key, $this->option, true)) {
+            $key = 'config.' . $key;
             return $this->redis->set($key, $val);
         }
 
