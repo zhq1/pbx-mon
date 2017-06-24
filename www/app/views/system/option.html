@@ -61,7 +61,7 @@
       <div class="row box">
         <div class="checkbox">
           <label>
-             <input id="record" type="checkbox"<?php echo isset($config['record']) && intval($config['record']) === 1 ? 'checked="checked"' : ''; ?> onClick="change(this)"> Enable call recording - all gateway for global
+             <input id="record" type="checkbox"<?php echo isset($config['record']) && intval($config['record']) === 1 ? 'checked="checked"' : ''; ?>> Enable call recording - all gateway for global
           </label>
         </div>
         <div class="checkbox disabled">
@@ -71,7 +71,7 @@
         </div>
         <div class="checkbox">
           <label>
-            <input id="security" type="checkbox"<?php echo isset($config['security']) && intval($config['security']) === 1 ? 'checked="checked"' : ''; ?> onClick="change(this)"> Enable Web firewall security policy
+            <input id="security" type="checkbox"<?php echo isset($config['security']) && intval($config['security']) === 1 ? 'checked="checked"' : ''; ?>> Enable Web firewall security policy
           </label>
         </div>
         <hr />
@@ -94,22 +94,18 @@
       });
   });
 
-$('input').on('ifChanged', function(event){
-  console.log(this);
-  //alert(event.type + ' callback');
-});
-/*
-  function change(obj) {
+  $('input').on('ifChanged', function(event){
     var url = '/system/option?';
-    switch (obj.id) {
+    
+    switch (this.id) {
       case 'record':
-        url += 'key=record&val=' + (obj.checked ? '1' : '0');
+        url += 'key=record&val=' + (this.checked ? '1' : '0');
         break;
       case 'blacklist':
-        url += 'key=blacklist&val=' + (obj.checked ? '1' : '0');
+        url += 'key=blacklist&val=' + (this.checked ? '1' : '0');
         break;
       case 'security':
-        url += 'key=security&val=' + (obj.checked ? '1' : '0');
+        url += 'key=security&val=' + (this.checked ? '1' : '0');
         break;
     }
 
@@ -117,10 +113,10 @@ $('input').on('ifChanged', function(event){
       if (status == 'success') {
         window.location.reload();
       } else {
-        layer.msg('Oops, 开启 ' + obj.id + ' 失败!', {icon: 2});
+        layer.msg('Oops, 开启 ' + this.id + ' 失败!', {icon: 2});
       }
     });
-  }
-  */
+  });
+
   </script>
 </html>
