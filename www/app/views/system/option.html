@@ -10,6 +10,7 @@
     <title>pbxMon System</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/all.css">
     <link type="text/css" rel="stylesheet" href="/css/system.css">
   </head>
   <body>
@@ -84,11 +85,8 @@
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript" src="/js/icheck.min.js"></script>
   <script type="text/javascript">
-  $('input').iCheck({
-    labelHover: false,
-    cursor: true
-  });
-  
+  $('input').iCheck();
+
   function change(obj) {
     var url = '/system/option?';
     switch (obj.id) {
