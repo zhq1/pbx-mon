@@ -92,5 +92,20 @@
         });
      });
   }
+
+  function show() {
+    layer.prompt({title: '输入任何口令，并确认', formType: 1}, function(ip, index){
+      var url = '/system/security';
+      $.post(url, {'ip': ip}, function(response, status) {
+        if (status == 'success') {
+          setTimeout(function() {
+              window.location.reload();
+          }, 1000);
+        } else {
+          layer.msg('Oops, 添加 ' + ip + ' 失败!', {icon: 2});
+        }
+      });
+    });
+  }
   </script>
 </html>
