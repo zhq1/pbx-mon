@@ -84,14 +84,17 @@
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript">
   function show(obj) {
-    var url = '';
+    var url = '/system/option?';
     switch (obj.id) {
       case 'record':
-        url = '/system/option?key=record&val=' + (obj.checked ? '1' : '0');
+        url += 'key=record&val=' + (obj.checked ? '1' : '0');
+        break;
       case 'blacklist':
-        url = '/system/option?key=blacklist&val=' + (obj.checked ? '1' : '0');
+        url += 'key=blacklist&val=' + (obj.checked ? '1' : '0');
+        break;
       case 'security':
-        url = '/system/option?key=security&val=' + (obj.checked ? '1' : '0');
+        url += 'key=security&val=' + (obj.checked ? '1' : '0');
+        break;
     }
 
     console.log(url);
