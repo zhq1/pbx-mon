@@ -85,7 +85,9 @@
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript" src="/js/icheck.min.js"></script>
   <script type="text/javascript">
-  $('input').iCheck();
+  $('input').iCheck({checkboxClass: 'icheckbox_square-blue',
+              radioClass: 'iradio_square-blue',
+              increaseArea: '20%'});
 
   function change(obj) {
     var url = '/system/option?';
