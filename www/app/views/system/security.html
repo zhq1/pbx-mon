@@ -79,13 +79,12 @@
   function drop(ip) {
     layer.confirm('亲，确定要删除？', {
         btn: ['是','否'], icon: 3
-      }, function(){
+      }, function(index){
         var url = '/system/security?op=delete&ip=' + ip;
         $.get(url, function(response, status){
           if (status == 'success') {
-            setTimeout(function() {
-              window.location.reload();
-            }, 1000);
+            layer.close(index);
+            window.location.reload();
           } else {
             layer.msg('Oops, 删除失败!', {icon: 2});
           }
