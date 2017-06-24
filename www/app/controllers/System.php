@@ -22,7 +22,7 @@ class SystemController extends Yaf\Controller_Abstract {
         $key = $request->getQuery('key');
         if ($key) {
             $val = intval($request->getQuery('val'));
-            if (in_array($val, [0, 1])) {
+            if (in_array($val, [0, 1], true)) {
                 $config->set($key, $val);
             }
 

@@ -47,7 +47,7 @@ class ConfigModel {
     }
 
     public function set($key = null, $val = null) {
-        if ($key == null || $val == null) {
+        if ($key === null || $val === null) {
             return false;
         }
 
