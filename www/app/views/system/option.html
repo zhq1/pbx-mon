@@ -59,7 +59,7 @@
       <div class="row box">
         <div class="checkbox">
           <label>
-             <input id="record" type="checkbox"<?php echo isset($config['record']) && intval($config['record']) === 1 ? 'checked="checked"' : ''; ?> onClick="show(this)"> Enable call recording - all gateway for global
+             <input id="record" type="checkbox"<?php echo isset($config['record']) && intval($config['record']) === 1 ? 'checked="checked"' : ''; ?> onClick="change(this)"> Enable call recording - all gateway for global
           </label>
         </div>
         <div class="checkbox disabled">
@@ -69,7 +69,7 @@
         </div>
         <div class="checkbox">
           <label>
-            <input id="security" type="checkbox"<?php echo isset($config['security']) && intval($config['security']) === 1 ? 'checked="checked"' : ''; ?> onClick="show(this)"> Enable Web whitelist security policy
+            <input id="security" type="checkbox"<?php echo isset($config['security']) && intval($config['security']) === 1 ? 'checked="checked"' : ''; ?> onClick="change(this)"> Enable Web whitelist security policy
           </label>
         </div>
         <hr />
@@ -83,7 +83,7 @@
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript">
-  function show(obj) {
+  function change(obj) {
     var url = '/system/option?';
     switch (obj.id) {
       case 'record':
