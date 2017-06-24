@@ -97,7 +97,15 @@
         break;
     }
 
-    console.log(url);
+    $.get(url, function(response, status){
+      if (status == 'success') {
+        setTimeout(function() {
+              window.location.reload();
+        }, 1000);
+      } else {
+        layer.msg('Oops, 开启 ' + obj.id + ' 失败!', {icon: 2});
+      }
+    });
   }
   </script>
 </html>
