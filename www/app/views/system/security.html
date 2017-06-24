@@ -63,7 +63,7 @@
         <?php
         if (isset($data)) {
           foreach ($data as $obj) {
-            echo '<tr><td class="tab-left" style="width:20px"><span class="glyphicon glyphicon-lock text-success"></span></td><td class="text-left" style="width:200px">',long2ip($obj['ip']),'</td><td><small class="text-muted"> 创建于 ',date('Y-m-d H:i:s', $obj['create_time']),'</small> <button type="button" class="close" onClick="drop(',$obj['ip'],')" aria-label="Close"><span>&times;</span></button></td>',"\n";
+            echo '<tr><td class="tab-left" style="width:50px"><span class="glyphicon glyphicon-lock text-success"></span></td><td class="text-left" style="width:200px">',long2ip($obj['ip']),'</td><td><small class="text-muted"> 创建于 ',date('Y-m-d H:i:s', $obj['create_time']),'</small> <button type="button" class="close" onClick="drop(',$obj['ip'],')" aria-label="Close"><span>&times;</span></button></td>',"\n";
           }
         }
         ?>
