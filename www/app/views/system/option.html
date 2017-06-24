@@ -94,9 +94,6 @@
       });
   });
 
-
-
-/*
   function change(obj) {
     var url = '/system/option?';
     switch (obj.id) {
@@ -110,7 +107,7 @@
         url += 'key=security&val=' + (obj.checked ? '1' : '0');
         break;
     }
-*/
+
     $.get(url, function(response, status){
       if (status == 'success') {
         window.location.reload();
