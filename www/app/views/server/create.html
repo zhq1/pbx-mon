@@ -10,6 +10,8 @@
     <title>pbxMon System</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/all.css">
+    <link type="text/css" rel="stylesheet" href="/css/flat/blue.css">
     <link type="text/css" rel="stylesheet" href="/css/server.css">
   </head>
   <body>
@@ -129,9 +131,17 @@
   <script type="text/javascript" src="/js/jquery.min.js"></script>
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/layer.js"></script>
-  <script type="text/javascript"> 
-    $("#submit").click(function(){
-      var index = layer.load(2, {shade: [0.7,'#fff'], time: 3000});
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $('#call').iCheck({
+      checkboxClass: 'icheckbox_flat-blue',
+      radioClass: 'iradio_flat-blue',
+      increaseArea: '20%'
     });
+  });
+
+  $("#submit").click(function(){
+     var index = layer.load(2, {shade: [0.7,'#fff'], time: 3000});
+  });
   </script>
 </html>
