@@ -99,9 +99,7 @@
 
     $.get(url, function(response, status){
       if (status == 'success') {
-        setTimeout(function() {
-              window.location.reload();
-        }, 1000);
+        window.location.reload();
       } else {
         layer.msg('Oops, 开启 ' + obj.id + ' 失败!', {icon: 2});
       }
