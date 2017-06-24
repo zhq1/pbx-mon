@@ -94,7 +94,7 @@
   }
 
   function show() {
-    layer.prompt({title: '输入被允许 ip 地址'}, function(val, index){
+    layer.prompt({title: '输入被允许的 ip 地址'}, function(val, index){
       var url = '/system/security';
       $.post(url, {ip: val}, function(response, status) {
         if (status == 'success') {
