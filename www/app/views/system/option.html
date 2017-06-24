@@ -94,6 +94,10 @@
       });
   });
 
+$('input').on('ifChecked', function(event){
+  alert(event.type + ' callback');
+});
+/*
   function change(obj) {
     var url = '/system/option?';
     switch (obj.id) {
@@ -116,5 +120,6 @@
       }
     });
   }
+  */
   </script>
 </html>
