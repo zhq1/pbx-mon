@@ -98,9 +98,8 @@
       var url = '/system/security';
       $.post(url, {ip: val}, function(response, status) {
         if (status == 'success') {
-          setTimeout(function() {
-              window.location.reload();
-          }, 500);
+          layer.close(index);
+          window.location.reload();
         } else {
           layer.msg('Oops, 添加 ' + ip + ' 失败!', {icon: 2});
         }
