@@ -59,17 +59,17 @@
       <div class="row box">
         <div class="checkbox">
           <label>
-             <input type="checkbox"<?php echo isset($config['record']) && intval($config['record']) === 1 ? 'checked="checked"' : ''; ?> onClick="show(this)"> Enable call recording - all gateway for global
+             <input id="record" type="checkbox"<?php echo isset($config['record']) && intval($config['record']) === 1 ? 'checked="checked"' : ''; ?> onClick="show(this)"> Enable call recording - all gateway for global
           </label>
         </div>
         <div class="checkbox disabled">
           <label>
-            <input type="checkbox"<?php echo isset($config['blacklist']) && intval($config['blacklist']) === 1 ? 'checked="checked"' : ''; ?>disabled="disabled"> Enable phone blacklist filtering option
+            <input id="blacklist" type="checkbox"<?php echo isset($config['blacklist']) && intval($config['blacklist']) === 1 ? 'checked="checked"' : ''; ?>disabled="disabled"> Enable phone blacklist filtering option
           </label>
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox"<?php echo isset($config['security']) && intval($config['security']) === 1 ? 'checked="checked"' : ''; ?> onClick="show(this)"> Enable Web whitelist security policy
+            <input id="security" type="checkbox"<?php echo isset($config['security']) && intval($config['security']) === 1 ? 'checked="checked"' : ''; ?> onClick="show(this)"> Enable Web whitelist security policy
           </label>
         </div>
         <hr />
@@ -84,7 +84,7 @@
   <script type="text/javascript" src="/js/layer.js"></script>
   <script type="text/javascript">
   function show(obj) {
-    console.log(obj.checked);
+    console.log(obj.id + '->' + obj.checked);
   }
   </script>
 </html>
