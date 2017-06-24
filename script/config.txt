@@ -1,0 +1,3 @@
+SET config.blacklist 0
+SET config.security 0
+SET config.record 0
