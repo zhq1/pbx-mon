@@ -108,7 +108,7 @@ class RouteModel {
         $data = $this->checkArgs($data);
 
         /* Reserved routing table */
-        if (in_array($data, ['route', 'default'])) {
+        if (in_array($data['name'], ['route', 'default'])) {
             return false;
         }
 
