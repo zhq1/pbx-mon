@@ -110,6 +110,7 @@
 导入数据库表
 
 	$ mysql < script/db.sql
+    $ redis-cli < script/config.txt
 
 安装 Web 平台系统
 
