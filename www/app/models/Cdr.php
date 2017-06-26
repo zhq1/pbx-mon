@@ -1,7 +1,7 @@
 <?php
 
 /*
- * The Cdr model
+ * The Cdr Model
  * Link http://github.com/typefo/pbx-mon
  * By typefo <typefo@qq.com>
  */
@@ -201,7 +201,7 @@ class CdrModel {
     public function getphgeo($phone = null) {
     	if (!empty($phone) && is_string($phone)) {
     		$reply = $this->redis->get(substr($phone, 0, 7));
-    		if ($reply) {
+    		if ($reply !== false) {
     			return $reply;
     		}
     	}
