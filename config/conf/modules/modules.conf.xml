@@ -92,7 +92,7 @@
     <!-- Codec Interfaces -->
     <!-- <load module="mod_spandsp"/> -->
     <!-- <load module="mod_g723_1"/> -->
-    <load module="mod_bcg729"/>
+    <load module="mod_g729"/>
     <!-- <load module="mod_g729"/> -->
     <!-- <load module="mod_amr"/> -->
     <!--<load module="mod_ilbc"/>-->
@@ -133,7 +133,7 @@
     <!-- <load module="mod_rss"/> -->
 
     <!-- Say -->
-    <load module="mod_say_en"/>
+    <!-- <load module="mod_say_en"/> -->
     <!-- <load module="mod_say_ru"/> -->
     <!-- <load module="mod_say_zh"/> -->
     <!-- <load module="mod_say_sv"/> -->

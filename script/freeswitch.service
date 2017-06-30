@@ -17,7 +17,6 @@ IOSchedulingClass=realtime
 IOSchedulingPriority=2
 CPUSchedulingPolicy=rr
 CPUSchedulingPriority=89
-WorkingDirectory=/var/freeswitch
 ExecStart=/usr/local/freeswitch/bin/freeswitch -nc -nf -nonat
 ExecStop=/usr/local/freeswitch/bin/freeswitch -stop
 ExecReload=/usr/bin/kill -HUP $MAINPID
