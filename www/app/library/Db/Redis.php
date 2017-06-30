@@ -19,7 +19,7 @@ class Redis {
         	/* Check redis extension */
     	    if (!extension_loaded('redis')) {
     	    	error_log('Unable to find redis driver extension', 0);
-    	    	return $handle;
+    	    	return $this->handle;
     	    }
 
     	    $this->host = $host;

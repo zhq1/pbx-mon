@@ -36,7 +36,7 @@ class Filter {
         $value = filter_var($value, FILTER_SANITIZE_STRING);
         if ($value) {
             $len = mb_strlen($value);
-            if ($len > $min && $len < $max) {
+            if ($len >= $min && $len <= $max) {
                 return $value;
             }
         }
@@ -67,7 +67,7 @@ class Filter {
 
     static public function port($value = null, $defval = null) {
         $value = intval($value);
-        if ($value > 0 && $value < 65535) {
+        if ($value >= 0 && $value <= 65535) {
             return $value;
         }
 

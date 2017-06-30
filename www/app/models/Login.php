@@ -19,7 +19,7 @@ class LoginModel {
     public function __construct(array $data = null) {
         if (isset($data['username'], $data['password'])) {
             $this->username = Filter::alpha($data['username'], null, 1, 32);
-            $this->password = Filter::string($data['password'], null, 8, 64);
+            $this->password = Filter::string($data['password'], null, 6, 64);
 
             if ($this->username && $this->password) {
                 $this->db = Yaf\Registry::get('db');
