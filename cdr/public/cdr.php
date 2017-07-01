@@ -29,7 +29,7 @@ try {
         	/* Initialize mysql connection */
     		$db = new PDO('mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
 
-            $db->query("INSERT INTO cdr(caller, called, duration, src_ip, rpf, file, create_time) values('$caller', '$called', $duration, $src_ip, $dst_ip, '$rpf', '$file', '$create_time')");
+            $db->query("INSERT INTO cdr(caller, called, duration, src_ip, dst_ip, file, create_time) values('$caller', '$called', $duration, $src_ip, $dst_ip, '$file', '$create_time')");
 
             /* Close mysql connection */
     	    $db = null;
@@ -41,10 +41,15 @@ try {
     	    }
 
     	    /* initialize redis connection */
-    	    $redis = new Redis(REDIS_HOST, REDIS_PORT);
+    	    $redis = new Redis();
+            $redis->connect(REDIS_HOST, REDIS_PORT);
+
     	    if (REDIS_PASS) {
     	    	$redis->auth(REDIS_PASS);
     	    }
+
+            /* Select Database */
+            $redis->select(REDIS_DB);
 
     	    $key = date('Ymd');
     	    $redis->hIncrBy('server.' . $key . '.' . $src_ip, 'in', 1);
