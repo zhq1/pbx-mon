@@ -17,6 +17,7 @@ class SystemModel {
     public function __construct() {
         $this->db = Yaf\Registry::get('db');
         $this->config = Yaf\Registry::get('config');
+        umask(0117);
     }
 
     public function regenAcl() {
