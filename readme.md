@@ -37,8 +37,8 @@
     $ yum install -y gcc gcc-c++ autoconf automake libtool wget python ncurses-devel zlib-devel openssl-devel
     $ yum install -y nginx libevent libevent-devel sqlite-devel libcurl-devel pcre-devel libxml2-devel
     $ yum install -y libdb4* libidn-devel unbound-devel libuuid-devel lua-devel libsndfile-devel
-    $ yum install -y speex-devel ldns-devel libedit-devel e2fsprogs-devel gsm gsm-devel re2c
-    $ yum install -y php php-fpm php-devel php-pdo php-mysql php-mysqli php-mcrypt php-mbstring
+    $ yum install -y speex-devel ldns-devel libedit-devel e2fsprogs-devel gsm gsm-devel re2c redis
+    $ yum install -y php php-fpm php-devel php-pdo php-mysql php-mysqli php-mcrypt php-mbstring mariadb mariadb-server
 
 内核配置 /etc/sysctl.conf
 
@@ -49,14 +49,21 @@
     net.ipv4.tcp_tw_reuse = 1
     net.ipv4.tcp_tw_recycle = 1
     net.ipv4.tcp_fin_timeout = 30
-    fs.file-max = 2097152
+    fs.file-max = 2048000
+    fs.nr_open = 2048000
+    fs.file-max = 1024000
+    fs.aio-max-nr = 1048576
 
 内核配置 /etc/security/limits.conf
 
-    * soft nofile 102400
-    * hard nofile 102400
-    * soft nproc unlimited
-    * hard nproc unlimited
+    * soft    nofile  1024000
+    * hard    nofile  1024000
+    * soft    nproc   unlimited
+    * hard    nproc   unlimited
+    * soft    core    unlimited
+    * hard    core    unlimited
+    * soft    memlock unlimited
+    * hard    memlock unlimited
 
 创建 pbx 运行用户组，并下载 pbxMon 源码包
 
@@ -83,23 +90,23 @@
 
 安装 G729 语音模块
 
-	$ git clone https://github.com/typefo/mod_g729.git
+    $ git clone https://github.com/typefo/mod_g729.git
     $ cd mod_g729
     $ make
     $ make install
 
 安装 phpredis
 
-	$ git clone https://github.com/phpredis/phpredis.git
-	$ cd phpredis
-	$ phpize
-	$ ./configure
-	$ make
-	$ make install
+    $ git clone https://github.com/phpredis/phpredis.git
+    $ cd phpredis
+    $ phpize
+    $ ./configure
+    $ make
+    $ make install
 
 安装 yaf 框架
 
-	$ wget https://pecl.php.net/get/yaf-2.3.5.tgz
+    $ wget https://pecl.php.net/get/yaf-2.3.5.tgz
     $ tar -xzvf yaf-2.3.5.tgz
     $ cd yaf-2.3.5
     $ phpize
@@ -109,7 +116,7 @@
 
 导入数据库表
 
-	$ mysql < script/db.sql
+    $ mysql < script/db.sql
     $ redis-cli < script/config.txt
 
 安装 Web 平台系统
