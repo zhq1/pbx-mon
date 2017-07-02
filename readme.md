@@ -34,11 +34,11 @@
 
     $ yum -y install epel-release
     $ yum makecache fast
-    $ yum install -y gcc gcc-c++ autoconf automake libtool wget python ncurses-devel zlib-devel openssl-devel
-    $ yum install -y nginx libevent libevent-devel sqlite-devel libcurl-devel pcre-devel libxml2-devel
-    $ yum install -y libdb4* libidn-devel unbound-devel libuuid-devel lua-devel libsndfile-devel
-    $ yum install -y speex-devel ldns-devel libedit-devel e2fsprogs-devel gsm gsm-devel re2c redis
-    $ yum install -y php php-fpm php-devel php-pdo php-mysql php-mysqli php-mcrypt php-mbstring mariadb mariadb-server
+    $ yum install -y gcc gcc-c++ autoconf automake libtool wget python ncurses-devel zlib-devel ldns-devel
+    $ yum install -y openssl-devel libevent libevent-devel sqlite-devel libcurl-devel pcre-devel libxml2-devel
+    $ yum install -y libdb4* libidn-devel unbound-devel libuuid-devel lua-devel libsndfile-devel libjpeg-devel
+    $ yum install -y speex-devel libedit-devel e2fsprogs-devel gsm gsm-devel re2c redis mariadb mariadb-server
+    $ yum install -y nginx php php-fpm php-devel php-pdo php-mysql php-mysqli php-mcrypt php-mbstring 
 
 内核配置 /etc/sysctl.conf
 
@@ -74,6 +74,7 @@
 编译安装 FreeSWITCH
 
     $ wget http://files.freeswitch.org/freeswitch-releases/freeswitch-1.6.18.tar.gz
+    $ tar -xzvf freeswitch-1.6.18.tar.gz
     $ cd freeswitch-1.6.18
     $ emacs modules.conf
     $ ./configure --disable-debug --disable-libyuv --disable-libvpx
