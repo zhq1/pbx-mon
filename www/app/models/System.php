@@ -80,16 +80,18 @@ class SystemModel {
                     switch ($obj['type']) {
                         case 1:
                             $field = 'caller_id_number';
+                            $number = '${destination_number}';
                             break;
                         case 2:
                             $field = 'destination_number';
+                            $number = '$1';
                             break;
                         default:
                             break;
                     }
 
                     $xml .= '      <condition field="' . $field . '" expression="' . $obj['rexp'] . '">' . "\n";
-                    $xml .= '        <action application="set" data="called=$1"/>' . "\n";
+                    $xml .= '        <action application="set" data="called=' . $number . '"/>' . "\n";
                     $xml .= '        <action application="set" data="call_timeout=60"/>' . "\n";
                     $xml .= '        <action application="set" data="ringback=${cn-ring}"/>' . "\n";
 
