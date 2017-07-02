@@ -103,6 +103,7 @@ class SystemModel {
 
                     $xml .= '        <action application="set" data="sip_dest_host=' . explode(':', $obj['server'])[0] . '"/>' . "\n";
                     $sofia = $interface->get($obj['sofia']);
+                    $xml .= '        <action application="export" data="nolocal:absolute_codec_string=' . $sofia['out_code'] . '"/>' . "\n";
                     $xml .= '        <action application="bridge" data="sofia/' . $sofia['name'] . '/${called}@' . $obj['server'] . '"/>' . "\n";
                     $xml .= '        <action application="hangup"/>' . "\n";
                     $xml .= '      </condition>' . "\n";
