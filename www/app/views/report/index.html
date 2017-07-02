@@ -60,7 +60,7 @@
               echo '<td>',intval($obj['out']),'</td>';
               $duration = intval($obj['duration']);
               echo '<td>',gmstrftime('%H:%M:%S', $duration),'</td>';
-              $avg = ($duration > 0) ? ($duration / intval($obj['out'])) : 0;
+              $avg = ($duration > 0) ? ($duration / intval($obj['in'])) : 0;
               echo '<td>',gmstrftime('%H:%M:%S',$avg),'</td></tr>',"\n";
             }
           }
