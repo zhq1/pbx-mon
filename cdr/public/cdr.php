@@ -40,24 +40,28 @@ try {
     	    	exit(0);
     	    }
 
-    	    /* initialize redis connection */
-    	    $redis = new Redis();
-            $redis->connect(REDIS_HOST, REDIS_PORT);
+            try {
+                /* initialize redis connection */
+                $redis = new Redis();
+                $redis->connect(REDIS_HOST, REDIS_PORT);
 
-    	    if (REDIS_PASS) {
-    	    	$redis->auth(REDIS_PASS);
-    	    }
+                if (REDIS_PASS) {
+                    $redis->auth(REDIS_PASS);
+                }
 
-            /* Select Database */
-            $redis->select(REDIS_DB);
+                /* Select Database */
+                $redis->select(REDIS_DB);
 
-    	    $key = date('Ymd');
-    	    $redis->hIncrBy('server.' . $key . '.' . $src_ip, 'in', 1);
-    	    $redis->hIncrBy('server.' . $key . '.' . $dst_ip, 'out', 1);
-    	    $redis->hIncrBy('server.' . $key . '.' . $dst_ip, 'duration', $duration);
+                $key = date('Ymd');
+                $redis->hIncrBy('server.' . $key . '.' . $src_ip, 'in', 1);
+                $redis->hIncrBy('server.' . $key . '.' . $dst_ip, 'out', 1);
+                $redis->hIncrBy('server.' . $key . '.' . $dst_ip, 'duration', $duration);
 
-    	    /* Close redis connection */
-    	    $redis->close();
+                /* Close redis connection */
+                $redis->close();
+            } catch(RedisException $e) {
+                error_log($e->getMessage(), 0);
+            }
         }
     } else {
         error_log('Cannot parse requests appliation/json data', 0);
