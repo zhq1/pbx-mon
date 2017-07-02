@@ -50,7 +50,7 @@
 
   <X-PRE-PROCESS cmd="set" data="temp_dir=/tmp"/>
   <X-PRE-PROCESS cmd="set" data="cache_dir=/dev/shm"/>
-  <X-PRE-PROCESS cmd="set" data="recordings_dir=/var/www/public/record"/>
+  <X-PRE-PROCESS cmd="set" data="recordings_dir=/var/record"/>
   <X-PRE-PROCESS cmd="set" data="sound_prefix=$${sounds_dir}/en/us/callie"/>
 
   <!--
@@ -257,8 +257,6 @@
        127 - BV32
 
   -->
-  <X-PRE-PROCESS cmd="set" data="global_codec_prefs=G729,PCMU,PCMA"/>
-  <X-PRE-PROCESS cmd="set" data="outbound_codec_prefs=G729,PCMU,PCMA"/>
 
   <!--
       xmpp_client_profile and xmpp_server_profile
@@ -288,31 +286,6 @@
        If you're going to load test FreeSWITCH please input real IP addresses
        for external_rtp_ip and external_sip_ip
   -->
-
-  <!-- external_rtp_ip
-       Can be an one of:
-           ip address: "12.34.56.78"
-           a stun server lookup: "stun:stun.server.com"
-           a DNS name: "host:host.server.com"
-       where fs.mydomain.com is a DNS A record-useful when fs is on
-       a dynamic IP address, and uses a dynamic DNS updater.
-       If unspecified, the bind_server_ip value is used.
-       Used by: sofia.conf.xml dingaling.conf.xml
-  -->
-  <X-PRE-PROCESS cmd="set" data="external_rtp_ip=stun:stun.freeswitch.org"/>
-
-  <!-- external_sip_ip
-      Used as the public IP address for SDP.
-       Can be an one of:
-           ip address: "12.34.56.78"
-           a stun server lookup: "stun:stun.server.com"
-           a DNS name: "host:host.server.com"
-       where fs.mydomain.com is a DNS A record-useful when fs is on
-       a dynamic IP address, and uses a dynamic DNS updater.
-       If unspecified, the bind_server_ip value is used.
-       Used by: sofia.conf.xml dingaling.conf.xml
-  -->
-  <X-PRE-PROCESS cmd="set" data="external_sip_ip=stun:stun.freeswitch.org"/>
 
   <!-- unroll-loops
        Used to turn on sip loopback unrolling.
@@ -417,18 +390,6 @@
      Will show you what is available in your verion of openssl.
   -->
   <X-PRE-PROCESS cmd="set" data="sip_tls_ciphers=ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"/>
-  
-  <!-- Internal SIP Profile -->
-  <X-PRE-PROCESS cmd="set" data="internal_auth_calls=false"/>
-  <X-PRE-PROCESS cmd="set" data="internal_sip_port=5050"/>
-  <X-PRE-PROCESS cmd="set" data="internal_tls_port=5050"/>
-  <X-PRE-PROCESS cmd="set" data="internal_ssl_enable=false"/>
-
-  <!-- External SIP Profile -->
-  <X-PRE-PROCESS cmd="set" data="external_auth_calls=false"/>
-  <X-PRE-PROCESS cmd="set" data="external_sip_port=5060"/>
-  <X-PRE-PROCESS cmd="set" data="external_tls_port=5060"/>
-  <X-PRE-PROCESS cmd="set" data="external_ssl_enable=false"/>
 
   <!-- Video Settings -->
   <!-- Setting the max bandwdith -->
