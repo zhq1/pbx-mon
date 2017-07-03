@@ -53,9 +53,9 @@ try {
                 $redis->select(REDIS_DB);
 
                 $key = date('Ymd');
-                $redis->hIncrBy('server.' . $key . '.' . $src_ip, 'in', 1);
-                $redis->hIncrBy('server.' . $key . '.' . $dst_ip, 'out', 1);
-                $redis->hIncrBy('server.' . $key . '.' . $dst_ip, 'duration', $duration);
+                $redis->hIncrBy('server.' . $key . '.' . $src_ip, 'out', 1);
+                $redis->hIncrBy('server.' . $key . '.' . $dst_ip, 'in', 1);
+                $redis->hIncrBy('server.' . $key . '.' . $src_ip, 'duration', $duration);
 
                 /* Close redis connection */
                 $redis->close();

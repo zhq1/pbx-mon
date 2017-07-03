@@ -59,8 +59,12 @@
               echo '<td>',intval($obj['in']),'</td>';
               echo '<td>',intval($obj['out']),'</td>';
               $duration = intval($obj['duration']);
-              echo '<td>',gmstrftime('%H:%M:%S', $duration),'</td>';
-              $avg = ($duration > 0) ? ($duration / intval($obj['in'])) : 0;
+              if ($duration > 86400) {
+                echo '<td>', intval($duration / 3600) , ':' , gmstrftime('%M:%S', $duration % 3600) ,'</td>';
+              } else {
+                echo '<td>', gmstrftime('%H:%M:%S',$duration) ,'</td>';
+              }
+              $avg = ($duration > 0) ? ($duration / intval($obj['out'])) : 0;
               echo '<td>',gmstrftime('%H:%M:%S',$avg),'</td></tr>',"\n";
             }
           }
