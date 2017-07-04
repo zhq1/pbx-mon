@@ -1,23 +1,23 @@
 [Unit]
 Description=FreeSWITCH
-After=syslog.target network.target
+After=network.target
 
 [Service]
 User=root
 Group=pbx
-Nice=-5
 UMask=0022
 LimitCORE=infinity
 LimitNOFILE=100000
 LimitNPROC=60000
-LimitSTACK=25000
+LimitSTACK=250000
 LimitRTPRIO=infinity
-LimitRTTIME=7000000
+LimitRTTIME=infinity
 IOSchedulingClass=realtime
 IOSchedulingPriority=2
 CPUSchedulingPolicy=rr
 CPUSchedulingPriority=89
-ExecStart=/usr/local/freeswitch/bin/freeswitch -nc -nf -nonat
+
+ExecStart=/usr/local/freeswitch/bin/freeswitch -nc -nf -rp -nonat -nosql
 ExecStop=/usr/local/freeswitch/bin/freeswitch -stop
 ExecReload=/usr/bin/kill -HUP $MAINPID
 
