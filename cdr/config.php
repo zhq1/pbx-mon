@@ -10,8 +10,8 @@
 define('DB_HOST', '127.0.0.1');
 define('DB_PORT', 3306);
 define('DB_USER', 'root');
-define('DB_PASS', '123456');
-define('DB_NAME', 'bitcc');
+define('DB_PASS', 'tx4pn28y7n4cy735kv');
+define('DB_NAME', 'pbxmon');
 
 /* redis configuration */
 define('REDIS_HOST', '127.0.0.1');
