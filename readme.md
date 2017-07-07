@@ -9,7 +9,7 @@
 - Redis 3.2
 - MariaDB 5.5
 - phpredis 3.1.2
-- FreeSWITCH 1.6.18
+- FreeSWITCH 1.6.15
 - mod_g729 1.0.3
 - CentOS 7.3
 
@@ -73,9 +73,9 @@
 
 编译安装 FreeSWITCH
 
-    $ wget http://files.freeswitch.org/freeswitch-releases/freeswitch-1.6.18.tar.gz
-    $ tar -xzvf freeswitch-1.6.18.tar.gz
-    $ cd freeswitch-1.6.18
+    $ wget http://files.freeswitch.org/freeswitch-releases/freeswitch-1.6.15.tar.gz
+    $ tar -xzvf freeswitch-1.6.15.tar.gz
+    $ cd freeswitch-1.6.15
     $ emacs modules.conf
     $ ./configure --disable-debug --disable-libyuv --disable-libvpx
     $ make
