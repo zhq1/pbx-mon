@@ -50,8 +50,7 @@
         <div class="container main">
           <div class="row">
             <div class="col-xs-2 col-sm-2 col-md-2"><span class="glyphicon glyphicon-flash"></span> <b>pbx系统:</b></div>
-            <div class="col-xs-3 col-sm-3 col-md-3"><?php echo 'pbxMon ',$version;?></div>
-            <div class="col-xs-7 col-sm-7 col-md-7"><?php echo $status['uptime'];?></div>
+            <div class="col-xs-10 col-sm-10 col-md-10"><?php echo 'pbxMon ',$version,'<small class="text-muted"> ( ',$status['uptime'],' )</small>';?></div>
           </div>
           <div class="row">
             <div class="col-xs-2 col-sm-2 col-md-2"><span class="glyphicon glyphicon-copyright-mark"></span> <b>CPU型号:</b></div>
@@ -82,8 +81,8 @@
             </div>
           </div>
           <br /><hr />
-          <div class="row" style="padding:0px 15px">
-            <pre><?php echo $pbx;?></pre>
+          <div class="row" style="padding:0px 10px">
+            <pre style="background-color:#ffffff;border:0px"><?php echo $pbx;?></pre>
           </div>
         </div>
       </div>

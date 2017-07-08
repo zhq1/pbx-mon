@@ -385,6 +385,6 @@ class SystemModel {
     }
 
     public function getPbx() {
-        return $this->eslCmd('status', true);
+        return $this->eslCmd('api status', true);
     }
 }
