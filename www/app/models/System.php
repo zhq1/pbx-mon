@@ -254,7 +254,7 @@ class SystemModel {
         return false;
     }
 
-    public function eslCmd($cmd = null) {
+    public function eslCmd($cmd = null, $recv = false) {
         if ($cmd && is_string($cmd)) {
             $config = $this->config->esl;
 
@@ -263,6 +263,12 @@ class SystemModel {
 
             if ($esl) {
                 /* Send command to freeswitch execute */
+                if ($recv) {
+                    $reply = $esl->sendRecv($cmd);
+                    $esl->disconnect();
+                    return $reply->getBody();
+                }
+
                 $esl->send($cmd);
                 /* Close esl connection */
                 $esl->disconnect();
@@ -372,5 +378,9 @@ class SystemModel {
     
     public function getUname() {
         return php_uname();
+    }
+
+    public function getPbx() {
+        return $this->eslCmd('status', true);
     }
 }

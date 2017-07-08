@@ -12,6 +12,7 @@ class SystemController extends Yaf\Controller_Abstract {
         $system = new SystemModel();
 
         $this->getView()->assign('status', $system->sysInfo());
+        $this->getView()->assign('pbx', $system->getPbx());
         return true;
 	}
 
