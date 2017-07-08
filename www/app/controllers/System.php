@@ -69,6 +69,8 @@ class SystemController extends Yaf\Controller_Abstract {
     }
 
     public function aboutAction() {
+        $system = new SystemModel();
+        $this->getView()->assign('version', $system->getVersion());
         return true;
     }
 
