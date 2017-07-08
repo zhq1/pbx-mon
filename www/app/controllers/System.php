@@ -11,6 +11,7 @@ class SystemController extends Yaf\Controller_Abstract {
     public function statusAction() {
         $system = new SystemModel();
 
+        $this->getView()->assign('version', $system->getVersion());
         $this->getView()->assign('status', $system->sysInfo());
         $this->getView()->assign('pbx', $system->getPbx());
         return true;

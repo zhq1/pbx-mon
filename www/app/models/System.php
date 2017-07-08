@@ -281,6 +281,10 @@ class SystemModel {
         return false;
     }
 
+    public function getVersion() {
+        return $this->config->version;
+    }
+
     public function sysInfo($esl = null) {
         $status['uptime'] = $this->getUptime();
         $status['cpuinfo'] = $this->getCpuInfo();
