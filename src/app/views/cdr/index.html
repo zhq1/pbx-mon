@@ -107,7 +107,7 @@
 	        <?php
 	          if ($data) {
 	            foreach ($data as $obj) {
-                  echo '<tr><td>',$obj['id'],'</td><td>',$obj['caller'],'</td><td>',$obj['called'],'</td><td>',$obj['location'],'</td><td>',gmstrftime('%H:%M:%S', $obj['duration']),'</td><td>',long2ip($obj['src_ip']),'</td><td>',long2ip($obj['dst_ip']),'</td><td>',$obj['create_time'],'</td><td><a href="javascript:void(0);" res="' . $obj['file'] . '" onClick="show(this)"><span class="glyphicon glyphicon-headphones"></span> 试 听</a></td><td><span class="glyphicon glyphicon-qrcode" res="',$obj['file'],'" onClick="qrcode(this)"></span></td><td><a href="/record/',$obj['file'],'">下 载</a></td></tr>',"\n";
+                  echo '<tr><td>',$obj['id'],'</td><td>',$obj['caller'],'</td><td>',$obj['called'],'</td><td>',$obj['location'],'</td><td>',gmstrftime('%H:%M:%S', $obj['duration']),'</td><td>',long2ip($obj['src_ip']),'</td><td>',long2ip($obj['dst_ip']),'</td><td>',$obj['create_time'],'</td><td><a href="javascript:void(0);" res="' . $obj['file'] . '" onClick="show(this)"><span class="glyphicon glyphicon-headphones"></span> 试 听</a></td><td><span class="glyphicon glyphicon-qrcode" res="',base64_encode($obj['file']),'" onClick="qrcode(this)"></span></td><td><a href="/record/',$obj['file'],'">下 载</a></td></tr>',"\n";
 	            }
 	          }
             ?>
@@ -172,9 +172,8 @@
     }
 
     function qrcode(obj) {
-        var file = obj.getAttribute("res");
-        var url = 'http://112.2.19.92:8088/record/' + file;
-        var img = 'http://qr.liantu.com/api.php?text=' + url;
+        var res = obj.getAttribute("res");
+        var img = 'http://qr.liantu.com/api.php?text=' + res;
 
         layer.open({
             type: 1,

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="favicon.ico">
+    <title>record play</title>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <h3>录音试听- Recording audition</h3>
+      <div id="player" class="aplayer"></div>
+    </div>
+    <script type="text/javascript" src="/js/APlayer.min.js"></script>
+    <script type="text/javascript">
+        var app = new APlayer({
+          element: document.getElementById('player'),
+          narrow: false,
+          autoplay: true,
+          showlrc: false,
+          mutex: true,
+          theme: '#e6d0b2',
+          preload: 'metadata',
+          mode: 'circulation',
+          music: {
+            title: 'Recording',
+            author: 'pbxMon/Recording',
+            url: '<?php echo $record;?>',
+            pic: '/img/preparation.jpg'
+          }
+        });
+      </script>
+  </body>
+</html>
