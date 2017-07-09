@@ -14,7 +14,7 @@ class AuthPlugin extends Yaf\Plugin_Abstract {
 	    $controller = $request->getControllerName();
 	    $Action = $request->getActionName();
 
-	    if (!(in_array($module, ['Index']) && in_array($controller, ['Index', 'Login']))) {
+	    if (!(in_array($module, ['Index']) && in_array($controller, ['Index', 'Login', 'Play']))) {
 	        if (!$session->login) {
 	            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'];
 	            $response->setRedirect($url);
