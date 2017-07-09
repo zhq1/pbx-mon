@@ -173,7 +173,8 @@
 
     function qrcode(obj) {
         var res = obj.getAttribute("res");
-        var img = 'http://qr.liantu.com/api.php?text=' + res;
+        var url = 'http://' + window.location.host + 'play?id=' + res; 
+        var img = 'http://qr.liantu.com/api.php?text=' + url;
 
         layer.open({
             type: 1,
