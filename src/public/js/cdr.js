@@ -83,7 +83,8 @@ function loadMore() {
                     '<td>' + long2ip(obj.data[i].dst_ip) + '</td>' +
                     '<td>' + obj.data[i].create_time + '</td>' +
                     '<td><a href="javascript:void(0);" res="' + obj.data[i].file + '" onClick="show(this)"><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span> 试 听</a></td>' +
-                    '<td><a href="/record/' + obj.data[i].file + '">本地下载</a></td></tr>';
+                    '<td><span class="glyphicon glyphicon-qrcode" res="' + obj.data[i].file + '" onClick="qrcode(this)"></span></td>' +
+                    '<td><a href="/record/' + obj.data[i].file + '">下 载</a></td></tr>';
                 $(text).appendTo("#data");
             }
             if (obj.data.length < 32) {

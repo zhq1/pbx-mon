@@ -173,12 +173,13 @@
 
     function qrcode(obj) {
         var file = obj.getAttribute("res");
-        var url = 'http://http://112.2.19.92:8088/record/' + file;
+        var url = 'http://112.2.19.92:8088/record/' + file;
         var img = 'http://qr.liantu.com/api.php?text=' + url;
 
         layer.open({
             type: 1,
-            area: ['245', '245px'],
+            title: '手机扫描二维码试听',
+            area: ['300px', '345px'],
             content: '<img src="' + img + '" />'
         });
     }
