@@ -10,7 +10,7 @@ class PlayController extends Yaf\Controller_Abstract {
 
     public function indexAction() {
         $request = $this->getRequest();
-        $file = base64_decode($request->getQuery('id'));
+        $file = $request->getQuery('file');
         $record = '/record/'. $file;
         $this->getView()->assign("record", $record);
         return true;
