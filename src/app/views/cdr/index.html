@@ -101,13 +101,13 @@
       <div class="row">
         <table class="table table-hover table-condensed" onload="alert('hello world')">
           <thead>
-            <tr><th>#</th><th>主叫号码</th><th>被叫号码</th><th>号码归属地</th><th>通话时长</th><th>呼入 IP</th><th>呼出 IP</th><th>通话时间</th><th>录音试听</th><th>录音下载</th></tr>
+            <tr><th>#</th><th>主叫号码</th><th>被叫号码</th><th>号码归属地</th><th>通话时长</th><th>呼入 IP</th><th>呼出 IP</th><th>通话时间</th><th>录音试听</th><th>二维码</th><th>下 载</th></tr>
           </thead>
           <tbody id="data">
 	        <?php
 	          if ($data) {
 	            foreach ($data as $obj) {
-                  echo '<tr><td>',$obj['id'],'</td><td>',$obj['caller'],'</td><td>',$obj['called'],'</td><td>',$obj['location'],'</td><td>',gmstrftime('%H:%M:%S', $obj['duration']),'</td><td>',long2ip($obj['src_ip']),'</td><td>',long2ip($obj['dst_ip']),'</td><td>',$obj['create_time'],'</td><td><a href="javascript:void(0);" res="' . $obj['file'] . '" onClick="show(this)"><span class="glyphicon glyphicon-headphones"></span> 试 听</a></td><td><a href="/record/',$obj['file'],'">本地下载</a></td></tr>',"\n";
+                  echo '<tr><td>',$obj['id'],'</td><td>',$obj['caller'],'</td><td>',$obj['called'],'</td><td>',$obj['location'],'</td><td>',gmstrftime('%H:%M:%S', $obj['duration']),'</td><td>',long2ip($obj['src_ip']),'</td><td>',long2ip($obj['dst_ip']),'</td><td>',$obj['create_time'],'</td><td><a href="javascript:void(0);" res="' . $obj['file'] . '" onClick="show(this)"><span class="glyphicon glyphicon-headphones"></span> 试 听</a></td><td><span class="glyphicon glyphicon-qrcode" res="',$obj['file'],'" onClick="qrcode(this)"></span></td><td><a href="/record/',$obj['file'],'">下 载</a></td></tr>',"\n";
 	            }
 	          }
             ?>
@@ -169,6 +169,19 @@
         area: ['420px', '120px'],
         content: html
       });
+    }
+
+    function qrcode(obj) {
+        var file = obj.getAttribute("res");
+        var url = 'http://http://112.2.19.92:8088/record/' + file;
+        var img = 'http://qr.liantu.com/api.php?text=' + url;
+
+        layer.open({
+            type: 1,
+            skin: 'layui-layer-rim',
+            area: ['420px', '240px'],
+            content: '<img src="' + img + '" />'
+        });
     }
 
     <?php if (isset($last) && $last > 0) echo 'last = ',$last,";\n";?>
