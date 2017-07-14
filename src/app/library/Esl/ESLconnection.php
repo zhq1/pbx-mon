@@ -171,6 +171,7 @@ class ESLconnection {
 		$r=ESLconnection_getInfo($this->_cPtr);
 		if (is_resource($r)) {
 			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
+            $c = '\\'. __NAMESPACE__ . '\\' . $c;
 			if (class_exists($c)) return new $c($r);
 			return new ESLevent($r);
 		}
@@ -185,6 +186,7 @@ class ESLconnection {
 		$r=ESLconnection_sendRecv($this->_cPtr,$cmd);
 		if (is_resource($r)) {
 			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
+            $c = '\\'. __NAMESPACE__ . '\\' . $c;
 			if (class_exists($c)) return new $c($r);
 			return new ESLevent($r);
 		}
@@ -198,6 +200,7 @@ class ESLconnection {
 		}
 		if (is_resource($r)) {
 			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
+            $c = '\\'. __NAMESPACE__ . '\\' . $c;
 			if (class_exists($c)) return new $c($r);
 			return new ESLevent($r);
 		}
@@ -212,6 +215,7 @@ class ESLconnection {
 		}
 		if (is_resource($r)) {
 			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
+            $c = '\\'. __NAMESPACE__ . '\\' . $c;
 			if (class_exists($c)) return new $c($r);
 			return new ESLevent($r);
 		}
@@ -222,6 +226,7 @@ class ESLconnection {
 		$r=ESLconnection_sendEvent($this->_cPtr,$send_me);
 		if (is_resource($r)) {
 			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
+            $c = '\\'. __NAMESPACE__ . '\\' . $c;
 			if (class_exists($c)) return new $c($r);
 			return new ESLevent($r);
 		}
@@ -240,6 +245,7 @@ class ESLconnection {
 		$r=ESLconnection_recvEvent($this->_cPtr);
 		if (is_resource($r)) {
 			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
+            $c = '\\'. __NAMESPACE__ . '\\' . $c;
 			if (class_exists($c)) return new $c($r);
 			return new ESLevent($r);
 		}
@@ -250,6 +256,7 @@ class ESLconnection {
 		$r=ESLconnection_recvEventTimed($this->_cPtr,$ms);
 		if (is_resource($r)) {
 			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
+            $c = '\\'. __NAMESPACE__ . '\\' . $c;
 			if (class_exists($c)) return new $c($r);
 			return new ESLevent($r);
 		}
@@ -260,6 +267,7 @@ class ESLconnection {
 		$r=ESLconnection_filter($this->_cPtr,$header,$value);
 		if (is_resource($r)) {
 			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
+            $c = '\\'. __NAMESPACE__ . '\\' . $c;
 			if (class_exists($c)) return new $c($r);
 			return new ESLevent($r);
 		}
@@ -278,6 +286,7 @@ class ESLconnection {
 		}
 		if (is_resource($r)) {
 			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
+            $c = '\\'. __NAMESPACE__ . '\\' . $c;
 			if (class_exists($c)) return new $c($r);
 			return new ESLevent($r);
 		}
@@ -292,6 +301,7 @@ class ESLconnection {
 		}
 		if (is_resource($r)) {
 			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
+            $c = '\\'. __NAMESPACE__ . '\\' . $c;
 			if (class_exists($c)) return new $c($r);
 			return new ESLevent($r);
 		}
