@@ -80,6 +80,12 @@ class RouteModel {
 
         $result = $this->get($id);
         if (count($result) > 0) {
+            /* Check system reserved route */
+            $reserved = ['route', 'default'];
+            if (in_array($result['name'], $reserved)) {
+                return false;
+            }
+            
             $file = $this->config->fs->path . '/conf/dialplan/' . $result['name'] . '.xml';
 
             /* Delete dialplan file */
