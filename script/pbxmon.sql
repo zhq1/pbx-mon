@@ -14,8 +14,8 @@ CREATE TABLE `cdr` (
        `caller` varchar(64) not null,
        `called` varchar(64) not null,
        `duration` int not null,
-       `src_ip` int not null,
-       `dst_ip` int not null,
+       `src_ip` int unsigned not null,
+       `dst_ip` int unsigned not null,
        `file` varchar(128) not null,
        `create_time` datetime not null
 );
