@@ -20,9 +20,8 @@ class InterfaceController extends Yaf\Controller_Abstract {
         if ($request->isPost()) {
             $interface = new InterfaceModel();
             $interface->create($request->getPost());
-            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/interface';
             $response = $this->getResponse();
-            $response->setRedirect($url);
+            $response->setRedirect('/interface');
             $response->response();
             return false;
         }
@@ -36,9 +35,8 @@ class InterfaceController extends Yaf\Controller_Abstract {
 
         if ($request->isPost()) {
             $interface->change($request->getQuery('id'), $request->getPost());
-            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/interface';
             $response = $this->getResponse();
-            $response->setRedirect($url);
+            $response->setRedirect('/interface');
             $response->response();
             return false;
         }
@@ -59,5 +57,3 @@ class InterfaceController extends Yaf\Controller_Abstract {
         return false;
     }
 }
-
-

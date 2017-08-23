@@ -26,9 +26,8 @@ class RouteController extends Yaf\Controller_Abstract {
         if ($request->isPost()) {
             $route = new RouteModel();
             $route->create($request->getPost());
-            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/route';
             $response = $this->getResponse();
-            $response->setRedirect($url);
+            $response->setRedirect('/route');
             $response->response();
             return false;
         }
@@ -42,9 +41,8 @@ class RouteController extends Yaf\Controller_Abstract {
 
         if ($request->isPost()) {
             $route->change($request->getQuery('id'), $request->getPost());
-            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/route';
             $response = $this->getResponse();
-            $response->setRedirect($url);
+            $response->setRedirect('/route');
             $response->response();
             return false;
         }

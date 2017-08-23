@@ -22,9 +22,8 @@ class ServerController extends Yaf\Controller_Abstract {
         if ($request->isPost()) {
             $server = new ServerModel();
             $server->create($request->getPost());
-            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/server';
             $response = $this->getResponse();
-            $response->setRedirect($url);
+            $response->setRedirect('/server');
             $response->response();
             return false;
         }
@@ -40,9 +39,8 @@ class ServerController extends Yaf\Controller_Abstract {
 
         if ($request->isPost()) {
             $server->change($request->getQuery('id'), $request->getPost());
-            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/server';
             $response = $this->getResponse();
-            $response->setRedirect($url);
+            $response->setRedirect('/server');
             $response->response();
             return false;
         }
