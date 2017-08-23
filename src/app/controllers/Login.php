@@ -12,7 +12,6 @@ class LoginController extends Yaf\Controller_Abstract {
     public function indexAction() {
         $request = $this->getRequest();
         $response = $this->getResponse();
-        $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'];
 
         /* Check login action */
         if ($request->isPost()) {
@@ -35,13 +34,13 @@ class LoginController extends Yaf\Controller_Abstract {
 
             $session = Yaf\Session::getInstance();
             $session->set('login', true);
-            $response->setRedirect($url . '/cdr');
+            $response->setRedirect('/cdr');
             $response->response();
             return false;
         }
 
         output:
-        $response->setRedirect($url);
+        $response->setRedirect('/');
         $response->response();
         return false;
     }
