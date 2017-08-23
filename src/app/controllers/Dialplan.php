@@ -52,9 +52,8 @@ class DialplanController extends Yaf\Controller_Abstract {
             $dialplan = new DialplanModel();
             $data = $request->getPost();
             $dialplan->create($data);
-            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/dialplan?rid=' . intval($data['rid']);
             $response = $this->getResponse();
-            $response->setRedirect($url);
+            $response->setRedirect('/dialplan?rid=' . intval($data['rid']));
             $response->response();
             return false;
         }
@@ -69,9 +68,8 @@ class DialplanController extends Yaf\Controller_Abstract {
         if ($request->isPost()) {
             $data = $request->getPost();
             $dialplan->change($request->getQuery('id'), $data);
-            $url = 'http://' . $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT'] . '/dialplan?rid=' . intval($data['rid']);
             $response = $this->getResponse();
-            $response->setRedirect($url);
+            $response->setRedirect('/dialplan?rid=' . intval($data['rid']));
             $response->response();
             return false;
         }
@@ -119,5 +117,4 @@ class DialplanController extends Yaf\Controller_Abstract {
         return false;
     }
 }
-
 
