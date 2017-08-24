@@ -60,6 +60,7 @@ table tr td {
 
 .form-group label select {
     border-width: 0px;
+    background-color: #ffffff;
 }
 
 .form-group .talktime {
