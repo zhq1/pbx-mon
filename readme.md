@@ -76,7 +76,6 @@
     $ wget http://files.freeswitch.org/freeswitch-releases/freeswitch-1.6.15.tar.gz
     $ tar -xzvf freeswitch-1.6.15.tar.gz
     $ cd freeswitch-1.6.15
-    $ emacs modules.conf
     $ ./configure --disable-debug --disable-libyuv --disable-libvpx
     $ make
     $ make install
