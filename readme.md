@@ -112,12 +112,15 @@
     $ make
     $ make install
 
-**导入数据库表**
+**安装配置文件**
 
-    $ mysql < script/db.sql
-    $ redis-cli < script/config.txt
+    $ make config
 
-**安装 Web 平台系统**
+**安装服务脚本**
+
+    $ make script
+
+**安装 Web 系统**
 
     $ make install
 
