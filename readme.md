@@ -30,7 +30,7 @@
     config          Nginx、PHP 、MySQL 和 FreeSWITCH 的配置文件
     script          MySQL 数据库表 SQL 文件
 
-#### 安装方法
+#### 安装基础依赖包
 
     $ yum -y install epel-release
     $ yum makecache fast
@@ -40,7 +40,7 @@
     $ yum install -y speex-devel libedit-devel e2fsprogs-devel gsm gsm-devel re2c redis mariadb mariadb-server
     $ yum install -y nginx php php-fpm php-devel php-pdo php-mysql php-mysqli php-mcrypt php-mbstring 
 
-内核配置 /etc/sysctl.conf
+**内核配置** /etc/sysctl.conf
 
     net.ipv6.conf.all.disable_ipv6 = 1
     net.ipv6.conf.default.disable_ipv6 = 1
@@ -54,7 +54,7 @@
     fs.file-max = 1024000
     fs.aio-max-nr = 1048576
 
-内核配置 /etc/security/limits.conf
+**内核配置** /etc/security/limits.conf
 
     * soft    nofile  1024000
     * hard    nofile  1024000
@@ -65,13 +65,13 @@
     * soft    memlock unlimited
     * hard    memlock unlimited
 
-创建 pbx 运行用户组，并下载 pbxMon 源码包
+**创建 pbx 运行用户组，并下载 pbxMon 源码包**
 
     $ groupadd pbx
     $ usermod -g pbx nginx
     $ git clone https://github.com/typefo/pbx-mon.git
 
-编译安装 FreeSWITCH
+**编译安装 FreeSWITCH**
 
     $ wget http://files.freeswitch.org/freeswitch-releases/freeswitch-1.6.15.tar.gz
     $ tar -xzvf freeswitch-1.6.15.tar.gz
@@ -80,23 +80,21 @@
     $ ./configure --disable-debug --disable-libyuv --disable-libvpx
     $ make
     $ make install
-    $ ln -s /usr/local/freeswitch/bin/fs_cli /usr/bin/fs_cli
-    $ ln -s /usr/local/freeswitch/bin/freeswitch /usr/bin/freeswitch
 
-安装 ESL PHP 模块
+**安装 ESL PHP 模块**
 
     $ cd libs/esl
     $ make phpmod
     $ cp php/ESL.so /usr/lib64/php/modules
 
-安装 G729 语音模块
+**安装 G729 语音模块**
 
     $ git clone https://github.com/typefo/mod_g729.git
     $ cd mod_g729
     $ make
     $ make install
 
-安装 phpredis
+**安装 phpredis**
 
     $ git clone https://github.com/phpredis/phpredis.git
     $ cd phpredis
@@ -105,7 +103,7 @@
     $ make
     $ make install
 
-安装 yaf 框架
+**安装 yaf 框架**
 
     $ wget https://pecl.php.net/get/yaf-2.3.5.tgz
     $ tar -xzvf yaf-2.3.5.tgz
@@ -115,12 +113,12 @@
     $ make
     $ make install
 
-导入数据库表
+**导入数据库表**
 
     $ mysql < script/db.sql
     $ redis-cli < script/config.txt
 
-安装 Web 平台系统
+**安装 Web 平台系统**
 
     $ make install
 
