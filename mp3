@@ -152,8 +152,8 @@ sudo \cp /usr/local/lib/pkgconfig/libpng* /usr/lib64/pkgconfig/
 cd .. && tar –zxvf libshout-2.2.2.tar.gz
 cd libshout-2.2.2
  ./configure
-make
-make install
+sudo make -j4
+sudo make install
 \cp /usr/local/lib/libshout* /usr/lib64/
 \cp /usr/local/lib/pkgconfig/shout.pc /usr/lib64/pkgconfig/
 
@@ -162,8 +162,8 @@ make install
 cd .. && tar -zxvf mpg123.tar.gz
 cd mpg123
 ./configure
-make
-make install
+sudo make -j4
+sudo make install
 \cp /usr/local/lib/pkgconfig/libmpg123.pc/usr/lib64/pkgconfig/
 \cp -rf /usr/local/lib/mpg123 /usr/lib64/
 
@@ -171,8 +171,8 @@ make install
 cd .. && tar -zxvf lame-3.98.4.tar.gz
 cd lame-3.98.4
 ./configure
-make
-make install
+sudo make -j4
+sudo make install
 
 #编译安装 FreeSWITCH
 cd ..
