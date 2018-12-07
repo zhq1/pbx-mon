@@ -2,6 +2,7 @@
 #安装基础依赖包
 
 #firewall-cmd --state
+yum install sudo -y
 sudo systemctl stop firewalld.service
 sudo systemctl disable firewalld.service
 setenforce 0
