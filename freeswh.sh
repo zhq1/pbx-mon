@@ -602,3 +602,66 @@ root@localhost bin]# ./freeswitch
 解决办法： cp /usr/lib/libyuv.so /usr/lib64/
 
 然后就可以正常启动的
+
+
+增加mod_shout ,可以播放录制mp3
+
+需要安装的lib（可以去fs官网下载）：
+
+libshout-2.2.2.tar.gz（http://files.freeswitch.org/downloads/libs/libshout-2.2.2.tar.gz）
+
+mpg123.tar.gz（http://files.freeswitch.org/downloads/libs/mpg123.tar.gz）
+
+lame-3.98.4.tar.gz（http://files.freeswitch.org/downloads/libs/lame-3.98.4.tar.gz）
+
+ 
+
+安装：libshout-2.2.2.tar.gz
+
+#tar –zxvf libshout-2.2.2.tar.gz
+
+# cd libshout-2.2.2
+
+# ./configure
+
+#make
+
+#make install
+
+# cp /usr/local/lib/libshout* /usr/lib64/
+
+如果有提示，直接回车确认
+
+#cp /usr/local/lib/pkgconfig/shout.pc/usr/lib64/pkgconfig/
+
+ 
+
+安装mpg123.tar.gz
+
+# tar -zxvf mpg123.tar.gz
+
+#cd mpg123
+
+# ./configure
+
+#make
+
+#make install
+
+# cp /usr/local/lib/pkgconfig/libmpg123.pc/usr/lib64/pkgconfig/
+
+# cp -rf /usr/local/lib/mpg123 /usr/lib64/
+
+ 
+
+安装lame-3.98.4.tar.gz
+
+# tar -zxvf lame-3.98.4.tar.gz
+
+# cd lame-3.98.4
+
+# ./configure
+
+#make
+
+#make install
