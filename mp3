@@ -26,6 +26,8 @@ sudo yum install -y nginx php php-fpm php-devel php-pdo php-mysql php-mysqli php
 sudo yum install -y gcc-c++ sqlite-devel zlib-devel libcurl-devel pcre-devel  speex-devel ldns-devel  libedit-devel  openssl-devel -y
 sudo yum install -y libjpeg-devel lua-devel libsndfile-devel libyuv-devel git libtool -y
 
+yum install libshout-devel lame-devel libmpg123-devel -y
+
 #优化内核参数
 sudo \cp /etc/sysctl.conf /etc/sysctl.conf.`date +"%Y-%m-%d_%H-%M-%S"`
 sudo tee /etc/sysctl.conf <<-'EOF'
@@ -131,9 +133,8 @@ EOF
 sudo groupadd pbx
 sudo usermod -g pbx nginx
 
-git clone https://github.com/typefo/pbx-mon.git
+cd test
 
-cd ..
 cd opus
 ./autogen.sh
 ./configure
@@ -147,32 +148,6 @@ cd libpng
 sudo make -j4
 sudo make install
 sudo \cp /usr/local/lib/pkgconfig/libpng* /usr/lib64/pkgconfig/
-
-#增加mod_shout ,可以播放录制mp3
-cd .. && tar –zxvf libshout-2.2.2.tar.gz
-cd libshout-2.2.2
- ./configure
-sudo make -j4
-sudo make install
-\cp /usr/local/lib/libshout* /usr/lib64/
-\cp /usr/local/lib/pkgconfig/shout.pc /usr/lib64/pkgconfig/
-
- 
-#安装mpg123.tar.gz
-cd .. && tar -zxvf mpg123.tar.gz
-cd mpg123
-./configure
-sudo make -j4
-sudo make install
-\cp /usr/local/lib/pkgconfig/libmpg123.pc/usr/lib64/pkgconfig/
-\cp -rf /usr/local/lib/mpg123 /usr/lib64/
-
-#安装lame-3.98.4.tar.gz
-cd .. && tar -zxvf lame-3.98.4.tar.gz
-cd lame-3.98.4
-./configure
-sudo make -j4
-sudo make install
 
 #编译安装 FreeSWITCH
 cd ..
@@ -360,7 +335,8 @@ sudo make phpmod
 \cp php/ESL.so /usr/lib64/php/modules
 
 #安装 G729 语音模块
-cd ..
+cd
+cd test
 cd mod_g729
 sudo make -j4
 sudo make install
