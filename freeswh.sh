@@ -463,7 +463,7 @@ chown -R mysql:mysql /var/lib/mysql
 
 路由规则   ^(.*)$
 
-
+密码---MD5小写32位----SHA1加密
 
 #当root密码丢失的时候
 
