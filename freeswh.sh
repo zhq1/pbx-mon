@@ -2,6 +2,7 @@
 #安装基础依赖包
 
 #firewall-cmd --state
+yum install sudo -y
 sudo systemctl stop firewalld.service
 sudo systemctl disable firewalld.service
 setenforce 0
@@ -25,6 +26,7 @@ sudo yum install -y speex-devel libedit-devel e2fsprogs-devel gsm gsm-devel re2c
 sudo yum install -y nginx php php-fpm php-devel php-pdo php-mysql php-mysqli php-mcrypt php-mbstring 
 sudo yum install -y gcc-c++ sqlite-devel zlib-devel libcurl-devel pcre-devel  speex-devel ldns-devel  libedit-devel  openssl-devel -y
 sudo yum install -y libjpeg-devel lua-devel libsndfile-devel libyuv-devel git libtool -y
+sudo yum install libshout-devel lame-devel libmpg123-devel -y
 
 #优化内核参数
 sudo \cp /etc/sysctl.conf /etc/sysctl.conf.`date +"%Y-%m-%d_%H-%M-%S"`
@@ -290,7 +292,7 @@ formats/mod_native_file
 formats/mod_png
 #formats/mod_portaudio_stream
 #formats/mod_shell_stream
-#formats/mod_shout
+formats/mod_shout
 formats/mod_sndfile
 #formats/mod_ssml
 formats/mod_tone_stream
@@ -333,9 +335,7 @@ xml_int/mod_xml_cdr
 #xml_int/mod_xml_radius
 xml_int/mod_xml_rpc
 xml_int/mod_xml_scgi
-
 #../../libs/freetdm/mod_freetdm
-
 ## Experimental Modules (don't cry if they're broken)
 #../../contrib/mod/xml_int/mod_xml_odbc
 EOF
