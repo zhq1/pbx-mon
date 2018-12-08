@@ -381,6 +381,9 @@ sudo make script
 #安装 Web 系统
 sudo make install
 
+#导入归属地
+cat number.db | redis-cli
+
 echo "extension=yaf.so" >> /etc/php.ini
 echo "" >> /etc/php.ini
 echo "[redis]" >> /etc/php.ini
