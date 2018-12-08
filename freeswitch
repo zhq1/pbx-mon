@@ -26,6 +26,7 @@ sudo yum install -y speex-devel libedit-devel e2fsprogs-devel gsm gsm-devel re2c
 sudo yum install -y nginx php php-fpm php-devel php-pdo php-mysql php-mysqli php-mcrypt php-mbstring 
 sudo yum install -y gcc-c++ sqlite-devel zlib-devel libcurl-devel pcre-devel  speex-devel ldns-devel  libedit-devel  openssl-devel -y
 sudo yum install -y libjpeg-devel lua-devel libsndfile-devel libyuv-devel git libtool -y
+sudo yum install libshout-devel lame-devel libmpg123-devel -y
 
 #优化内核参数
 sudo \cp /etc/sysctl.conf /etc/sysctl.conf.`date +"%Y-%m-%d_%H-%M-%S"`
@@ -132,6 +133,9 @@ EOF
 sudo groupadd pbx
 sudo usermod -g pbx nginx
 
+git clone https://github.com/typefo/pbx-mon.git
+
+cd && git clone https://freeswitch.org/stash/scm/sd/opus.git
 cd opus
 ./autogen.sh
 ./configure
@@ -272,7 +276,7 @@ formats/mod_native_file
 formats/mod_png
 #formats/mod_portaudio_stream
 #formats/mod_shell_stream
-#formats/mod_shout
+formats/mod_shout
 formats/mod_sndfile
 #formats/mod_ssml
 formats/mod_tone_stream
@@ -333,14 +337,14 @@ sudo make phpmod
 \cp php/ESL.so /usr/lib64/php/modules
 
 #安装 G729 语音模块
-cd
+cd && git clone https://github.com/typefo/mod_g729.git
 cd mod_g729
 sudo make -j4
 sudo make install
 
 
 #安装 phpredis
-cd
+cd && git clone https://github.com/phpredis/phpredis.git
 cd phpredis
 phpize
 ./configure
@@ -348,7 +352,7 @@ sudo make -j4
 sudo make install
 
 #安装 yaf 框架
-cd
+cd && wget https://pecl.php.net/get/yaf-2.3.5.tgz
 tar -xzvf yaf-2.3.5.tgz
 cd yaf-2.3.5
 phpize
