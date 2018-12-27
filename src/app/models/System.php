@@ -266,7 +266,7 @@ class SystemModel {
                 if ($recv) {
                     $reply = $esl->sendRecv($cmd);
                     $esl->disconnect();
-                    return $reply->getBody();
+                    return $reply ? $reply->getBody() : 'Connect to freeswitch socket error, It may not be running';
                 }
 
                 $esl->send($cmd);
