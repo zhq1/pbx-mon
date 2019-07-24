@@ -187,6 +187,7 @@ class SystemModel {
                 $xml .= '    <domain name="all" alias="false" parse="true"/>' . "\n";
                 $xml .= '  </domains>' . "\n";
                 $xml .= '  <settings>' . "\n";
+                $xml .= '    <param name="enable-100rel" value="true"/>' . "\n";
                 $xml .= '    <param name="debug" value="0"/>' . "\n";
                 $xml .= '    <param name="sip-trace" value="no"/>' . "\n";
                 $xml .= '    <param name="sip-capture" value="no"/>' . "\n";
